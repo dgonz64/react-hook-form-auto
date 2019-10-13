@@ -3,7 +3,6 @@
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
 ## [Play with the demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
-## [Documentation](#documentation-1)
 
 ## Installation
 
@@ -34,7 +33,7 @@ Here we are saying that a `client` is required to have a name and providing its 
 
 #### 2. Make your Autoform component
 
-If you are not using your own skin, the one provided with the library uses styles. The styles prop must be provided with each `<Autoform />` render. A way to avoid scaffolding is to put your `<Autoform />` in a module or use a HoC. Example for module:
+If you are not using your own skin, the one that comes with the library uses styles. The styles prop must be provided with each `<Autoform />` render. A way to avoid scaffolding is to put your `<Autoform />` in a module or use a HoC. Example for module:
 
 ```javascript
     import React, { forwardRef } from 'react'
@@ -94,10 +93,10 @@ Form will be validated following the rules set by the schema.
 It also allows you to build arrays from other schemas. You just toss an array with another schema from elsewhere as first element and `Autoform` will allow you to add and remove elements:
 
 ```javascript
-    import { Schema } from 'react-hook-form-auto'
+    import { createSchema } from 'react-hook-form-auto'
     import { client } from './client'
 
-    export const company = new Schema('company', {
+    export const company = createSchema('company', {
       clients: {
         type: [client],
         minChildren: 10
@@ -106,6 +105,8 @@ It also allows you to build arrays from other schemas. You just toss an array wi
 ```
 
 Read the [documentation](#documentation-1) to find out what else you can do.
+
+## [Documentation](#documentation-1)
 
 ## Rationale
 
@@ -437,7 +438,7 @@ Or you can drop it directly to `setTranslator()` if it's compatible.
 
 The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin.
 
-You can take a look at [defaultSkin.js](https://github.com/dgonz64/react-hook-form-auto/blob/master/src/ui/defaltSkin.js) and [`components/index.js`](https://github.com/dgonz64/react-hook-form-auto/tree/master/src/ui/components) from any skin to have a glimpse.
+You can take a look at [defaultSkin.js](https://github.com/dgonz64/react-hook-form-auto/blob/master/src/ui/defaultSkin.jsx) and [`components/index.js`](https://github.com/dgonz64/react-hook-form-auto/tree/master/src/ui/components) from any skin to have a glimpse.
 
 There's an entry in the skin object for every field type. The value of the entry is an object with two attributes like in this example:
 
