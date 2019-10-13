@@ -106,8 +106,6 @@ It also allows you to build arrays from other schemas. You just toss an array wi
 
 Read the [documentation](#documentation-1) to find out what else you can do.
 
-## [Documentation](#documentation-1)
-
 ## Rationale
 
 One of the purposes of the library is to avoid repeating code by not having to write a set of input components for every entity. Also when time is of the essence, writing forms can be exasperating.
