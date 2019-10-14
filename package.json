@@ -1,6 +1,6 @@
 {
   "name": "react-hook-form-auto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate automatic forms following a schema",
   "main": "lib/index.js",
   "keywords": [
