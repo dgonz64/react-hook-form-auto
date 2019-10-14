@@ -33,7 +33,7 @@ In this example we are stating that a `client` is required to have a `name` and 
 
 ### 2. Render a form
 
-`<Autoform />` React component will generate inputs including translatable label, proper input types and error messages:
+`<Autoform />` React component will generate inputs including translatable label, proper input types and error messages.
 
 ```javascript
     import { Autoform } from 'react-hook-form-auto'
@@ -48,7 +48,7 @@ In this example we are stating that a `client` is required to have a `name` and 
 
 Form will be validated following the rules set by the schema.
 
-It also allows you to build arrays from other schemas. Simply put in other schema with brackets `[<other>]` in the type. `Autoform` will allow you to add and remove elements:
+It also allows you to build arrays from other schemas. Simply specify the other schema within brackets `[<other>]`. `Autoform` default skin will allow you to add and remove elements.
 
 ```javascript
     import { createSchema } from 'react-hook-form-auto'
@@ -63,6 +63,8 @@ It also allows you to build arrays from other schemas. Simply put in other schem
 ```
 
 #### 3. Make it less ugly
+
+Install the emergency styles
 
     $ npm install rhfa-emergency-styles --save
 
@@ -209,7 +211,7 @@ The string returned will be translated. The translation will receive the field's
 
 ### The `validate` validator
 
-The function used to validate the field, as any other validator, can return:
+The function used to validate the field, as any other validator, can return
 
 * true to fail (and automatically generate message) or false to pass
 * An string that will be the error message
