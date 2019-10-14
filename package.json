@@ -54,6 +54,7 @@
     "docs": "jsdoc2md -t jsdoc2md/README.hbs src/*.js src/**/*.js src/**/*.jsx > README.md; echo ",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:short": "jest",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "prepublishOnly": "npm run build"
   }
 }
