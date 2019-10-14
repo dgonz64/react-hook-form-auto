@@ -4,6 +4,6 @@ If you find a bug, open an issue. There will be probably needed code samples or,
 
 #### Coding
 
-Some pointers in [README](https://www.npmjs.com/package/react-hook-form-auto#help-wanted--contribute)
+Some pointers in [README](https://github.com/dgonz64/react-hook-form-auto#help-wanted--contribute)
 
 ## Thank you very much!
