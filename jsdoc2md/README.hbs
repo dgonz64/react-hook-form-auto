@@ -10,7 +10,7 @@ This library allows your React application to automatically generate forms using
 
 ## Usage
 
-#### 1. Write schema
+### 1. Write schema
 
 Write a schema for each model you have:
 
@@ -29,56 +29,14 @@ Write a schema for each model you have:
     })
 ```
 
-Here we are saying that a `client` is required to have a name and providing its allowed length. Also client has age and it's a number.
+In this example we are stating that a `client` is required to have a `name` and providing its allowed length. Also `client` has `age` and it's a number.
 
-#### 2. Make your Autoform component
-
-If you are not using your own skin, the one that comes with the library uses styles. The styles prop must be provided with each `<Autoform />` render. A way to avoid scaffolding is to put your `<Autoform />` in a module or use a HoC. Example for module:
-
-```javascript
-    import React, { forwardRef } from 'react'
-    import { Autoform as RHFAutoform } from 'react-hook-form-auto'
-
-    import panelStyles from './Panel.sass'
-    import inputStyles from './inputs.sass'
-
-    const styles = { ...panelStyles, ...inputStyles }
-
-    export let Autoform = (props, ref) =>
-      <RHFAutoform
-        styles={styles}
-        {...props}
-        ref={ref}
-      />
-
-    Autoform = forwardRef(Autoform)
-```
-
-##### If you have sass
-
-In this example I use sass and css-modules but you can provide the class names in any other way.
-
-If sass suits you, you can copy-paste both demo styles: [inputs](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/inputs.sass) and [panels](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Panel.sass). They are separated in the demo to reuse the panels. Sorry about it, working on it.
-
-##### If you don't have sass
-
-The classes inserted in the component are the ones specified in the `styles` object, like this:
-
-```javascript
-    {
-      input: 'my-input',
-      button: 'my-button'
-    }
-```
-
-For a complete list best take a look at former sass style files and adapt to your project layout.
-
-#### 2. Render a form
+### 2. Render a form
 
 `<Autoform />` React component will generate inputs including translatable label, proper input types and error messages:
 
 ```javascript
-    import { Autoform } from './Autoform'
+    import { Autoform } from 'react-hook-form-auto'
     import { client } from './models/client'
 
     const MyForm = ({ onSubmit }) =>
@@ -90,7 +48,7 @@ For a complete list best take a look at former sass style files and adapt to you
 
 Form will be validated following the rules set by the schema.
 
-It also allows you to build arrays from other schemas. You just toss an array with another schema from elsewhere as first element and `Autoform` will allow you to add and remove elements:
+It also allows you to build arrays from other schemas. Simply put in other schema with brackets `[<other>]` in the type. `Autoform` will allow you to add and remove elements:
 
 ```javascript
     import { createSchema } from 'react-hook-form-auto'
@@ -103,6 +61,25 @@ It also allows you to build arrays from other schemas. You just toss an array wi
       }
     })
 ```
+
+#### 3. Make it less ugly
+
+    $ npm install rhfa-emergency-styles --save
+
+Then set the `styles` prop of `<Autoform />`:
+
+```javascript
+    import styles from 'rhfa-emergency-styles'
+ 
+    // With sass...
+    import 'rhfa-emergency-styles/prefixed.sass'
+    // ...or without
+    import 'rhfa-emergency-styles/dist/styles.css'
+ 
+    <Autoform styles={styles} />
+```
+
+If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
 
 Read the [documentation](#documentation-1) to find out what else you can do.
 
@@ -125,12 +102,12 @@ Also react-hook-form-auto has some of its own
 
 # Roadmap
 
-Actually I don't have a roadmap. The library suits my personal needs. Do you need anything that is not there? Feel free to write an issue! Those are the things I think may be interesting:
+Actually there aren't clearly defined goals. The library already suits my personal needs. Do you need anything that is not there? Feel free to write an issue! Those are the tasks I think may be interesting and will randomly work on them:
 
 - [x] Automatic form generation
 - [x] Able to stylize components
 - [x] Datatype coertion
-- [ ] Provide more and better styling examples
+- [x] Provide more and better styling examples
 - [ ] Styles to make it look like bootstrap4
 - [ ] _Native_ components for famous ui libraries like bootstrap4
 - [ ] Translated messages from server/async
@@ -164,8 +141,8 @@ These are the types a field can be:
 | string     | Value is a string        | `<input type="text" />`       |
 | number     | Value is a number        | `<input type="number" />`     |
 | range      | Between two numbers      | `<input type="range" />`      |
-| [<schema>] | Each array item is valid | Renders as array              |
-| <schema>   | Value follows schema     | Renders as submodel           |
+| [\<schema\>] | Each array item is valid | Renders as array              |
+| \<schema\>   | Value follows schema     | Renders as submodel           |
 | select     | Value belongs to set     | `<select />`                  |
 | radios     | Value belongs to set     | `<Radio />`                   |
 | boolean    | Value is boolean         | `<input type="checkbox />`    |
@@ -218,31 +195,30 @@ Example with function. This example assumes `Autoform` component has a color col
 
 ### Validators
 
-In addition to the type, you can specify some other validation rules.
+| Validation  | Type     | Meaning | Error string ID |
+| ----------- | -------- | -------------------------------------------------- | --- |
+| minChildren | number   | Minimum amount of children an array field can have | `error.minChildren` |
+| maxChildren | number   | Maximum amount of children an array field can have | `error.maxChildren` |
+| min         | number   | Minimum value | `error.min` |
+| max         | number   | Maximum value | `error.min` |
+| required    | boolean  | The value can't be empty or undefined | `error.required` |
+| validate    | function | Function that takes the value and entry and returns validity | |
+| pattern     | regex    | Regex. The value matches the regex | |
 
-| Validation  | Type     | Meaning |
-| ----------- | -------- | -------------------------------------------------- |
-| minChildren | number   | Minimum amount of children an array field can have |
-| maxChildren | number   | Maximum amount of children an array field can have |
-| min         | number   | Minimum value |
-| max         | number   | Maximum value |
-| required    | boolean  | The value can't be empty or undefined |
-| validate    | function | Function that takes the value and entry and returns validity |
-| pattern     | regex    | Regex. The value matches the regex |
-| options     | array / function | For the select like inputs. Value should be in options |
+The string returned will be translated. The translation will receive the field's schema as [variables](#variable-substitution).
 
 ### The `validate` validator
 
 The function used to validate the field, as any other validator, can return:
 
-* true to fail or false to pass
+* true to fail (and automatically generate message) or false to pass
 * An string that will be the error message
 
 ### Schema
 
 The schema establishes the validation and inputs. The instance can be stored anywhere, like your own model object or a module. At the moment it doesn't change over time.
 
-#### createSchema
+### createSchema
 {{#function name="createSchema"~}}
 {{>body~}}
 {{/function}}
@@ -353,7 +329,7 @@ To translate string for your use call `tr()` and pass the string path separated 
 
 This is the usage of the `tr()` function:
 
-#### tr
+### tr
 {{#function name="tr"~}}
 {{>body~}}
 {{/function}}
@@ -389,7 +365,7 @@ This allows you to translate and inserting a value in the correct place of the s
 
 Then you call addTranslations with the object tree:
 
-#### addTranslations
+### addTranslations
 {{#function name="addTranslations"~}}
 {{>body~}}
 {{/function}}
@@ -410,7 +386,7 @@ If your application has more than one language and it can be changed on the fly,
 
 You can disable the translation system to use your own.
 
-#### setTranslator
+### setTranslator
 {{#function name="setTranslator"~}}
 {{>body~}}
 {{/function}}
@@ -559,12 +535,12 @@ Class components receive all the provided or derived props.
 
 To render the input or inputs, two functions are used:
 
-#### renderInputs
+### renderInputs
 {{#function name="renderInputs"~}}
 {{>body~}}
 {{/function}}
 
-#### renderInput
+### renderInput
 {{#function name="renderInput"~}}
 {{>body~}}
 {{/function}}
