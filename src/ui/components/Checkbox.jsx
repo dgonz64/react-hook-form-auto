@@ -19,6 +19,7 @@ export let Checkbox = ({
         name={name}
         ref={ref}
         defaultChecked={defaultChecked}
+        className={styles.checkbox}
       />
       <label
         key="label"
