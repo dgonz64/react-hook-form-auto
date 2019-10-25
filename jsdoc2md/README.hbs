@@ -62,7 +62,7 @@ It also allows you to build arrays from other schemas. Simply specify the other 
     })
 ```
 
-#### 3. Make it less ugly
+### 3. Make it less ugly
 
 Install the emergency styles
 
@@ -82,6 +82,8 @@ Then set the `styles` prop of `<Autoform />`:
 ```
 
 If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
+
+As you have to pass the styles on every `Autoform` render, I recommend [creating a module](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Autoform.jsx) or a HoC.
 
 Read the [documentation](#documentation-1) to find out what else you can do.
 
@@ -289,7 +291,7 @@ You can also disable coercers with the `Autoform`'s `disableCoercing` prop.
 
 ### Select
 
-By default select will include an empty option for new elements
+By default select will include an empty option for uninitialized elements
 
 ## Translation
 
@@ -553,7 +555,7 @@ react-hook-form-auto needs your help. Skins must be written!
 
 ### Where to begin
 
-Make a fork and do your magic followed by a [pull request](https://help.github.com/articles/about-pull-requests/). If it's an implementation, test case and documentation update wold be highly appreciated.
+Make a fork and do your magic followed by a [pull request](https://help.github.com/articles/about-pull-requests/). If it's an implementation, test case and documentation update would be highly appreciated.
 
 ### Some code pointers
 
