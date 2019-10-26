@@ -2,7 +2,7 @@
 
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
-## [Play with the demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
+## [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/) | [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
 
 ## Installation
 
@@ -87,7 +87,13 @@ If you use `css-modules` you have [better options](https://github.com/dgonz64/rh
 
 #### 3b. Make it pretty with Bootstrap 4
 
+We can take advantage of the styling strategy and pass bootstrap classes as `styles` props. You can grab them [from here](https://github.com/dgonz64/react-hook-form-auto-demo-bootstrap4/blob/master/src/styles.js) \[[raw](https://raw.githubusercontent.com/dgonz64/react-hook-form-auto-demo-bootstrap4/master/src/styles.js)\]. Then use them:
 
+```javascript
+    import styles from './bsStyles'  // copy-pasted styles description
+
+    <Autoform styles={styles} />
+```
 
 Read the [documentation](#documentation-1) to find out what else you can do.
 
@@ -116,7 +122,7 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] Able to stylize components
 - [x] Datatype coertion
 - [x] Provide more and better styling examples
-- [ ] Styles to make it look like bootstrap4
+- [x] Styles to make it look like bootstrap4
 - [ ] _Native_ components for famous ui libraries like bootstrap4
 - [ ] Translated messages from server/async
 - [ ] Actually limit children
