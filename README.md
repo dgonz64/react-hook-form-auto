@@ -62,9 +62,9 @@ It also allows you to build arrays from other schemas. Simply specify the other 
     })
 ```
 
-#### 3. Make it less ugly
+#### 3a. Make it less ugly with some styling
 
-Install the emergency styles
+Install the emergency styles if you don't want to bundle a whole bootstrap.
 
     $ npm install rhfa-emergency-styles --save
 
@@ -81,7 +81,13 @@ Then set the `styles` prop of `<Autoform />`:
     <Autoform styles={styles} />
 ```
 
+If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
+
 If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
+
+#### 3b. Make it pretty with Bootstrap 4
+
+
 
 Read the [documentation](#documentation-1) to find out what else you can do.
 

@@ -10,6 +10,8 @@ import { inputArray } from '../ducks'
 import { Panel } from './Panel'
 import { trModel } from '../../translation_utils'
 import { deletedMark } from '../deletedMark'
+import { RemoveGlyph } from '../svgs/RemoveGlyph'
+import { AddGlyph } from '../svgs/AddGlyph'
 
 const handleAdd = (dispatch) => {
   dispatch(inputArray.add())
@@ -24,9 +26,10 @@ const renderAddButton = ({ onAdd, styles }) => {
   return (
     <Button
       onClick={boundAdd}
-      text="🞤"
       styles={styles}
-    />
+    >
+      <AddGlyph />
+    </Button>
   )
 }
 
@@ -43,9 +46,10 @@ const renderCloseButton = ({
   return (
     <Button
       onClick={boundRemove}
-      text="❌"
       styles={styles}
-    />
+    >
+      <RemoveGlyph />
+    </Button>
   )
 }
 
