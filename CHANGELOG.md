@@ -1,8 +1,14 @@
 # Changelog
 
+## 1.0.3 (12/11/2019)
+
 ### Fixed
 
 * Fixed checkboxes
+
+### Added
+
+* Tests for more components in the submit test
 
 ## 1.0.2 (26/10/2019)
 

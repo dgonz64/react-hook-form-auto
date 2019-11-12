@@ -12,6 +12,17 @@ const custom = createSchema('simple', {
   name: {
     type: 'string',
   },
+  numberer: {
+    type: 'number'
+  },
+  radiator: {
+    type: 'radios',
+    options: ['a', 'b']
+  },
+  selector: {
+    type: 'select',
+    options: ['c', 'd']
+  },
   booler: {
     type: 'boolean'
   }
@@ -33,6 +44,15 @@ test('Submits', async () => {
   const input = app.find('input[name="name"]')
   input.instance().value = 'Hello'
 
+  const numberer = app.find('input[name="numberer"]')
+  numberer.instance().value = 128
+
+  const radiator = app.find('#radiator-b')
+  radiator.instance().checked = true
+
+  const selector = app.find('select[name="selector"]')
+  selector.instance().value = 'd'
+
   const booler = app.find('input[name="booler"]')
   booler.instance().checked = true
 
@@ -47,7 +67,10 @@ test('Submits', async () => {
     expect(calls.length).toBe(1)
     expect(calls[0][0]).toStrictEqual({
       name: 'Hello',
-      booler: Boolean(true),
+      numberer: 128,
+      radiator: 'b',
+      selector: 'd',
+      booler: true
     })
   })
 })
