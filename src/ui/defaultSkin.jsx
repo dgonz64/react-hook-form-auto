@@ -100,9 +100,15 @@ export default {
   },
   boolean: {
     coerce: value => new Boolean(value),
-    render: {
-      component: Checkbox,
-      inline: true
+    render: (props) => {
+      const { register, ...rest } = props
+
+      return {
+        ...rest,
+        ref: registerValidation(props.fieldSchema, register),
+        component: Checkbox,
+        inline: true
+      }
     }
   },
   array: {

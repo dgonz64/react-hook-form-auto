@@ -35,7 +35,7 @@ export let InputWrap = ({
   labelOverride,
   inline,
   errors = {}
-}) => {
+}, ref) => {
   const label = typeof labelOverride != 'undefined' ?
     labelOverride : trModel(schemaTypeName, field, '_field')
   const error = errors[name]
@@ -63,3 +63,5 @@ export let InputWrap = ({
     </Wrap>
   )
 }
+
+InputWrap = forwardRef(InputWrap)

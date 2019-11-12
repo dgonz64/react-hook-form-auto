@@ -11,6 +11,9 @@ import {
 const custom = createSchema('simple', {
   name: {
     type: 'string',
+  },
+  booler: {
+    type: 'boolean'
   }
 })
 
@@ -30,6 +33,9 @@ test('Submits', async () => {
   const input = app.find('input[name="name"]')
   input.instance().value = 'Hello'
 
+  const booler = app.find('input[name="booler"]')
+  booler.instance().checked = true
+
   const Form = app.find(Autoform)
   await act(async () => {
     await Form.simulate('submit')
@@ -39,6 +45,9 @@ test('Submits', async () => {
   const { calls } = mockSubmit.mock
   return wasSubmitted.then(() => {
     expect(calls.length).toBe(1)
-    expect(calls[0][0]).toStrictEqual({ name: 'Hello' })
+    expect(calls[0][0]).toStrictEqual({
+      name: 'Hello',
+      booler: Boolean(true),
+    })
   })
 })

@@ -1,5 +1,9 @@
 # Changelog
 
+### Fixed
+
+* Fixed checkboxes
+
 ## 1.0.2 (26/10/2019)
 
 ### Added
