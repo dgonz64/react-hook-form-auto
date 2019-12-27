@@ -95,7 +95,7 @@ We can take advantage of the styling strategy and pass bootstrap classes as `sty
     <Autoform styles={styles} />
 ```
 
-Read the [documentation](#documentation-1) to find out what else you can do.
+Read the [documentation](#documentation) to find out what else you can do.
 
 ## Rationale
 
@@ -308,6 +308,33 @@ You can also disable coercers with the `Autoform`'s `disableCoercing` prop.
 ### Select
 
 By default select will include an empty option for new elements
+
+## Imperative handling
+
+`Autoform` component sets some functions to be used in referenced component:
+
+```javascript
+    let formRef
+
+    // Example: imperative submit
+    const doSubmit = () => {
+      formRef.submit()
+    }
+
+    const MyForm = ({ onSubmit }) =>
+      <Autoform
+        onSubmit={onSubmit}
+        ref={e => formRef = e}
+      />
+```
+
+An object with three attributes is exported:
+
+| Attribute | Description |
+| --- | --- |
+| submit | Imperative submit. |
+| setValue | Sets a value in any place of the document. You can use a path. As this library coerces values, it's better to use this than the one from react-hook-form to avoid inconsistences. |
+| formHook | Call this in order to get react-hook-form vanilla reference object. |
 
 ## Translation
 

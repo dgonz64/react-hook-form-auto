@@ -1,10 +1,18 @@
 # Changelog
 
+## 1.0.4
+
+### Added
+
+* You can change document values outside of Autoform
+* Documentation about Autoform's ref
+
 ## 1.0.3 (12/11/2019)
 
 ### Fixed
 
 * Fixed checkboxes
+* Some documentation formating concerning translations
 
 ### Added
 

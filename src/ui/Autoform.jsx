@@ -71,7 +71,8 @@ export let Autoform = ({
 
   useImperativeHandle(ref, () => ({
     submit,
-    formHook: () => formHook
+    formHook: () => formHook,
+    setValue
   }))
 
   const inputProps = {
