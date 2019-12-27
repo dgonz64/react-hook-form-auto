@@ -357,8 +357,8 @@ Translates a string given its id.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| id | <code>string</code> | Identifier in the form 	key1.key2.key3 |
-| vars | <code>object</code> | Object with substitution variables. It will 	substitute ocurrences when string contains this expression: 	__variable__. For example the string "My name is __name__" with 	vars = { name: 'David' } will return "My name is David". 	Keys will be searched by partitioning the 'path'. 	It will get the latest found key if any. For example, given the 	strings { "a": { "b": 'Hello' } } and looking for 'a.b.c' it will 	return 'a.b' ("Hello"). |
+| id | <code>string</code> | Identifier in the form	`key1.key2.key3` |
+| vars | <code>object</code> | Object with substitution variables. It will 	substitute ocurrences when string contains this expression: `__variable__`. For example the string `"My name is __name__"` with `vars = { name: 'David' }` will return `"My name is David"`. Keys will be searched by partitioning the `path`. It will get the latest found key if any. For example, given the strings `{ "a": { "b": 'Hello' } }` and looking for `'a.b.c'` it will 	return `'a.b'` (`"Hello"`). |
 
 
 ### Variable substitution
