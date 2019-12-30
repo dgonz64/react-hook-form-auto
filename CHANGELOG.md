@@ -6,6 +6,9 @@
 
 * You can change document values outside of Autoform
 * Documentation about Autoform's ref
+* Passing ReacHookForm's formHook to form components
+* Components get autoform props in autoformProps prop
+* Components get information about their place in arrays
 
 ## 1.0.3 (12/11/2019)
 

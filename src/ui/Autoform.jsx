@@ -11,20 +11,22 @@ import { createCoercers } from '../coercing'
  * has all the needed fields, styles and validation
  * errors in order to work.
  */
-export let Autoform = ({
-  schema,
-  elementProps,
-  initialValues,
-  children,
-  onSubmit,
-  onErrors,
-  styles,
-  submitButton,
-  submitButtonText,
-  skin = defaultSkin,
-  skinOverride,
-  ...rest
-}, ref) => {
+export let Autoform = (props, ref) => {
+  const {
+    schema,
+    elementProps,
+    initialValues,
+    children,
+    onSubmit,
+    onErrors,
+    styles,
+    submitButton,
+    submitButtonText,
+    skin = defaultSkin,
+    skinOverride,
+    ...rest
+  } = props
+
   const coerceRef = useRef({})
 
   const initial = initialValues && isObject(initialValues) ?
@@ -88,7 +90,9 @@ export let Autoform = ({
     styles,
     errors,
     coerceRef,
-    skin: finalSkin
+    skin: finalSkin,
+    formHook,
+    autoformProps: props
   }
 
   return (
@@ -96,11 +100,13 @@ export let Autoform = ({
       {renderInputs(inputProps)}
       {
         submitButton &&
-          <Button
-            styles={styles}
-            text={submitButtonText}
-            type="submit"
-          />
+          <div>
+            <Button
+              styles={styles}
+              text={submitButtonText}
+              type="submit"
+            />
+          </div>
       }
       {children}
     </form>

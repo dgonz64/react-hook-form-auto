@@ -1,6 +1,5 @@
 import React, {
   forwardRef,
-  cloneElement,
   useReducer,
   useRef
 } from 'react'
@@ -148,7 +147,9 @@ export let InputArrayWrap = ({
           initialValues: itemDefault,
           styles,
           register: registerSpy,
-          unregister
+          unregister,
+          arrayIdx: idx,
+          arrayInitialValues: itemDefault
         })
       }
     }

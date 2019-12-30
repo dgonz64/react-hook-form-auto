@@ -563,6 +563,10 @@ The rest of the properties a skin block can override:
 | `config`         | object            | Override config for this input |
 | `index`          | number            | Name for arrays |
 | `errors`         | object            | Validation error overriding |
+| `formHook`       | object            | ReacHookForm's register() object |
+| `autoformProps`  | object            | Properties passed to Autoform |
+| `arrayIdx`       | number            | Index of the element in array if applies |
+| `arrayInitialValues` | object        | Initial values of the array element if applies |
 
 There are also other props passed depending on current implementation of `renderInput`, the function in charge of choosing the component and render it.
 
