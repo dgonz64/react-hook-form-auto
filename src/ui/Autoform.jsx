@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle, forwardRef } from 'react'
 import { objectTraverse, isObject } from '../utils'
-import useForm from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { getComponents, renderInputs } from './componentRender'
 import { Button } from './components/Button'
 import defaultSkin from './defaultSkin'

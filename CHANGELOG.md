@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.4
+## 1.1.0
 
 ### Added
 
@@ -9,6 +9,7 @@
 * Passing ReacHookForm's formHook to form components
 * Components get autoform props in autoformProps prop
 * Components get information about their place in arrays
+* Works with ReactHookForm 4
 
 ## 1.0.3 (12/11/2019)
 
