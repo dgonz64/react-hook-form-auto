@@ -15,7 +15,7 @@ This library allows your React application to automatically generate forms using
 Write a schema for each model you have:
 
 ```javascript
-    import { createSchema } from 'react-hook-form'
+    import { createSchema } from 'react-hook-form-auto'
 
     export const client = createSchema('client', {
       name: {
