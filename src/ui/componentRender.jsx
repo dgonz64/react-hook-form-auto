@@ -2,7 +2,8 @@ import React, { Children } from 'react'
 import classnames from 'classnames'
 
 import { schemaTypeEx } from '../utils'
-import { tr, trError } from '../translation_utils'
+import { tr } from '../translate'
+import { trError } from '../translation_utils'
 
 /**
  * Allows to specify extra props for a field in runtime.

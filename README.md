@@ -8,6 +8,10 @@ This library allows your React application to automatically generate forms using
 
     $ npm install react-hook-form react-hook-form-auto --save
 
+## Deprecated
+
+react-hook-form-auto 1.1.0 onwards works with react-hook-form 4+. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
+
 ## Usage
 
 ### 1. Write schema
@@ -81,7 +85,8 @@ Then set the `styles` prop of `<Autoform />`:
     <Autoform styles={styles} />
 ```
 
-If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
+If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-
+form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
 
 If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
 
@@ -94,6 +99,8 @@ We can take advantage of the styling strategy and pass bootstrap classes as `sty
 
     <Autoform styles={styles} />
 ```
+
+As you have to pass the styles on every `Autoform` render, I recommend [creating a module](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Autoform.jsx) or a HoC.
 
 Read the [documentation](#documentation) to find out what else you can do.
 
@@ -307,7 +314,7 @@ You can also disable coercers with the `Autoform`'s `disableCoercing` prop.
 
 ### Select
 
-By default select will include an empty option for new elements
+Select will include an empty option for uninitialized elements. Please, write an issue if you want this to be configurable.
 
 ## Imperative handling
 
@@ -384,8 +391,8 @@ Translates a string given its id.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| id | <code>string</code> | Identifier in the form	`key1.key2.key3` |
-| vars | <code>object</code> | Object with substitution variables. It will 	substitute ocurrences when string contains this expression: `__variable__`. For example the string `"My name is __name__"` with `vars = { name: 'David' }` will return `"My name is David"`. Keys will be searched by partitioning the `path`. It will get the latest found key if any. For example, given the strings `{ "a": { "b": 'Hello' } }` and looking for `'a.b.c'` it will 	return `'a.b'` (`"Hello"`). |
+| id | <code>string</code> | Identifier in the form 	`key1.key2.key3` |
+| vars | <code>object</code> | Object with substitution variables. It will 	substitute ocurrences when string contains this expression: 	`__variable__`. For example the string `"My name is __name__"` with 	`vars = { name: 'David' }` will return `"My name is David"`. 	Keys will be searched by partitioning the path. 	It will get the latest found key if any. For example, given the 	strings `{ "a": { "b": 'Hello' } }` and looking for `'a.b.c'` it will 	return `'a.b'` (`"Hello"`). |
 
 
 ### Variable substitution
@@ -440,6 +447,31 @@ If your application has more than one language and it can be changed on the fly,
 
     setLanguageByName('en')
 ```
+
+### Translation utils
+
+There are some functions that deal with semantic organization of the translation strings this library uses. You can take advantage of them if you are building a skin:
+
+Multipurpose semantic-ish translation.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| model | <code>string</code> | Object name, usually what    you pass as the first parameter when you create    the schema. |
+| field | <code>string</code> | Field name |
+| op | <code>string</code> | Thing that varies based on    the type. |
+
+
+Translates error message.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| error | <code>string</code> | Code of the error (usually the    validation code-name) |
+| data | <code>object</code> | Field configuration from createSchema(). |
+
 
 ### Use your own translation system
 
@@ -640,7 +672,7 @@ react-hook-form-auto needs your help. Skins must be written!
 
 ### Where to begin
 
-Make a fork and do your magic followed by a [pull request](https://help.github.com/articles/about-pull-requests/). If it's an implementation, test case and documentation update wold be highly appreciated.
+Make a fork and do your magic followed by a [pull request](https://help.github.com/articles/about-pull-requests/). If it's an implementation, test case and documentation update would be highly appreciated.
 
 ### Some code pointers
 

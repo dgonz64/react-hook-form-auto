@@ -152,7 +152,7 @@ export function processOptions({
 /**
  * Transforms typical form path to array. Example:
  *
- * pathToArray("pets[4].name") --> ['pets', '4', 'name']
+ * `pathToArray("pets[4].name") --> ['pets', '4', 'name']`
  */
 export function pathToArray(path) {
   const unsquared = path.replace(/\[(.*?)\]/g, '.$1')
@@ -163,15 +163,15 @@ export function pathToArray(path) {
  * Traverses an object using an array of keys.
  *
  * @param {object} object Object to traverse
- * @param {string|array} path Path in the form "pets[4].name"
- *  or ['pets', '4', 'name']
+ * @param {string|array} path Path in the form `"pets[4].name"`
+ *  or `['pets', '4', 'name']`
  * @param {object} options Optional options:
  *  {
  *    createIfMissing: Creates missing entities with
  *      objects
  *  }
  *
- * @returns {object} Array in the form [ object, name ]
+ * @returns {object} Array in the form `[{ object, name }, ...]`
  *  (or empty if subobject is not found).
  *
  *  This allows you to mutate original object like this:

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1
+
+### Added
+
+* Error translation moved to translation_utils.js
+
+### Fixed
+
+* Integrate all README changes into generator (jsdoc2md/README.hbs) that were put in the README by mistake.
+
 ## 1.1.0
 
 ### Added

@@ -5,17 +5,14 @@ import {
 } from './translate'
 import { trPath } from './utils'
 
-// Let's reexport this stuff to lighten imports
-export { tr, setLanguage }
-
 const defLangs = { en, es }
 
 /**
  * Loads a language from the languages table.
  *
- * @param {string} name Language code as in 'en' or 'fr'.
+ * @param {string} name Language code as in `'en'` or `'fr'`.
  */
-export const setLanguageByName = name => {
+export function setLanguageByName(name) {
   if (name in defLangs)
     setLanguage(defLangs[name])
 }
@@ -30,16 +27,17 @@ export const setLanguageByName = name => {
  * @param {string} op Thing that varies based on
  *    the type.
  */
-export const trModel = (model, field, op) =>
-  tr(trPath(model, field, op))
+export function trModel(model, field, op) {
+  return tr(trPath(model, field, op))
+}
 
 /**
  * Translates error message.
  *
  * @param {string} error Code of the error (usually the
  *    validation code-name)
- * @param {object} data Field configuration from createSchema().
+ * @param {object} data Field configuration from `createSchema()`.
  */
-export const trError = (error, data) =>
-  tr(`error.${error}`, data)
-
+export function trError(error, data) {
+  return tr(`error.${error}`, data)
+}

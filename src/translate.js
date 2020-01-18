@@ -46,16 +46,17 @@ function regexReplace(regex, str, callback) {
  * Translates a string given its id.
  *
  * @param {string} id Identifier in the form
- * 	key1.key2.key3
+ * 	`key1.key2.key3`
  * @param {object} vars Object with substitution variables. It will
  * 	substitute ocurrences when string contains this expression:
- * 	__variable__. For example the string "My name is __name__" with
- * 	vars = { name: 'David' } will return "My name is David".
+ * 	`__variable__`. For example the string `"My name is __name__"` with
+ * 	`vars = { name: 'David' }` will return `"My name is David"`.
  *
- * 	Keys will be searched by partitioning the 'path'.
+ * 	Keys will be searched by partitioning the path.
+ *
  * 	It will get the latest found key if any. For example, given the
- * 	strings { "a": { "b": 'Hello' } } and looking for 'a.b.c' it will
- * 	return 'a.b' ("Hello").
+ * 	strings `{ "a": { "b": 'Hello' } }` and looking for `'a.b.c'` it will
+ * 	return `'a.b'` (`"Hello"`).
  * @returns Translated string
  */
 export function tr(id, vars = {}) {

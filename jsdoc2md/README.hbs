@@ -2,11 +2,15 @@
 
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
-## [Play with the demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
+## [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/) | [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
 
 ## Installation
 
     $ npm install react-hook-form react-hook-form-auto --save
+
+## Deprecated
+
+react-hook-form-auto 1.1.0 onwards works with react-hook-form 4+. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
 ## Usage
 
@@ -15,7 +19,7 @@ This library allows your React application to automatically generate forms using
 Write a schema for each model you have:
 
 ```javascript
-    import { createSchema } from 'react-hook-form'
+    import { createSchema } from 'react-hook-form-auto'
 
     export const client = createSchema('client', {
       name: {
@@ -62,9 +66,9 @@ It also allows you to build arrays from other schemas. Simply specify the other 
     })
 ```
 
-### 3. Make it less ugly
+#### 3a. Make it less ugly with some styling
 
-Install the emergency styles
+Install the emergency styles if you don't want to bundle a whole bootstrap.
 
     $ npm install rhfa-emergency-styles --save
 
@@ -81,11 +85,24 @@ Then set the `styles` prop of `<Autoform />`:
     <Autoform styles={styles} />
 ```
 
+If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-
+form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
+
 If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
+
+#### 3b. Make it pretty with Bootstrap 4
+
+We can take advantage of the styling strategy and pass bootstrap classes as `styles` props. You can grab them [from here](https://github.com/dgonz64/react-hook-form-auto-demo-bootstrap4/blob/master/src/styles.js) \[[raw](https://raw.githubusercontent.com/dgonz64/react-hook-form-auto-demo-bootstrap4/master/src/styles.js)\]. Then use them:
+
+```javascript
+    import styles from './bsStyles'  // copy-pasted styles description
+
+    <Autoform styles={styles} />
+```
 
 As you have to pass the styles on every `Autoform` render, I recommend [creating a module](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Autoform.jsx) or a HoC.
 
-Read the [documentation](#documentation-1) to find out what else you can do.
+Read the [documentation](#documentation) to find out what else you can do.
 
 ## Rationale
 
@@ -112,7 +129,7 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] Able to stylize components
 - [x] Datatype coertion
 - [x] Provide more and better styling examples
-- [ ] Styles to make it look like bootstrap4
+- [x] Styles to make it look like bootstrap4
 - [ ] _Native_ components for famous ui libraries like bootstrap4
 - [ ] Translated messages from server/async
 - [ ] Actually limit children
@@ -291,7 +308,34 @@ You can also disable coercers with the `Autoform`'s `disableCoercing` prop.
 
 ### Select
 
-By default select will include an empty option for uninitialized elements
+Select will include an empty option for uninitialized elements. Please, write an issue if you want this to be configurable.
+
+## Imperative handling
+
+`Autoform` component sets some functions to be used in referenced component:
+
+```javascript
+    let formRef
+
+    // Example: imperative submit
+    const doSubmit = () => {
+      formRef.submit()
+    }
+
+    const MyForm = ({ onSubmit }) =>
+      <Autoform
+        onSubmit={onSubmit}
+        ref={e => formRef = e}
+      />
+```
+
+An object with three attributes is exported:
+
+| Attribute | Description |
+| --- | --- |
+| submit | Imperative submit. |
+| setValue | Sets a value in any place of the document. You can use a path. As this library coerces values, it's better to use this than the one from react-hook-form to avoid inconsistences. |
+| formHook | Call this in order to get react-hook-form vanilla reference object. |
 
 ## Translation
 
@@ -385,6 +429,18 @@ If your application has more than one language and it can be changed on the fly,
 
     setLanguageByName('en')
 ```
+
+### Translation utils
+
+There are some functions that deal with semantic organization of the translation strings this library uses. You can take advantage of them if you are building a skin:
+
+{{#function name="trModel"~}}
+{{>body~}}
+{{/function}}
+
+{{#function name="trError"~}}
+{{>body~}}
+{{/function}}
 
 ### Use your own translation system
 
@@ -503,6 +559,10 @@ The rest of the properties a skin block can override:
 | `config`         | object            | Override config for this input |
 | `index`          | number            | Name for arrays |
 | `errors`         | object            | Validation error overriding |
+| `formHook`       | object            | ReacHookForm's register() object |
+| `autoformProps`  | object            | Properties passed to Autoform |
+| `arrayIdx`       | number            | Index of the element in array if applies |
+| `arrayInitialValues` | object        | Initial values of the array element if applies |
 
 There are also other props passed depending on current implementation of `renderInput`, the function in charge of choosing the component and render it.
 
