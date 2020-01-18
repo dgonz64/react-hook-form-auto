@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import classnames from 'classnames'
 
 import { schemaTypeEx } from '../utils'
-import { tr } from '../translate'
+import { tr, trError } from '../translation_utils'
 
 /**
  * Allows to specify extra props for a field in runtime.
@@ -38,7 +38,7 @@ export function registerValidation(fieldSchema, register) {
       } else {
         data = {
           value: fieldSchema[key],
-          message: tr(`error.${key}`, fieldSchema)
+          message: trError(key, fieldSchema)
         }
       }
 

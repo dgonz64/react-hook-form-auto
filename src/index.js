@@ -7,7 +7,8 @@ export {
 } from './translate'
 export {
   setLanguageByName,
-  trModel
+  trModel,
+  trError
 } from './translation_utils'
 export { Panel, Button } from './ui/components'
 export { FieldPropsOverride } from './ui/components/FieldPropsOverride'
