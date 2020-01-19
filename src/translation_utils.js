@@ -5,6 +5,8 @@ import {
 } from './translate'
 import { trPath } from './utils'
 
+export { tr, setLanguage }
+
 const defLangs = { en, es }
 
 /**

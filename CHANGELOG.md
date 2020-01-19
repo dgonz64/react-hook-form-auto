@@ -5,6 +5,7 @@
 ### Added
 
 * Error translation moved to translation_utils.js
+* Reexporting translate functions from translation_utils
 
 ### Fixed
 
