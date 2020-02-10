@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react'
 // import { renderLectures } from './renderLectures'
 
-import { tr, trModel } from '../../translation_utils'
+import { tr, trField } from '../../translation_utils'
 import { trPath } from '../../utils'
 
 const renderRemove = ({ idx, closeButton }) =>
@@ -20,7 +20,7 @@ const renderTableHeader = ({ schema }) => {
       {
         fields.map(sub =>
           <th key={sub}>
-            {trModel(subType, sub, '_field')}
+            {trField(subType, sub)}
           </th>
         )
       }

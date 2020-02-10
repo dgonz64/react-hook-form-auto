@@ -22,15 +22,33 @@ export function setLanguageByName(name) {
 /**
  * Multipurpose semantic-ish translation.
  *
- * @param {string} model Object name, usually what
+ * @param {string} modelName Object name, usually what
  *    you pass as the first parameter when you create
  *    the schema.
  * @param {string} field Field name
  * @param {string} op Thing that varies based on
  *    the type.
  */
-export function trModel(model, field, op) {
-  return tr(trPath(model, field, op))
+export function trModel(modelName, field, op) {
+  return tr(trPath(modelName, field, op))
+}
+
+/**
+ * Translate field name
+ *
+ * @param {string|object} modelName Object name, usually what
+ *    you pass as the first parameter when you create
+ *    the schema. It can also be an object with component
+ *    props so it will figure out the values
+ * @param {string} field Field name
+ */
+export function trField(modelName, field) {
+  if (typeof modelName == 'object') {
+    field = modelName.field
+    modelName = modelName.schemaTypeName
+  }
+
+  return tr(trPath(modelName, field, '_field'))
 }
 
 /**

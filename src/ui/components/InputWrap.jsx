@@ -1,5 +1,5 @@
 import React, { forwardRef, cloneElement } from 'react'
-import { trModel } from '../../translation_utils'
+import { trField } from '../../translation_utils'
 
 const Wrap = ({
   name,
@@ -26,18 +26,20 @@ const Wrap = ({
   }
 }
 
-export let InputWrap = ({
-  name,
-  field,
-  children,
-  schemaTypeName,
-  styles,
-  labelOverride,
-  inline,
-  errors = {}
-}, ref) => {
+export let InputWrap = (props, ref) => {
+  const {
+    name,
+    field,
+    children,
+    schemaTypeName,
+    styles,
+    labelOverride,
+    inline,
+    errors = {}
+  } = props
+
   const label = typeof labelOverride != 'undefined' ?
-    labelOverride : trModel(schemaTypeName, field, '_field')
+    labelOverride : trField(props)
   const error = errors[name]
 
   return (
