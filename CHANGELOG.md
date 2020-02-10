@@ -5,7 +5,7 @@
 ### Added
 
 * Error translation moved to translation_utils.js
-* Reexporting translate functions from translation_utils
+* Export more functions to help constructing skins
 
 ### Fixed
 

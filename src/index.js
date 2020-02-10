@@ -6,6 +6,11 @@ export {
   tr
 } from './translate'
 export {
+  trPath,
+  processOptions,
+  objectTraverse
+} from './utils'
+export {
   setLanguageByName,
   trModel,
   trError
