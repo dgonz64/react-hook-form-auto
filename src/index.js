@@ -13,6 +13,7 @@ export {
 export {
   setLanguageByName,
   trModel,
+  trField,
   trError
 } from './translation_utils'
 export { Panel, Button } from './ui/components'
