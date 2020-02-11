@@ -12,6 +12,7 @@ import { InputArrayPanel } from './components/InputArrayPanel'
 import { Select } from './components/Select'
 import { Checkbox } from './components/Checkbox'
 import { Submodel } from './components/Submodel'
+import { Button } from './components/Button'
 
 import { processOptions } from '../utils'
 
@@ -157,5 +158,15 @@ export default {
       component: Submodel,
       inline: true
     }
+  },
+  button: {
+    render: ({ styles, text }) =>
+      <Button styles={styles} text={text} type="submit" />
+  },
+  form: {
+    render: ({ children, ...rest }) =>
+      <form {...rest}>
+        {children}
+      </form>
   }
 }

@@ -2,7 +2,6 @@ import React, { useRef, useImperativeHandle, forwardRef } from 'react'
 import { objectTraverse, isObject } from '../utils'
 import { useForm } from 'react-hook-form'
 import { getComponents, renderInputs } from './componentRender'
-import { Button } from './components/Button'
 import defaultSkin from './defaultSkin'
 import { createCoercers } from '../coercing'
 
@@ -95,8 +94,11 @@ export let Autoform = (props, ref) => {
     autoformProps: props
   }
 
+  const Button = finalSkin.button.render
+  const Form = finalSkin.form.render
+
   return (
-    <form onSubmit={submit}>
+    <Form onSubmit={submit}>
       {renderInputs(inputProps)}
       {
         submitButton &&
@@ -104,12 +106,11 @@ export let Autoform = (props, ref) => {
             <Button
               styles={styles}
               text={submitButtonText}
-              type="submit"
             />
           </div>
       }
       {children}
-    </form>
+    </Form>
   )
 }
 
