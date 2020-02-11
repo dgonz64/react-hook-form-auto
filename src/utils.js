@@ -111,6 +111,9 @@ export function trPath(model, field, op) {
  * Converts options from different formats to
  * [ { label, value } ]
  *
+ * You can usually pass control props here. Options will
+ * be acquired from fieldSchema.
+ *
  * @param {string} schemaTypeName Model name
  * @param {string} field Field name
  * @param {function|array} options Array with options. If
@@ -119,12 +122,16 @@ export function trPath(model, field, op) {
  *  to populate label and value.
  */
 export function processOptions({
+  fieldSchema,
   schemaTypeName,
   field,
   options,
   addDefault,
   ...rest
 }) {
+  if (fieldSchema && !options)
+    options = fieldSchema.options
+
   const extracted = typeof options == 'function' ?
     options({ name, field, schemaTypeName, ...rest }) : options
 

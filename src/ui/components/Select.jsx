@@ -1,21 +1,12 @@
 import React, { forwardRef } from 'react'
 import { processOptions } from '../../utils'
 
-export let Select = ({
-  name,
-  field,
-  fieldSchema: { options },
-  schemaTypeName,
-  styles,
-  register,
-  ...rest
-}) => {
+export let Select = (props) => {
+  const { name, styles, register } = props
+
   const optionsProcessed = processOptions({
-    schemaTypeName,
-    field,
-    options,
+    ...props,
     addDefault: true,
-    ...rest
   })
 
   return (

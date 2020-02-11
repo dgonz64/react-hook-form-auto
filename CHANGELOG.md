@@ -7,6 +7,7 @@
 * Error translation moved to translation_utils.js
 * Export more functions to help constructing skins
 * trField to translate field names
+* Allow processOptions to manage with standard control props
 
 ### Fixed
 
