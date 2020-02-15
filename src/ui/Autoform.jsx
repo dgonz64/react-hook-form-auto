@@ -106,6 +106,7 @@ export let Autoform = (props, ref) => {
             <Button
               styles={styles}
               text={submitButtonText}
+              onSubmit={submit}
             />
           </div>
       }
