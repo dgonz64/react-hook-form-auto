@@ -1,8 +1,4 @@
 import React from 'react'
-import { createNumberedArray } from '../../utils'
-import { Panel } from './Panel'
-
-import { tr, trModel } from '../../translation_utils'
 
 const renderItemHeader = ({ styles, closeButton }) => {
   return (
@@ -12,7 +8,7 @@ const renderItemHeader = ({ styles, closeButton }) => {
   )
 }
 
-const renderItems = ({ styles, items }) =>
+const renderItems = ({ styles, items, Panel }) =>
   items.map(({ idx, closeButton, inputs }) => {
     const itemHeader = renderItemHeader({ styles, closeButton })
 
@@ -26,12 +22,13 @@ const renderItems = ({ styles, items }) =>
   })
 
 export const InputArrayPanel = (props) => {
-  const { styles } = props
+  const { styles, skin } = props
+  const Panel = skin.panel.render
 
   return (
     <>
       <div className={styles.arrayPanelItems}>
-        {renderItems(props)}
+        {renderItems({ ...props, Panel })}
       </div>
     </>
   )

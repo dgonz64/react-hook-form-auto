@@ -1,7 +1,7 @@
-import React, { cloneElement } from 'react'
+import React from 'react'
 // import { renderLectures } from './renderLectures'
 
-import { tr, trField } from '../../translation_utils'
+import { trField } from '../../translation_utils'
 import { trPath } from '../../utils'
 
 const renderRemove = ({ idx, closeButton }) =>

@@ -9,7 +9,8 @@
 * trField to translate field names
 * Allow processOptions to manage with standard control props
 * Allow button and form skinage
-* Pass onSubmit to the form button to facilitate imperative use
+* Pass submit to the form button onClick in order to facilitate imperative use
+* Added more components to skin to allow easier and more granular skinage
 
 ### Fixed
 

@@ -13,6 +13,9 @@ import { Select } from './components/Select'
 import { Checkbox } from './components/Checkbox'
 import { Submodel } from './components/Submodel'
 import { Button } from './components/Button'
+import { Panel } from './components/Panel'
+import { RemoveGlyph } from './svgs/RemoveGlyph'
+import { AddGlyph } from './svgs/AddGlyph'
 
 import { processOptions } from '../utils'
 
@@ -114,7 +117,9 @@ export default {
   },
   array: {
     coerce: (arr = [], { coerceObject, schemaDef, fieldName }) => {
-      const otherSchema = getOtherSchema(schemaDef, fieldName, { isArray: true })
+      const otherSchema = getOtherSchema(schemaDef, fieldName, {
+        isArray: true
+      })
 
       return arr.map(entry => {
         if (entry[deletedMark])
@@ -128,12 +133,15 @@ export default {
         config = {},
         className,
         fieldSchema,
+        skin,
         ...rest
       } = props
 
       const { arrayMode } = config
       const isTable = arrayMode == 'table'
-      const arrayHandler = isTable ? InputArrayTable : InputArrayPanel
+      const ArrayTable = skin.arrayTable.render
+      const ArrayPanel = skin.arrayPanel.render
+      const arrayHandler = isTable ? ArrayTable : ArrayPanel
 
       return {
         ...rest,
@@ -144,7 +152,8 @@ export default {
         arrayHandler,
         inline: true,
         noRef: true,
-        isTable
+        isTable,
+        skin
       }
     },
   },
@@ -160,13 +169,30 @@ export default {
     }
   },
   button: {
-    render: ({ styles, text }) =>
-      <Button styles={styles} text={text} type="submit" />
+    render: Button
+  },
+  arrayButton: {
+    render: Button
   },
   form: {
     render: ({ children, ...rest }) =>
       <form {...rest}>
         {children}
       </form>
+  },
+  panel: {
+    render: Panel
+  },
+  addGlyph: {
+    render: AddGlyph
+  },
+  removeGlyph: {
+    render: RemoveGlyph
+  },
+  arrayTable: {
+    render: InputArrayTable
+  },
+  arrayPanel: {
+    render: InputArrayPanel
   }
 }

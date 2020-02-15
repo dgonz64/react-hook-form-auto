@@ -3,20 +3,16 @@ import React, {
   useReducer,
   useRef
 } from 'react'
-import { Button } from './Button'
 import { renderInputs } from '../componentRender'
 import { inputArray } from '../ducks'
-import { Panel } from './Panel'
 import { trModel } from '../../translation_utils'
 import { deletedMark } from '../deletedMark'
-import { RemoveGlyph } from '../svgs/RemoveGlyph'
-import { AddGlyph } from '../svgs/AddGlyph'
 
 const handleAdd = (dispatch) => {
   dispatch(inputArray.add())
 }
 
-const renderAddButton = ({ onAdd, styles }) => {
+const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
   const boundAdd = e => {
     e.preventDefault()
     onAdd()
@@ -35,7 +31,9 @@ const renderAddButton = ({ onAdd, styles }) => {
 const renderCloseButton = ({
   onRemove,
   idx,
-  styles
+  styles,
+  Button,
+  RemoveGlyph
 }) => {
   const boundRemove = e => {
     e.preventDefault()
@@ -52,10 +50,19 @@ const renderCloseButton = ({
   )
 }
 
-const renderPanelHeader = ({ schemaTypeName, dispatch, name, styles }) => {
+const renderPanelHeader = ({
+  schemaTypeName,
+  dispatch,
+  name,
+  styles,
+  Button,
+  AddGlyph
+}) => {
   const addButton = renderAddButton({ 
     onAdd: handleAdd.bind(null, dispatch),
-    styles
+    styles,
+    Button,
+    AddGlyph,
   })
 
   return (
@@ -86,6 +93,7 @@ export let InputArrayWrap = ({
   styles,
   isTable,
   setValue,
+  skin,
   ...rest
 }) => {
   const [ items, dispatch ] = useReducer(
@@ -96,6 +104,11 @@ export let InputArrayWrap = ({
 
   const schema = type[0]
   const $arrayHandler = arrayHandler
+
+  const Button = skin.arrayButton.render
+  const AddGlyph = skin.addGlyph.render
+  const RemoveGlyph = skin.removeGlyph.render
+  const Panel = skin.panel.render
 
   const itemsInputs = items.keys.map(idx => {
     if (idx === null) {
@@ -125,7 +138,13 @@ export let InputArrayWrap = ({
         return register(params)
       }
 
-      const closeButton = renderCloseButton({ onRemove: handleRemove, idx, styles })
+      const closeButton = renderCloseButton({
+        onRemove: handleRemove,
+        idx,
+        styles,
+        Button,
+        RemoveGlyph
+      })
 
       let itemDefault
       if (defaultValue && Array.isArray(defaultValue))
@@ -149,15 +168,25 @@ export let InputArrayWrap = ({
           register: registerSpy,
           unregister,
           arrayIdx: idx,
-          arrayInitialValues: itemDefault
+          arrayInitialValues: itemDefault,
+          skin
         })
       }
     }
   }).filter(item => item !== null)
 
+  const panelProps = {
+    schemaTypeName,
+    dispatch,
+    name,
+    styles,
+    Button,
+    AddGlyph
+  }
+
   return (
     <Panel
-      header={renderPanelHeader({ schemaTypeName, dispatch, name, styles })}
+      header={renderPanelHeader(panelProps)}
       styles={styles}
     >
       <$arrayHandler
@@ -171,6 +200,7 @@ export let InputArrayWrap = ({
         defaultValue={defaultValue}
         schemaTypeName={schemaTypeName}
         styles={styles}
+        skin={skin}
         {...rest}
       />
     </Panel>
