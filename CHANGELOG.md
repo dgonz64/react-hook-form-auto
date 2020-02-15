@@ -13,6 +13,7 @@
 ### Fixed
 
 * Integrate all README changes into generator (jsdoc2md/README.hbs) that were put in the README by mistake.
+* Incorrect translations for min, max, minLength and maxLength
 
 ## 1.1.0
 
