@@ -85,8 +85,7 @@ Then set the `styles` prop of `<Autoform />`:
     <Autoform styles={styles} />
 ```
 
-If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-
-form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
+If you use `sass` you have to make sure you are [not excluding `node_modules`](https://github.com/dgonz64/react-hook-form-auto-demo/commit/94dbe78dc93a4110f915a5809a6880a8c7a55970) in your build process.
 
 If you use `css-modules` you have [better options](https://github.com/dgonz64/rhfa-emergency-styles).
 
@@ -458,9 +457,19 @@ Multipurpose semantic-ish translation.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| model | <code>string</code> | Object name, usually what    you pass as the first parameter when you create    the schema. |
+| modelName | <code>string</code> | Object name, usually what    you pass as the first parameter when you create    the schema. |
 | field | <code>string</code> | Field name |
 | op | <code>string</code> | Thing that varies based on    the type. |
+
+
+Translate field name
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modelName | <code>string</code> \| <code>object</code> | Object name, usually what    you pass as the first parameter when you create    the schema. It can also be an object with component    props so it will figure out the values |
+| field | <code>string</code> | Field name |
 
 
 Translates error message.
@@ -470,7 +479,7 @@ Translates error message.
 | Param | Type | Description |
 | --- | --- | --- |
 | error | <code>string</code> | Code of the error (usually the    validation code-name) |
-| data | <code>object</code> | Field configuration from createSchema(). |
+| data | <code>object</code> | Field configuration from `createSchema()`. |
 
 
 ### Use your own translation system
@@ -540,10 +549,6 @@ The attribute `component` is the React component used to render the whole HTML f
     },
 ```
 
-The `component` property is also in charge of the field connection with register.
-
-The `render` property can be an object or a function
-
 ##### Object
 
 Props merged to component's default:
@@ -571,6 +576,42 @@ Function that takes the component's intended props and returns component's final
     },
 ```
 
+#### Register in render
+
+The `component` in the `render` property is also in charge of the field connection with `register`. For that matter you have two options:
+
+Find a way to pass `ref="register"` to the final <input /> dom element:
+
+```javascript
+  const Input = ({ name, register }) =>
+    <MyAwesomeWrapping>
+      <input name={name} ref={register} />
+    </MyAwesomeWrapping>
+
+  const mySkinOverride = {
+    string: {
+      render: {
+        component: Input
+      }
+    }
+  }
+```
+
+Another way is to register manually and call `setValue` on every change. The component is still uncontrolled but model's value will be updated.
+
+```javascript
+  render: ({ name, register, setValue }) => {
+    register({ name })
+    const setValueFromEvent = event => {
+      setValue(name, event.target.value)
+    }
+
+    return {
+      component: <MyComponent {...} onChange={setValueFromEvent} />
+    }
+  }
+```
+
 ## Overriding
 
 You can override (or add) specific types by using `<Autoform />`'s `skinOverride` prop.
@@ -587,7 +628,7 @@ The rest of the properties a skin block can override:
 | `field`          | string            | This field name |
 | `option`         | string            | Forces value (used in radios for example ) |
 | `inline`         | boolean           | Goes to the wrapper as `inline` |
-| `register`       | function          | ReactHookForm's register |
+| `register`       | function          | `register` with validation ready (will be automatically passed as second param to ReactHookForm) |
 | `styles`         | object            | Style overriding |
 | `fieldSchema`    | object            | Schema specification for the field |
 | `schemaTypeName` | string (required) | Name of the schema that contains the field |
