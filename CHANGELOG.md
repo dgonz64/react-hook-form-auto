@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2
+
+### Changed
+
+* `register` will be passed to skin components with validation already set up
+* Documented the way to use `register` in skins
+
 ## 1.1.1
 
 ### Added

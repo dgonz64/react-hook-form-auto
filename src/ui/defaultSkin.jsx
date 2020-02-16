@@ -1,8 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import { registerValidation } from './componentRender'
-
 import { InputWrap } from './components/InputWrap'
 import { RadiosWrap } from './components/RadiosWrap'
 import { Radio } from './components/Radio'
@@ -65,7 +63,7 @@ export default {
   },
   radios: {
     render: (props) => {
-      const { schemaTypeName, field, fieldSchema, ...rest } = props
+      const { schemaTypeName, field, fieldSchema, register, ...rest } = props
       const { options } = fieldSchema
       const optionsProcessed = processOptions({
         schemaTypeName,
@@ -89,7 +87,7 @@ export default {
               option={op.value}
               label={op.label}
               field={props.field}
-              ref={registerValidation(props.fieldSchema, props.register)}
+              ref={register}
               inline
             />
           )
@@ -109,7 +107,7 @@ export default {
 
       return {
         ...rest,
-        ref: registerValidation(props.fieldSchema, register),
+        ref: register,
         component: Checkbox,
         inline: true
       }

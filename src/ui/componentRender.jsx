@@ -105,12 +105,11 @@ function renderSingleInput(props) {
     })
   }
 
-  const ref = registerValidation(fieldSchema, register)
   if (!isComponent && !noRef)
-    baseProps.ref = ref
+    baseProps.ref = register
 
   const componentProps = isComponent ?
-    { ...baseProps, ...rest, errors, fieldSchema, styles, register: ref } : baseProps
+    { ...baseProps, ...rest, errors, fieldSchema, styles, register } : baseProps
 
   return (
     <$wrapper
@@ -164,6 +163,7 @@ export function renderInput({
   const strType = schemaTypeEx(type)
   const skinElement = skin[strType]
   const render = skinElement.render
+  const validatedRegister = registerValidation(fieldSchema, register)
   if (render) {
     let fullField
     if (typeof index == 'undefined')
@@ -182,7 +182,7 @@ export function renderInput({
       parent,
       propOverrides,
       wrapper: skin.defaultWrap,
-      register,
+      register: validatedRegister,
       styles,
       skin,
       errors,
