@@ -53,7 +53,7 @@ export function registerValidation(fieldSchema, register) {
   if (Object.keys(result).length == 0)
     return register
   else
-    return register(result)
+    return params => params ? register(params, result) : register(result)
 }
 
 /**
