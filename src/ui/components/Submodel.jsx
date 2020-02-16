@@ -1,7 +1,6 @@
 import React, { forwardRef, cloneElement } from 'react'
 import PropTypes from 'prop-types'
 
-import { Panel } from './Panel'
 import { renderInputs } from '../componentRender'
 import { trModel } from '../../translation_utils'
 
@@ -12,6 +11,7 @@ export let Submodel = ({
   fieldSchema: { type },
   defaultValue,
   styles,
+  skin,
   ...rest
 }, ref) => {
   const inputsConf = {
@@ -20,9 +20,11 @@ export let Submodel = ({
     config,
     parent: name,
     initialValues: defaultValue,
-    styles
+    styles,
+    skin
   }
   const schemaTypeName = type.getType()
+  const Panel = skin.panel.render
 
   return (
     <Panel
