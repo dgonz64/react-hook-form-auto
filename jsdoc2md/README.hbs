@@ -268,7 +268,7 @@ The `config` prop is an object that has the following attributes
 
 | Attribute  | Meaning |
 | ---------- | ------------------------------------------------------------------- |
-| arrayMode  | `'table'` or `'panels'` depending on wanted array field format. |
+| arrayMode  | `'table'` or `'panels'` depending on wanted array field format. `panels` uses card/box/panel wrapping for elements. `table` uses tables (might not fit but if it does is perfect for compact models) |
 
 ### Field props override
 
@@ -472,6 +472,8 @@ Or you can drop it directly to `setTranslator()` if it's compatible.
 ## Extending
 
 ### Creating a skin
+
+I made a tutorial adapting Material-UI to react-hook-form-auto. You can find it [here](https://github.com/dgonz64/rhfa-playground).
 
 The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin.
 
