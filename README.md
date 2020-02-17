@@ -2,7 +2,11 @@
 
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
-## [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/) | [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
+## Play with the demos
+
+* [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/)
+* [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
+* [Play with Material-UI demo](https://dgonz64.github.io/rhfa-demo-material-ui/demo/)
 
 ## Installation
 
@@ -102,6 +106,14 @@ We can take advantage of the styling strategy and pass bootstrap classes as `sty
 As you have to pass the styles on every `Autoform` render, I recommend [creating a module](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Autoform.jsx) or a HoC.
 
 Read the [documentation](#documentation) to find out what else you can do.
+
+## Available skins
+
+Some of them need other imports. See instructions from each.
+
+### [Vanilla](https://github.com/dgonz64/react-hook-form-auto) (here)
+### Bootstrap 4 (as instructed here)
+### [Material-UI](https://github.com/dgonz64/rhfa-material-ui)
 
 ## Rationale
 
@@ -274,7 +286,7 @@ The `config` prop is an object that has the following attributes
 
 | Attribute  | Meaning |
 | ---------- | ------------------------------------------------------------------- |
-| arrayMode  | `'table'` or `'panels'` depending on wanted array field format. |
+| arrayMode  | `'table'` or `'panels'` depending on wanted array field format. `panels` uses card/box/panel wrapping for elements. `table` uses tables (might not fit but if it does is perfect for compact models) |
 
 ### Field props override
 
@@ -514,6 +526,8 @@ Or you can drop it directly to `setTranslator()` if it's compatible.
 ## Extending
 
 ### Creating a skin
+
+I made a tutorial adapting Material-UI to react-hook-form-auto. You can find it [here](https://github.com/dgonz64/rhfa-playground).
 
 The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin.
 
