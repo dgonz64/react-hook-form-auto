@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3
+
+### Fixed
+
+* minimist security concern
+
 ## 1.1.2
 
 ### Changed
