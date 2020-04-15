@@ -28,14 +28,15 @@
     "babel-loader": "^8.0.6",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "jest": "^24.8.0",
+    "jest": "^25.0.0",
     "jsdoc-to-markdown": "^5.0.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-hook-form": "^4.4.8",
     "rimraf": "^2.6.3",
     "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "minimist": "1.2.5"
   },
   "peerDependencies": {
     "react": "^16.8.0-0",
