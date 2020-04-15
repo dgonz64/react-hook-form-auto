@@ -101,7 +101,7 @@ export default {
     }
   },
   boolean: {
-    coerce: value => new Boolean(value),
+    coerce: value => Boolean(value),
     render: (props) => {
       const { register, ...rest } = props
 
