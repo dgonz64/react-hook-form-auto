@@ -5,6 +5,8 @@
 ### Fixed
 
 * minimist security concern
+* acorn security concern
+* Better boolean result for boolean fields
 
 ## 1.1.2
 

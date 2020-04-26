@@ -2,6 +2,19 @@
 
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
+## Contents
+
+* [Usage](#usage)
+  * [1. Write schema](#1-write-schema)
+  * [2. Render a form](#2-render-a-form)
+  * [3. Make it prettier](#3-make-it-prettier)
+  * [4. Translate labels](#4-translate)
+* [Available skins](#available-skins)
+* [Roadmap](#roadmap)
+* [Documentation](#documentation)
+* [Extending](#extending)
+* [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
+
 ## Play with the demos
 
 * [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/)
@@ -70,6 +83,8 @@ It also allows you to build arrays from other schemas. Simply specify the other 
     })
 ```
 
+### 3. Make it prettier
+
 #### 3a. Make it less ugly with some styling
 
 Install the emergency styles if you don't want to bundle a whole bootstrap.
@@ -106,6 +121,27 @@ We can take advantage of the styling strategy and pass bootstrap classes as `sty
 As you have to pass the styles on every `Autoform` render, I recommend [creating a module](https://github.com/dgonz64/react-hook-form-auto-demo/blob/master/src/components/Autoform.jsx) or a HoC.
 
 Read the [documentation](#documentation) to find out what else you can do.
+
+#### 4. Translate
+
+You probably see labels like `models.client.name` instead of the proper ones. That's because the project uses a built-in translation system. You can setup those strings both at once or incrementally.
+
+Simple call `addTranslations` directly in your module or modules. Example:
+
+```javascript
+    import { addTranslations } from 'react-hook-form-auto'
+
+    addTranslations({
+      models: {
+        client: {
+          name: 'Name',
+          age: 'Age'
+        }
+      }
+    })
+```
+
+A simple way to fill this is by replicating the unstranslated string in the object. The dot is a subobject. In the former example you would see a label called `models.client.name`.
 
 ## Available skins
 
