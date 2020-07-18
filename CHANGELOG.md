@@ -7,6 +7,8 @@
 * minimist security concern
 * acorn security concern
 * Better boolean result for boolean fields
+* defaultValue is calculated before skinning and not after
+* Allow wrapper to be specified also per component type in skin
 
 ## 1.1.2
 

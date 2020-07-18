@@ -99,7 +99,7 @@ function renderSingleInput(props) {
     name: name,
     type: type,
     value: option,
-    defaultValue: defaultValue || fieldSchema.defaultValue,
+    defaultValue,
     className: classnames(styles.input, styles.standard, {
       [styles.errored]: errors[name]
     })
@@ -146,8 +146,10 @@ export function renderInput({
   fieldSchema,
   fieldSchema: {
     type,
-    required
+    required,
+    defaultValue
   },
+  initialValue,
   register,
   parent,
   children,
@@ -162,7 +164,7 @@ export function renderInput({
 }) {
   const strType = schemaTypeEx(type)
   const skinElement = skin[strType]
-  const render = skinElement.render
+  const { render, wrapper } = skinElement
   const validatedRegister = registerValidation(fieldSchema, register)
   if (render) {
     let fullField
@@ -181,11 +183,12 @@ export function renderInput({
       config,
       parent,
       propOverrides,
-      wrapper: skin.defaultWrap,
+      wrapper: wrapper || skin.defaultWrap,
       register: validatedRegister,
       styles,
       skin,
       errors,
+      defaultValue: initialValue ?? defaultValue,
       ...searchForOverrides(parent, fullField, propOverrides)
     }
 
@@ -238,7 +241,7 @@ export function renderInputs({
       propOverrides: propOverrides || children,
       fieldSchema: schemaDef[field],
       schemaTypeName: schema.getType(),
-      defaultValue: initialValues[field],
+      initialValue: initialValues[field],
       styles
     })
   )
