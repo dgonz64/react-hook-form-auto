@@ -1,14 +1,23 @@
 # Changelog
 
-## 1.1.3
+## 1.2.0
+
+### Added
+
+* Allow wrapper to be specified also per component type in skin
+
+### Changed
+
+* Updated dependencies
+* Using ReactHookForm 6
+* defaultValue is calculated before skinning and not after
+* Slightly better required string
 
 ### Fixed
 
+* Better boolean result for boolean fields
 * minimist security concern
 * acorn security concern
-* Better boolean result for boolean fields
-* defaultValue is calculated before skinning and not after
-* Allow wrapper to be specified also per component type in skin
 
 ## 1.1.2
 
