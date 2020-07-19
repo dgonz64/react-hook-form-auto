@@ -102,15 +102,13 @@ export let Autoform = (props, ref) => {
       {renderInputs(inputProps)}
       {
         submitButton &&
-          <div>
-            <Button
-              styles={styles}
-              onClick={submit}
-              type="submit"
-            >
-              {submitButtonText}
-            </Button>
-          </div>
+          <Button
+            styles={styles}
+            onClick={submit}
+            type="submit"
+          >
+            {submitButtonText}
+          </Button>
       }
       {children}
     </Form>
