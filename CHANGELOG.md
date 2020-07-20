@@ -18,6 +18,7 @@
 * Better boolean result for boolean fields
 * minimist security concern
 * acorn security concern
+* Updated docs with sandbox demos
 
 ## 1.1.2
 
