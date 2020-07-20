@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+* Fixing package.lock
+
 ## 1.2.0
 
 ### Added
