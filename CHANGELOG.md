@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3
+
+### Fixed
+
+* Forgot to talk about blueprint ui in README
+
 ## 1.2.2
 
 ### Added
