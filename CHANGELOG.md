@@ -3,6 +3,7 @@
 ## 1.2.2
 
 * The X symbol has been removed from the errored input
+* Now you can control autocomplete="off" from Autoform (general) and schema (individual)  see README.md
 
 ## 1.2.1
 

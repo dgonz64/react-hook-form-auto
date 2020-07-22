@@ -288,6 +288,14 @@ The function used to validate the field, as any other validator, can return
 * true to fail (and automatically generate message) or false to pass
 * An string that will be the error message
 
+### Other schema fields
+
+There are some other attributes you can pass while defining the field schema:
+
+| Attribute      | Type      | Meaning |
+| -----------    | --------  | -------------------------------------------------- |
+| noAutocomplete | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
+
 ### Schema
 
 The schema establishes the validation and inputs. The instance can be stored anywhere, like your own model object or a module. At the moment it doesn't change over time.
@@ -312,9 +320,12 @@ The `<Autoform />` component accepts the following props
 | styles    | object | Styles used by the defaultSkin |
 | submitButton | boolean | (optional) Include submit button |
 | submitButtonText | element | (optional) Contents for the submit button |
-| skin | object | Base skin. |
+| skin | object | Base skin |
 | skinOverride | object | Override some skin components |
-| disableCoercing | boolean | Disable all coercing. Get values as text. |
+| disableCoercing | boolean | Disable all coercing and get values as text |
+| noAutocomplete | boolean | Disable all autocompleting by passing `autocomplete=off` to the input or skin's `render()` |
+
+Any other prop will be passed to the skin `render()`.
 
 ### Config
 

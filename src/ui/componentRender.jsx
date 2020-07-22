@@ -87,6 +87,7 @@ function renderSingleInput(props) {
     fieldSchema,
     noRef,
     errors,
+    noAutocomplete,
     ...rest
   } = props
 
@@ -110,6 +111,9 @@ function renderSingleInput(props) {
 
   const componentProps = isComponent ?
     { ...baseProps, ...rest, errors, fieldSchema, styles, register } : baseProps
+
+  if (noAutocomplete || fieldSchema.noAutocomplete)
+    componentProps.autoComplete = 'off'
 
   return (
     <$wrapper
