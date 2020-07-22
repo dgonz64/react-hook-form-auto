@@ -56,9 +56,6 @@ export let InputWrap = (props, ref) => {
             <div className={styles.errorMessage}>
               {error.message}
             </div>
-            <div className={styles.errorIcon}>
-              ❌
-            </div>
           </div>
         </>
       }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+* The X symbol has been removed from the errored input
+
 ## 1.2.1
 
 * Fixing package.lock
