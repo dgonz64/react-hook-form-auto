@@ -6,7 +6,8 @@ const Wrap = ({
   children,
   inline,
   styles,
-  label
+  label,
+  ...rest
 }) => {
   if (inline) {
     return (
@@ -16,8 +17,16 @@ const Wrap = ({
     )
   } else {
     return (
-      <div key={name} className={styles.inputBlockWrap}>
-        <label key="label" htmlFor={name} className={styles.label}>
+      <div
+        key={name}
+        className={styles.inputBlockWrap}
+        {...rest}
+      >
+        <label
+          key="label"
+          htmlFor={name}
+          className={styles.label}
+        >
           {label}
         </label>
         {children}
@@ -35,7 +44,8 @@ export let InputWrap = (props, ref) => {
     styles,
     labelOverride,
     inline,
-    errors = {}
+    errors = {},
+    addWrapperProps
   } = props
 
   const label = typeof labelOverride != 'undefined' ?
@@ -48,6 +58,7 @@ export let InputWrap = (props, ref) => {
       inline={inline}
       styles={styles}
       label={label}
+      {...addWrapperProps}
     >
       {children}
       { error &&

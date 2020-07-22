@@ -701,17 +701,18 @@ There are also other props passed depending on current implementation of `render
 
 ### InputWrap
 
-It's a common component used to create all the input structure, including wrappers. You can use it to avoid boilerplate.
+It's a common component used to create all the input structure, including wrappers. You can use it to avoid boilerplate. Those are its props and also the props you are expected to received when making your own wrapper.
 
-| Prop             |   Type   | Use |
-| ---------------- | -------- | --------------------------------------------------- |
-| `children`       | element     | (optional) You can use InputWrap to... wrap. |
-| `name`           | string   | Full name (with hierarchy) |
-| `field`          | element  | Field name |
-| `schemaTypeName` | string   | Name of the schema as created |
-| `styles`         | object   | Styles |
-| `labelOverride`  | string   | Label overriding |
-| `errors`         | object   | Validation errors |
+| Prop              |   Type   | Use |
+| ----------------- | -------- | --------------------------------------------------- |
+| `children`        | element     | (optional) You can use InputWrap to... wrap. |
+| `name`            | string   | Full name (with hierarchy) |
+| `field`           | element  | Field name |
+| `schemaTypeName`  | string   | Name of the schema as created |
+| `styles`          | object   | Styles |
+| `labelOverride`   | string   | Label overriding |
+| `errors`          | object   | Validation errors |
+| `addWrapperProps` | object   | Adds those to the outer div |
 
 The props for the input component are different depending if the `inputComponent` is a string, like `'input'` or a React component.
 

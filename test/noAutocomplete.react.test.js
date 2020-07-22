@@ -5,7 +5,6 @@ import config from './enzymeConfig'
 import { createSchema } from '../src/index'
 
 import { Autoform } from './buttonHack'
-import { createParenter } from './createParenter'
 
 const noAutocompleter = createSchema('noAutocompleter', {
   allows: {

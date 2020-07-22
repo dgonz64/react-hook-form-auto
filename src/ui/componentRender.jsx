@@ -103,7 +103,8 @@ function renderSingleInput(props) {
     defaultValue,
     className: classnames(styles.input, styles.standard, {
       [styles.errored]: errors[name]
-    })
+    }),
+    ...fieldSchema.addInputProps
   }
 
   if (!isComponent && !noRef)
@@ -123,6 +124,7 @@ function renderSingleInput(props) {
       fieldSchema={fieldSchema}
       errors={errors}
       inline={inline}
+      addWrapperProps={fieldSchema.addWrapperProps}
       {...rest}
     >
       <$component
