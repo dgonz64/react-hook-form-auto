@@ -9,23 +9,37 @@ function findString(id) {
   const part = id.split('.')
 
   const lastIndex = part.length - 1
-  return part.reduce((node, cur, index) => {
+  return part.reduce((nodeInfo, cur, index) => {
+    const { node, found } = nodeInfo
     const isLast = index == lastIndex
     const isString = typeof node == 'string'
 
-    if (isString)
-      return node
-    else {
+    if (isString) {
+      return {
+        found,
+        node
+      }
+    } else {
       if (node && node[cur]) {
-        if (isLast && node[cur]._)
-          return node[cur]._
-        else
-          return node[cur]
+        if (isLast && node[cur]._) {
+          return {
+            found: true,
+            node: node[cur]._
+          }
+        } else {
+          return {
+            found: isLast,
+            node: node[cur]
+          }
+        }
       } else {
-        return (node && node._) || id
+        return {
+          found: node && '_' in node,
+          node: node && node._
+        }
       }
     }
-  }, translations)
+  }, { node: translations })
 }
 
 function regexReplace(regex, str, callback) {
@@ -60,17 +74,29 @@ function regexReplace(regex, str, callback) {
  * @returns Translated string
  */
 export function tr(id, vars = {}) {
-  let found = findString(id)
-  if (found) {
+  let { node } = findString(id)
+  if (node) {
     // Find variables
-    found = regexReplace(VAR_REGEX, found, match => vars[match])
+    node = regexReplace(VAR_REGEX, node, match => vars[match])
 
     // Find references
-    found = regexReplace(REF_REGEX, found, match => tr(match, vars))
+    node = regexReplace(REF_REGEX, node, match => tr(match, vars))
 
-    return found
+    return node
   } else
     return id
+}
+
+/**
+ * Returns if the string does exist
+ *
+ * @param {string} id Identifier
+ *
+ * @returns { boolean } true if it exists
+ */
+export function stringExists(id) {
+  const { found } = findString(id)
+  return found
 }
 
 /**

@@ -4,6 +4,7 @@
 
 * The X symbol has been removed from the errored input
 * Now you can control autocomplete="off" from Autoform (general) and schema (individual)  see README.md
+* You can call `stringExists(id)` to see if it exists
 
 ## 1.2.1
 

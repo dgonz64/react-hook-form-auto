@@ -1,7 +1,8 @@
 import {
   tr,
   setLanguage,
-  addTranslations
+  addTranslations,
+  stringExists
 } from '../src/translate'
 
 setLanguage({
@@ -62,4 +63,14 @@ test('Returns id when string is not found', () => {
 test('Returns added translations', () => {
   const str = tr('added')
   expect(str).toEqual('added string')
+})
+
+test('See if string exists', () => {
+  const exists = stringExists('added')
+  expect(exists).toEqual(true)
+})
+
+test('See if string doesn\'t not not exist', () => {
+  const exists = stringExists('inventedShit')
+  expect(exists).toEqual(false)
 })

@@ -3,7 +3,8 @@ export { Autoform } from './ui/Autoform'
 export {
   addTranslations,
   setTranslator,
-  tr
+  tr,
+  stringExists
 } from './translate'
 export {
   trPath,
