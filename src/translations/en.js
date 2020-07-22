@@ -8,7 +8,7 @@ export const en = {
 		max: 'Value must be less than __max__',
 		minLength: 'Value must be more than __minLength__ characters long',
 		maxLength: 'Value must be less than __maxLength__ characters long',
-		required: '(required)',
+		required: 'Required',
 		minChildren: 'Expected to have at least __minChildren__',
 		maxChildren: 'Can only have __maxChildren__',
 	}
