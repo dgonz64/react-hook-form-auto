@@ -2,10 +2,16 @@
 
 ## 1.2.2
 
-* The X symbol has been removed from the errored input
+### Added
+
 * Now you can control autocomplete="off" from Autoform (general) and schema (individual)  see README.md
 * You can call `stringExists(id)` to see if it exists
 * Be able to pass any prop from schema to wrapper and input
+* Talk about brand new blueprintjs skin
+
+### Changed
+
+* The X symbol has been removed from the errored input
 
 ## 1.2.1
 

@@ -20,6 +20,7 @@ This library allows your React application to automatically generate forms using
 * [Emergency styles](https://codesandbox.io/s/rhfa-emergency-6upsj?file=/src/App.js)
 * [Bootstrap 4](https://codesandbox.io/s/rhfa-bootstrap-ttbfw?file=/src/App.js)
 * [Material-UI](https://codesandbox.io/s/rhfa-material-ui-k9pe9?file=/src/App.js)
+* **(new!)** [Blueprint](https://codesandbox.io/s/rhfa-blueprint-l4773?file=/src/App.js)
 
 ### Full webpack project demos
 
@@ -288,6 +289,16 @@ The function used to validate the field, as any other validator, can return
 * true to fail (and automatically generate message) or false to pass
 * An string that will be the error message
 
+### Other schema fields
+
+There are some other attributes you can pass while defining the field schema:
+
+| Attribute       | Type      | Meaning |
+| -----------     | --------  | -------------------------------------------------- |
+| noAutocomplete  | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
+| addWrapperProps | object    | Directly passed to wrapper component |
+| addInputProps   | boolean   | Props merged into input component |
+
 ### Schema
 
 The schema establishes the validation and inputs. The instance can be stored anywhere, like your own model object or a module. At the moment it doesn't change over time.
@@ -318,9 +329,12 @@ The `<Autoform />` component accepts the following props
 | styles    | object | Styles used by the defaultSkin |
 | submitButton | boolean | (optional) Include submit button |
 | submitButtonText | element | (optional) Contents for the submit button |
-| skin | object | Base skin. |
+| skin | object | Base skin |
 | skinOverride | object | Override some skin components |
-| disableCoercing | boolean | Disable all coercing. Get values as text. |
+| disableCoercing | boolean | Disable all coercing and get values as text |
+| noAutocomplete | boolean | Disable all autocompleting by passing `autocomplete=off` to the input or skin's `render()` |
+
+Any other prop will be passed to the skin `render()`.
 
 ### Config
 
@@ -446,6 +460,17 @@ Translates a string given its id.
 | --- | --- | --- |
 | id | <code>string</code> | Identifier in the form 	`key1.key2.key3` |
 | vars | <code>object</code> | Object with substitution variables. It will 	substitute ocurrences when string contains this expression: 	`__variable__`. For example the string `"My name is __name__"` with 	`vars = { name: 'David' }` will return `"My name is David"`. 	Keys will be searched by partitioning the path. 	It will get the latest found key if any. For example, given the 	strings `{ "a": { "b": 'Hello' } }` and looking for `'a.b.c'` it will 	return `'a.b'` (`"Hello"`). |
+
+
+### stringExists
+Returns if the string does exist
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - true if it exists  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Identifier |
 
 
 ### Variable substitution
@@ -701,18 +726,17 @@ There are also other props passed depending on current implementation of `render
 
 ### InputWrap
 
-It's a common component used to create all the input structure, including wrappers. You can use it to avoid boilerplate. Those are its props and also the props you are expected to received when making your own wrapper.
+It's a common component used to create all the input structure, including wrappers. You can use it to avoid boilerplate.
 
-| Prop              |   Type   | Use |
-| ----------------- | -------- | --------------------------------------------------- |
-| `children`        | element     | (optional) You can use InputWrap to... wrap. |
-| `name`            | string   | Full name (with hierarchy) |
-| `field`           | element  | Field name |
-| `schemaTypeName`  | string   | Name of the schema as created |
-| `styles`          | object   | Styles |
-| `labelOverride`   | string   | Label overriding |
-| `errors`          | object   | Validation errors |
-| `addWrapperProps` | object   | Adds those to the outer div |
+| Prop             |   Type   | Use |
+| ---------------- | -------- | --------------------------------------------------- |
+| `children`       | element     | (optional) You can use InputWrap to... wrap. |
+| `name`           | string   | Full name (with hierarchy) |
+| `field`          | element  | Field name |
+| `schemaTypeName` | string   | Name of the schema as created |
+| `styles`         | object   | Styles |
+| `labelOverride`  | string   | Label overriding |
+| `errors`         | object   | Validation errors |
 
 The props for the input component are different depending if the `inputComponent` is a string, like `'input'` or a React component.
 
