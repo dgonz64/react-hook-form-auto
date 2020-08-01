@@ -10,6 +10,7 @@ import {
   addTranslations
 } from '../src/index'
 import { createSubmitMocks } from './utils/createSubmitMocks'
+import { createParenter } from './utils/createParenter'
 
 addTranslations({
   error: {
@@ -136,5 +137,30 @@ test('Fails successfuly with validation function', async () => {
   const { calls } = mockSubmit.mock
   return wasSubmitted.then(() => {
     expect(calls[0][0]).toMatchObject({ weight: { message: 'Too heavy' } })
+  })
+})
+
+test('Fails successfuly with nested components', async () => {
+  const { wasSubmitted, mockSubmit } = createSubmitMocks()
+
+  const parenter = createParenter({ everythingRequired: true })
+
+  const app = mount(
+    <Autoform schema={parenter} onErrors={mockSubmit} />
+  )
+
+  const form = app.find(Autoform)
+  await act(async () => {
+    await form.simulate('submit')
+  })
+
+  expect.assertions(4)
+
+  const { calls } = mockSubmit.mock
+  return wasSubmitted.then(() => {
+    expect(calls[0][0].name.message).toBe('error.required')
+    expect(calls[0][0].childs).toHaveLength(1)
+    expect(calls[0][0].childs[0].name.message).toBe('error.required')
+    expect(calls[0][0].child.name.message).toBe('error.required')
   })
 })
