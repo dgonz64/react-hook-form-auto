@@ -1,5 +1,5 @@
 import React from 'react'
-import { createSchema } from '../src/index'
+import { createSchema } from '../../src/index'
 
 export const createParenter = () => {
   const child = createSchema('childer', {

@@ -169,7 +169,22 @@ export function renderInput({
   ...rest
 }) {
   const strType = schemaTypeEx(type)
+
+  function describePlace() {
+    return `Schema "${schemaTypeName}" has field "${field}"`
+  }
+
+  if (!strType) {
+    throw `${describePlace()} that lacks type description.`
+  }
+
   const skinElement = skin[strType]
+
+  if (!skinElement) {
+    throw `${describePlace()} with type "${fieldSchema.type}" `
+      + 'that doesn\'t exist in skin'
+  }
+
   const { render, wrapper } = skinElement
   const validatedRegister = registerValidation(fieldSchema, register)
   if (render) {

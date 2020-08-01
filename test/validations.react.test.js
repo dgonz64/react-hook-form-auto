@@ -2,14 +2,14 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
-import config from './enzymeConfig'
+import config from './utils/enzymeConfig'
 import {
   createSchema,
   Autoform,
   tr,
   addTranslations
 } from '../src/index'
-import { createSubmitMocks } from './createSubmitMocks'
+import { createSubmitMocks } from './utils/createSubmitMocks'
 
 addTranslations({
   error: {

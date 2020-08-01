@@ -1,5 +1,5 @@
 import React from 'react'
-import { Autoform as AutoformRHFA } from '../src'
+import { Autoform as AutoformRHFA } from '../../src'
 
 // To find buttons
 const styles = {

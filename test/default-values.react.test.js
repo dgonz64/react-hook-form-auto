@@ -1,10 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import config from './enzymeConfig'
+import config from './utils/enzymeConfig'
 import { createSchema } from '../src/index'
 
-import { Autoform } from './buttonHack'
+import { Autoform } from './utils/buttonHack'
 
 const defaulter = createSchema('defaulter', {
   name: {

@@ -2,7 +2,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { mount } from 'enzyme'
 
-import config from './enzymeConfig'
+import config from './utils/enzymeConfig'
 import {
   createSchema,
   Autoform,

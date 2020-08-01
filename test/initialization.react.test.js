@@ -1,11 +1,11 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import config from './enzymeConfig'
+import config from './utils/enzymeConfig'
 import { createSchema } from '../src/index'
 
-import { Autoform } from './buttonHack'
-import { createParenter } from './createParenter'
+import { Autoform } from './utils/buttonHack'
+import { createParenter } from './utils/createParenter'
 
 const parent = createParenter()
 

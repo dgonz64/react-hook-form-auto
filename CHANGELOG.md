@@ -2,6 +2,10 @@
 
 ## 1.2.3
 
+### Added
+
+* Some basic error messages on obvious things that we programmers usually forget, like not passing a `schema`.
+
 ### Fixed
 
 * Forgot to talk about blueprint ui in README

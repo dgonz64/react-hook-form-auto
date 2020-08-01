@@ -26,6 +26,10 @@ export let Autoform = (props, ref) => {
     ...rest
   } = props
 
+  if (!schema) {
+    throw new Error('<Autoform /> was rendered without schema')
+  }
+
   const coerceRef = useRef({})
 
   const initial = initialValues && isObject(initialValues) ?
