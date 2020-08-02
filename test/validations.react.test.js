@@ -155,7 +155,7 @@ test('Fails successfuly with nested components', async () => {
     await form.simulate('submit')
   })
 
-  expect.assertions(6)
+  expect.assertions(7)
 
   const { calls } = mockSubmit.mock
   return wasSubmitted.then(() => {

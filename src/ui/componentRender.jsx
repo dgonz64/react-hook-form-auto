@@ -77,6 +77,7 @@ function renderSingleInput(props) {
     component,
     wrapper,
     name,
+    field,
     type,
     defaultValue,
     option,
@@ -86,7 +87,7 @@ function renderSingleInput(props) {
     styles,
     fieldSchema,
     noRef,
-    errors,
+    errors = {},
     noAutocomplete,
     ...rest
   } = props
@@ -102,7 +103,7 @@ function renderSingleInput(props) {
     value: option,
     defaultValue,
     className: classnames(styles.input, styles.standard, {
-      [styles.errored]: errors[name]
+      [styles.errored]: errors[field]
     }),
     ...fieldSchema.addInputProps
   }
@@ -111,7 +112,7 @@ function renderSingleInput(props) {
     baseProps.ref = register
 
   const componentProps = isComponent ?
-    { ...baseProps, ...rest, errors, fieldSchema, styles, register } : baseProps
+    { ...baseProps, ...rest, field, errors, fieldSchema, styles, register } : baseProps
 
   if (noAutocomplete || fieldSchema.noAutocomplete)
     componentProps.autoComplete = 'off'
@@ -120,6 +121,7 @@ function renderSingleInput(props) {
     <$wrapper
       key={actualKey}
       name={name}
+      field={field}
       styles={styles}
       fieldSchema={fieldSchema}
       errors={errors}

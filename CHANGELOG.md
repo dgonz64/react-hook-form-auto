@@ -10,6 +10,7 @@
 
 * Forgot to talk about blueprint ui in README
 * Actually export `InputWrap` as documentation refers to it.
+* Array children now receive validation errors correctly.
 
 ## 1.2.2
 

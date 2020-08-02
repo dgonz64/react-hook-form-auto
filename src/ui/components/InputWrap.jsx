@@ -50,7 +50,7 @@ export let InputWrap = (props, ref) => {
 
   const label = typeof labelOverride != 'undefined' ?
     labelOverride : trField(props)
-  const error = errors[name]
+  const error = errors[field]
 
   return (
     <Wrap

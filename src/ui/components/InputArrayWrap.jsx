@@ -87,6 +87,7 @@ export let InputArrayWrap = ({
   fieldSchema: { type },
   schemaTypeName,
   defaultValue,
+  errors = {},
   initiallyEmpty,
   onRemove,
   config,
@@ -100,7 +101,6 @@ export let InputArrayWrap = ({
     inputArray.reducer,
     inputArray.initialFromDefault(defaultValue, initiallyEmpty)
   )
-  const registeredFields = useRef({})
 
   const schema = type[0]
   const $arrayHandler = arrayHandler
@@ -109,6 +109,8 @@ export let InputArrayWrap = ({
   const AddGlyph = skin.addGlyph.render
   const RemoveGlyph = skin.removeGlyph.render
   const Panel = skin.panel.render
+
+  const fieldErrors = errors[name] || {}
 
   const itemsInputs = items.keys.map(idx => {
     if (idx === null) {
@@ -119,23 +121,6 @@ export let InputArrayWrap = ({
 
         const taint = `${name}[${idx}].${deletedMark}`
         setValue(taint, true)
-      }
-
-      const registerSpy = (params) => {
-        if (params !== null) {
-          const { name } = params
-
-          if (name) {
-            const regFields = registeredFields.current
-
-            if (regFields[idx])
-              regFields[idx].add(name)
-            else
-              regFields[idx] = new Set([ name ])
-          }
-        }
-
-        return register(params)
       }
 
       const closeButton = renderCloseButton({
@@ -165,8 +150,9 @@ export let InputArrayWrap = ({
           index: idx,
           initialValues: itemDefault,
           styles,
-          register: registerSpy,
+          register,
           unregister,
+          errors: fieldErrors[idx],
           arrayIdx: idx,
           arrayInitialValues: itemDefault,
           skin
