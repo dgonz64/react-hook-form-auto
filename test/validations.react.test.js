@@ -7,7 +7,8 @@ import {
   createSchema,
   Autoform,
   tr,
-  addTranslations
+  addTranslations,
+  InputWrap
 } from '../src/index'
 import { createSubmitMocks } from './utils/createSubmitMocks'
 import { createParenter } from './utils/createParenter'
@@ -154,7 +155,7 @@ test('Fails successfuly with nested components', async () => {
     await form.simulate('submit')
   })
 
-  expect.assertions(4)
+  expect.assertions(6)
 
   const { calls } = mockSubmit.mock
   return wasSubmitted.then(() => {
@@ -162,5 +163,20 @@ test('Fails successfuly with nested components', async () => {
     expect(calls[0][0].childs).toHaveLength(1)
     expect(calls[0][0].childs[0].name.message).toBe('error.required')
     expect(calls[0][0].child.name.message).toBe('error.required')
+
+    const fields = [
+      'name',
+      'childs[0].name',
+      'child.name'
+    ]
+
+    const wraps = app.find(InputWrap)
+    wraps.forEach(wrap => {
+      const name = wrap.prop('name')
+      if (fields.includes(name)) {
+        const contents = wrap.text()
+        expect(contents).toMatch(/error.required/)
+      }
+    })
   })
 })
