@@ -19,3 +19,4 @@ export {
 } from './translation_utils'
 export { Panel, Button } from './ui/components'
 export { FieldPropsOverride } from './ui/components/FieldPropsOverride'
+export { InputWrap } from './ui/components/InputWrap'

@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.3
+## 1.2.3 (not released yet)
 
 ### Added
 
@@ -9,6 +9,7 @@
 ### Fixed
 
 * Forgot to talk about blueprint ui in README
+* Actually export `InputWrap` as documentation refers to it.
 
 ## 1.2.2
 
