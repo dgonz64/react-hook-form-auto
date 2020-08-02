@@ -62,13 +62,11 @@ export let InputWrap = (props, ref) => {
     >
       {children}
       { error &&
-        <>
-          <div className={styles.error}>
-            <div className={styles.errorMessage}>
-              {error.message}
-            </div>
+        <div className={styles.error}>
+          <div className={styles.errorMessage}>
+            {error.message}
           </div>
-        </>
+        </div>
       }
     </Wrap>
   )
