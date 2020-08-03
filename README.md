@@ -34,7 +34,8 @@ This library allows your React application to automatically generate forms using
 
 ## Deprecated
 
-react-hook-form-auto 1.1.0 onwards works with react-hook-form 4+. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
+* 1.2.0 works with react-hook-form 6+.
+* 1.1.0 works with react-hook-form 4+. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
 ## Usage
 
