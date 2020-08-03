@@ -20,27 +20,27 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.11.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "jest": "^26.1.0",
+    "jest": "^26.2.2",
     "jsdoc-to-markdown": "^6.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.0.7",
     "rimraf": "^3.0.2",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "minimist": "1.2.5"
   },
   "peerDependencies": {
-    "react": "^16.9.0",
-    "react-hook-form": "^6.0.0"
+    "react": "^16.13.1",
+    "react-hook-form": "^6.3.0"
   },
   "dependencies": {
     "classnames": "^2.2.6"
