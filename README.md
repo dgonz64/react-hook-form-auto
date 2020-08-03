@@ -12,6 +12,29 @@ This library allows your React application to automatically generate forms using
 * [Available skins](#available-skins)
 * [Roadmap](#roadmap)
 * [Documentation](#documentation)
+  * [Types](#types)
+    * [Select and radios](#select-and-radios)
+  * [Validators](#validators)
+    * [`validate` validator](#the-validate-validator)
+  * [Other schema fields](#other-schema-fields)
+  * [Schema](#schema)
+  * [`Autoform` component](#autoform-component)
+  * [Config](#config)
+  * [Field props override](#field-props-override)
+  * [Coercers](#coercers)
+  * [Translation](#translation)
+    * [`tr()`](#tr)
+    * [`stringExists()`](#stringexists)
+    * [Variable substitution](#variable-substitution)
+    * [Adding strings](#adding-strings)
+    * [Multilanguage](#multilanguage)
+    * [Translation utils](#translation-utils)
+    * [Use your own](#use-your-own-translation-system)
+  * [Extending](#extending)
+    * [Skinning tutorial](#creating-a-skin)
+  * [Overriding](#overriding)
+    * [Skin component](#skin-component)
+    * [Rendering](#rendering)
 * [Extending](#extending)
 * [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
 
@@ -156,8 +179,9 @@ A simple way to fill this is by replicating the unstranslated string in the obje
 Some of them need other imports. See instructions from each.
 
 ### [Vanilla](https://github.com/dgonz64/react-hook-form-auto) (here)
-### Bootstrap 4 (as instructed here)
+### Bootstrap 4 (as instructed in this document)
 ### [Material-UI](https://github.com/dgonz64/rhfa-material-ui)
+### [Blueprint](https://github.com/dgonz64/rhfa-blueprint)
 
 ## Rationale
 
@@ -185,9 +209,10 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] Datatype coertion
 - [x] Provide more and better styling examples
 - [x] Styles to make it look like bootstrap4
-- [ ] _Native_ components for famous ui libraries like bootstrap4
+- [x] _Native_ components for famous ui libraries like bootstrap4
+  - [ ] Need other? Open issue!
 - [ ] Translated messages from server/async
-- [ ] Actually limit children
+- [x] Actually limit children
 - [ ] Typescript
 
 # Documentation
@@ -298,7 +323,7 @@ There are some other attributes you can pass while defining the field schema:
 | -----------     | --------  | -------------------------------------------------- |
 | noAutocomplete  | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
 | addWrapperProps | object    | Directly passed to wrapper component |
-| addInputProps   | boolean   | Props merged into input component |
+| addInputProps   | object    | Props merged into input component |
 
 ### Schema
 
