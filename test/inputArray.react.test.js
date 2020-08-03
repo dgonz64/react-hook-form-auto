@@ -1,23 +1,32 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { act } from 'react-dom/test-utils'
 
 import config from './utils/enzymeConfig'
 
 import { Autoform } from './utils/buttonHack'
 import { createParenter } from './utils/createParenter'
 
-const parent = createParenter()
+const parent = createParenter({
+  arrayAdd: {
+    minChildren: 1,
+    maxChildren: 2
+  }
+})
 
-test('Allows to add in an arrayPanel', () => {
+const findInput = (app, idx) =>
+  app.find(`input[name="childs[${idx}].name"]`)
+
+test('Allows to add in an arrayPanel', async () => {
   const app = mount(
     <Autoform schema={parent} />
   )
 
-  const findInput = (app, idx) =>
-    app.find(`input[name="childs[${idx}].name"]`)
-
   const button = app.find('button').first()
-  button.simulate('click')
+  await act(async () => {
+    await button.simulate('click')
+    await app.update()
+  })
 
   const first = findInput(app, 0)
   first.instance().value = '111'
@@ -27,12 +36,49 @@ test('Allows to add in an arrayPanel', () => {
 
   const buttons = app.find('button')
   expect(buttons).toHaveLength(3)
-  buttons.at(1).simulate('click')
+  await act(async () => {
+    await buttons.at(1).simulate('click')
+  })
 
   const firstNew = findInput(app, 0)
-  expect(firstNew).toHaveLength(0)
+  expect(firstNew).toHaveLength(1)
 
   const secondNew = findInput(app, 1)
   expect(secondNew).toHaveLength(1)
   expect(secondNew.instance().value).toBe('222')
+
+  const appText = app.text()
+  expect(appText).not.toMatch('error.minChildren')
+  expect(appText).not.toMatch('error.maxChildren')
+})
+
+test('Complains when lacks children', () => {
+  const app = mount(
+    <Autoform schema={parent} />
+  )
+
+  const buttons = app.find('button')
+  expect(buttons).toHaveLength(2)
+  buttons.at(1).simulate('click')
+
+  expect(app.text()).toMatch('error.minChildren')
+})
+
+test('Complains when has too many children and then calms down', () => {
+  const app = mount(
+    <Autoform schema={parent} />
+  )
+
+  const button = app.find('button').first()
+  button.simulate('click')
+  button.simulate('click')
+
+  expect(app.text()).toMatch('error.maxChildren')
+
+  const buttons = app.find('button')
+  expect(buttons).toHaveLength(4)
+  buttons.at(1).simulate('click')
+
+  expect(app.text()).not.toMatch('error.maxChildren')
+  expect(app.text()).not.toMatch('error.minChildren')
 })
