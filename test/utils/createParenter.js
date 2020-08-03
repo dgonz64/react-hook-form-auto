@@ -1,7 +1,10 @@
 import React from 'react'
 import { createSchema } from '../../src/index'
 
-export const createParenter = ({ everythingRequired } = {}) => {
+export const createParenter = ({
+  everythingRequired,
+  arrayAdd
+} = {}) => {
   const child = createSchema('childer', {
     name: {
       type: 'string'
@@ -15,7 +18,8 @@ export const createParenter = ({ everythingRequired } = {}) => {
     },
     childs: {
       type: [child],
-      required: everythingRequired
+      required: everythingRequired,
+      ...arrayAdd
     },
     child: {
       type: child,

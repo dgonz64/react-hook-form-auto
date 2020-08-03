@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.2.3 (not released yet)
+## 1.2.3
 
 ### Added
 
 * Some basic error messages on obvious things that we programmers usually forget, like not passing a `schema`.
+* Implemented minChildren and maxChildren
 
 ### Fixed
 

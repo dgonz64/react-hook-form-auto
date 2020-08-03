@@ -119,12 +119,16 @@ export default {
         isArray: true
       })
 
-      return arr.map(entry => {
-        if (entry[deletedMark])
-          return null
-        else
-          return coerceObject({ object: entry, schemaDef: otherSchema })
-      }).filter(entry => entry !== null)
+      if (Array.isArray(arr)) {
+        return arr.map(entry => {
+          if (entry[deletedMark])
+            return null
+          else
+            return coerceObject({ object: entry, schemaDef: otherSchema })
+        }).filter(entry => entry !== null)
+      } else {
+        return []
+      }
     },
     render: props => {
       const {

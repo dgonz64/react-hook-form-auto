@@ -10,13 +10,14 @@ export const add = () => ({
   type: ADD
 })
 
-export const initialEmpty = { last: 0, keys: [] }
-export const initial = { last: 1, keys: [0] }
+export const initialEmpty = { last: 0, num: 0, keys: [] }
+export const initial = { last: 1, num: 1, keys: [0] }
 
 export const initialFromDefault = (defaultValue, initiallyEmpty) => {
   if (defaultValue && Array.isArray(defaultValue)) {
     return {
       last: defaultValue.length,
+      num: defaultValue.length,
       keys: defaultValue.map((_, idx) => idx)
     }
   } else {
@@ -31,6 +32,7 @@ export const reducer = (state = initial, action) => {
 
     return {
       last: state.last,
+      num: state.num - 1,
       keys: [
         ...keys.slice(0, action.idx),
         null,
@@ -40,6 +42,7 @@ export const reducer = (state = initial, action) => {
   case ADD:
     return {
       last: state.last + 1,
+      num: state.num + 1,
       keys: [ ...state.keys, state.last ]
     }
   default:

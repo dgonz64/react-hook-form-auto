@@ -1,16 +1,13 @@
 import React, {
   forwardRef,
   useReducer,
-  useRef
+  useRef,
+  useEffect
 } from 'react'
 import { renderInputs } from '../componentRender'
 import { inputArray } from '../ducks'
-import { trModel } from '../../translation_utils'
+import { tr, trModel } from '../../translation_utils'
 import { deletedMark } from '../deletedMark'
-
-const handleAdd = (dispatch) => {
-  dispatch(inputArray.add())
-}
 
 const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
   const boundAdd = e => {
@@ -51,15 +48,16 @@ const renderCloseButton = ({
 }
 
 const renderPanelHeader = ({
+  onAdd,
   schemaTypeName,
-  dispatch,
+  aliveItems,
   name,
   styles,
   Button,
   AddGlyph
 }) => {
   const addButton = renderAddButton({ 
-    onAdd: handleAdd.bind(null, dispatch),
+    onAdd,
     styles,
     Button,
     AddGlyph,
@@ -73,6 +71,15 @@ const renderPanelHeader = ({
   )
 }
 
+export const renderLectures = ({ error, styles }) => {
+  if (error && error.message) {
+    return (
+      <div className={styles.error}>{error.message}</div>
+    )
+  } else
+    return null
+}
+
 /**
  * Used for the arrays in models, for
  * example clients: [Clients]
@@ -84,8 +91,10 @@ export let InputArrayWrap = ({
   arrayHandler,
   register,
   unregister,
+  fieldSchema,
   fieldSchema: { type },
   schemaTypeName,
+  formHook,
   defaultValue,
   errors = {},
   initiallyEmpty,
@@ -112,56 +121,93 @@ export let InputArrayWrap = ({
 
   const fieldErrors = errors[name] || {}
 
-  const itemsInputs = items.keys.map(idx => {
-    if (idx === null) {
-      return null
-    } else {
-      const handleRemove = (idx) => {
-        dispatch(inputArray.remove(idx))
+  const aliveItems = items.keys.filter(idx => idx !== null)
+  const counterField = `${name}__count`
+  const arrayErrors = errors[counterField]
 
-        const taint = `${name}[${idx}].${deletedMark}`
-        setValue(taint, true)
-      }
+  const getErrorMessage = (num) => {
+    if ('minChildren' in fieldSchema) {
+      const { minChildren } = fieldSchema
 
-      const closeButton = renderCloseButton({
-        onRemove: handleRemove,
-        idx,
-        styles,
-        Button,
-        RemoveGlyph
-      })
-
-      let itemDefault
-      if (defaultValue && Array.isArray(defaultValue))
-        itemDefault = defaultValue[idx]
-      else
-        itemDefault = defaultValue
-
-      return {
-        idx,
-        closeButton,
-        inputs: renderInputs({
-          ...rest,
-          inline: isTable,
-          schema,
-          schemaTypeName,
-          setValue,
-          parent: name,
-          index: idx,
-          initialValues: itemDefault,
-          styles,
-          register,
-          unregister,
-          errors: fieldErrors[idx],
-          arrayIdx: idx,
-          arrayInitialValues: itemDefault,
-          skin
-        })
-      }
+      if (num < minChildren)
+        return tr('error.minChildren', { minChildren })
     }
-  }).filter(item => item !== null)
+
+    if ('maxChildren' in fieldSchema) {
+      const { maxChildren } = fieldSchema
+      if (num > maxChildren)
+        return tr('error.maxChildren', { maxChildren })
+    }
+  }
+
+  const checkSetErrorMessage = (num) => {
+    const message = getErrorMessage(num)
+    if (message) {
+      formHook.setError(counterField, {
+        type: 'manual',
+        message
+      })
+    } else {
+      formHook.clearErrors(counterField)
+    }
+  }
+
+  const itemsInputs = aliveItems.map(idx => {
+    const handleRemove = (idx) => {
+      dispatch(inputArray.remove(idx))
+      checkSetErrorMessage(items.num - 1)
+
+      const taint = `${name}[${idx}].${deletedMark}`
+      setValue(taint, true)
+
+      formHook.trigger(counterField)
+    }
+
+    const closeButton = renderCloseButton({
+      onRemove: handleRemove,
+      idx,
+      styles,
+      Button,
+      RemoveGlyph
+    })
+
+    let itemDefault
+    if (defaultValue && Array.isArray(defaultValue))
+      itemDefault = defaultValue[idx]
+    else
+      itemDefault = defaultValue
+
+    return {
+      idx,
+      closeButton,
+      inputs: renderInputs({
+        ...rest,
+        inline: isTable,
+        schema,
+        schemaTypeName,
+        setValue,
+        parent: name,
+        index: idx,
+        initialValues: itemDefault,
+        styles,
+        register,
+        unregister,
+        errors: fieldErrors[idx],
+        arrayIdx: idx,
+        arrayInitialValues: itemDefault,
+        skin
+      })
+    }
+  })
+
+  const handleAdd = () => {
+    formHook.trigger(counterField)
+    dispatch(inputArray.add())
+    checkSetErrorMessage(items.num + 1)
+  }
 
   const panelProps = {
+    onAdd: handleAdd,
     schemaTypeName,
     dispatch,
     name,
@@ -175,12 +221,13 @@ export let InputArrayWrap = ({
       header={renderPanelHeader(panelProps)}
       styles={styles}
     >
+      { renderLectures({ styles, error: arrayErrors }) }
       <$arrayHandler
         schema={schema}
         config={config}
         name={name}
         component={arrayHandler}
-        onAdd={handleAdd.bind(null, dispatch)}
+        onAdd={handleAdd}
         newObject={newObject}
         items={itemsInputs}
         defaultValue={defaultValue}
