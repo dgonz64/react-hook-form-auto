@@ -213,6 +213,7 @@ Actually there aren't clearly defined goals. The library already suits my person
   - [ ] Need other? Open issue!
 - [ ] Translated messages from server/async
 - [x] Actually limit children
+- [ ] React Native support
 - [ ] Typescript
 
 # Documentation
