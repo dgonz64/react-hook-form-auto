@@ -5,6 +5,7 @@
 ### Added
 
 * Exporting AutoformBase to allow for more generic skins: Library is now compatible with ReactNative.
+* Every component is now configurable.
 
 ## 1.2.3
 
