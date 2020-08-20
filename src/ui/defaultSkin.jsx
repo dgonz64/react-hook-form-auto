@@ -9,7 +9,6 @@ import { InputArrayTable } from './components/InputArrayTable'
 import { InputArrayPanel } from './components/InputArrayPanel'
 import { Select } from './components/Select'
 import { Checkbox } from './components/Checkbox'
-import { Submodel } from './components/Submodel'
 import { Button } from './components/Button'
 import { Panel } from './components/Panel'
 import { RemoveGlyph } from './svgs/RemoveGlyph'
@@ -17,20 +16,11 @@ import { AddGlyph } from './svgs/AddGlyph'
 
 import { processOptions } from '../utils'
 
-import { deletedMark } from './deletedMark'
-
 function standardClasses(props) {
   return classnames(
     props.styles.input,
     props.styles.standard
   )
-}
-
-function getOtherSchema(schemaDef, fieldName, { isArray }) {
-  const field = schemaDef[fieldName]
-  const { type } = field
-  const other = isArray ? type[0] : type
-  return other.getSchema()
 }
 
 export default {
@@ -113,63 +103,6 @@ export default {
       }
     }
   },
-  array: {
-    coerce: (arr = [], { coerceObject, schemaDef, fieldName }) => {
-      const otherSchema = getOtherSchema(schemaDef, fieldName, {
-        isArray: true
-      })
-
-      if (Array.isArray(arr)) {
-        return arr.map(entry => {
-          if (entry[deletedMark])
-            return null
-          else
-            return coerceObject({ object: entry, schemaDef: otherSchema })
-        }).filter(entry => entry !== null)
-      } else {
-        return []
-      }
-    },
-    render: props => {
-      const {
-        config = {},
-        className,
-        fieldSchema,
-        skin,
-        ...rest
-      } = props
-
-      const { arrayMode } = config
-      const isTable = arrayMode == 'table'
-      const ArrayTable = skin.arrayTable.render
-      const ArrayPanel = skin.arrayPanel.render
-      const arrayHandler = isTable ? ArrayTable : ArrayPanel
-
-      return {
-        ...rest,
-        config,
-        component: InputArrayWrap,
-        initiallyEmpty: fieldSchema.initiallyEmpty,
-        fieldSchema,
-        arrayHandler,
-        inline: true,
-        noRef: true,
-        isTable,
-        skin
-      }
-    },
-  },
-  schema: {
-    coerce: (obj = {}, { coerceObject, schemaDef, fieldName }) => {
-      const otherSchema = getOtherSchema(schemaDef, fieldName, { isArray: false })
-
-      return coerceObject({ object: obj, schemaDef: otherSchema })
-    },
-    render: {
-      component: Submodel,
-      inline: true
-    }
-  },
   button: {
     render: Button
   },
@@ -196,5 +129,11 @@ export default {
   },
   arrayPanel: {
     render: InputArrayPanel
+  },
+  div: {
+    render: props => <div {...props} />
+  },
+  text: {
+    render: ({ children }) => children
   }
 }

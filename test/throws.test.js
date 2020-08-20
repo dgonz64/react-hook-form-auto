@@ -10,17 +10,25 @@ import {
 } from '../src/index'
 
 test('Throws error when you forgot to pass schema', async () => {
-  let error
+  const spy = jest.fn()
 
-  try {
-    shallow(
+  const oldError = console.error
+  console.error = jest.fn()
+
+  const app = mount(
+    <ErrorBoundary spy={spy}>
       <Autoform />
-    )
-  } catch (err) {
-    error = err
-  }
+    </ErrorBoundary>
+  )
+  console.error = oldError
 
-  expect(error.message).toBe('<Autoform /> was rendered without schema')
+  const { calls } = spy.mock
+
+  expect(app.state()).toHaveProperty('hasError', true)
+  expect(calls).toHaveLength(1)
+  expect(calls[0][0].message).toBe(
+    '<Autoform /> was rendered without schema.'
+  )
 })
 
 test('Throws error when field lacks type', async () => {
@@ -71,6 +79,6 @@ test('Throws error when type doesn\'t exist in skin', async () => {
   expect(app.state()).toHaveProperty('hasError', true)
   expect(calls).toHaveLength(1)
   expect(calls[0][0]).toBe(
-    'Schema "fail" has field "notype" with type "some-shit" that doesn\'t exist in skin'
+    'Schema "fail" has field "notype" with type "some-shit" that doesn\'t exist in skin.'
   )
 })

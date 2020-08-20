@@ -5,7 +5,7 @@ let translations = {}
 const VAR_REGEX = /__(.*?)__/g
 const REF_REGEX = /@@(.*?)@@/g
 
-function findString(id) {
+function findString(id = '') {
   const part = id.split('.')
 
   const lastIndex = part.length - 1

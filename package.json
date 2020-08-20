@@ -30,13 +30,14 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^26.2.2",
     "jsdoc-to-markdown": "^6.0.1",
+    "minimist": "1.2.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.0.7",
     "rimraf": "^3.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "minimist": "1.2.5"
+    "webpack-merge": "^5.1.1"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -48,10 +49,13 @@
   "scripts": {
     "clean": "rimraf dist && rimraf lib",
     "start": "npm run clean && babel src --out-dir lib --watch --verbose --source-maps",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
+    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:base && npm run build:base:min",
     "build:commonjs": "babel src --out-dir lib",
-    "build:umd": "webpack",
-    "build:umd:min": "NODE_ENV=production npm run build:umd",
+    "build:umd": "webpack --env development",
+    "build:umd:min": "webpack --env production",
+    "build:base": "BUILD_TYPE=base webpack --env development",
+    "build:base:min": "BUILD_TYPE=base webpack --env production",
+    "watch:base": "BUILD_TYPE=base webpack --env development --watch",
     "docs": "jsdoc2md -t jsdoc2md/README.hbs src/*.js src/**/*.js src/**/*.jsx > README.md; echo ",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:short": "jest",

@@ -183,8 +183,8 @@ export function renderInput({
   const skinElement = skin[strType]
 
   if (!skinElement) {
-    throw `${describePlace()} with type "${fieldSchema.type}" `
-      + 'that doesn\'t exist in skin'
+    throw `${describePlace()} with type "${strType}" `
+      + 'that doesn\'t exist in skin.'
   }
 
   const { render, wrapper } = skinElement

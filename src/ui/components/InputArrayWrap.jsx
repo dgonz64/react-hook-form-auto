@@ -19,6 +19,7 @@ const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
     <Button
       onClick={boundAdd}
       styles={styles}
+      intent="add"
     >
       <AddGlyph />
     </Button>
@@ -41,6 +42,7 @@ const renderCloseButton = ({
     <Button
       onClick={boundRemove}
       styles={styles}
+      intent="remove"
     >
       <RemoveGlyph />
     </Button>
@@ -54,7 +56,9 @@ const renderPanelHeader = ({
   name,
   styles,
   Button,
-  AddGlyph
+  AddGlyph,
+  Div,
+  Text
 }) => {
   const addButton = renderAddButton({ 
     onAdd,
@@ -64,17 +68,19 @@ const renderPanelHeader = ({
   })
 
   return (
-    <div className={styles.inputPanelWrap}>
-      {trModel(schemaTypeName, name) + ' '}
+    <Div className={styles.inputPanelWrap}>
+      <Text className={styles.inputPanelEntity}>
+        {trModel(schemaTypeName, name) + ' '}
+      </Text>
       {addButton}
-    </div>
+    </Div>
   )
 }
 
-export const renderLectures = ({ error, styles }) => {
+export const renderLectures = ({ error, styles, Text }) => {
   if (error && error.message) {
     return (
-      <div className={styles.error}>{error.message}</div>
+      <Text className={styles.error}>{error.message}</Text>
     )
   } else
     return null
@@ -118,6 +124,8 @@ export let InputArrayWrap = ({
   const AddGlyph = skin.addGlyph.render
   const RemoveGlyph = skin.removeGlyph.render
   const Panel = skin.panel.render
+  const Div = skin.div.render
+  const Text = skin.text.render
 
   const fieldErrors = errors[name] || {}
 
@@ -189,6 +197,7 @@ export let InputArrayWrap = ({
         parent: name,
         index: idx,
         initialValues: itemDefault,
+        formHook,
         styles,
         register,
         unregister,
@@ -213,7 +222,9 @@ export let InputArrayWrap = ({
     name,
     styles,
     Button,
-    AddGlyph
+    AddGlyph,
+    Div,
+    Text
   }
 
   return (
@@ -221,7 +232,7 @@ export let InputArrayWrap = ({
       header={renderPanelHeader(panelProps)}
       styles={styles}
     >
-      { renderLectures({ styles, error: arrayErrors }) }
+      { renderLectures({ styles, error: arrayErrors, Text }) }
       <$arrayHandler
         schema={schema}
         config={config}

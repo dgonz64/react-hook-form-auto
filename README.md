@@ -37,6 +37,7 @@ This library allows your React application to automatically generate forms using
     * [Rendering](#rendering)
 * [Extending](#extending)
 * [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
+* [Importing base](#importing-base)
 
 ## Play with the demos
 
@@ -47,9 +48,9 @@ This library allows your React application to automatically generate forms using
 
 ### Full webpack project demos
 
-* [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/)
-* [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo)
-* [Play with Material-UI demo](https://dgonz64.github.io/rhfa-demo-material-ui/demo/)
+* [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/). [Project](https://github.com/dgonz64/react-hook-form-auto-demo-bootstrap4).
+* [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo). [Project](https://github.com/dgonz64/react-hook-form-auto-demo).
+* [Play with Material-UI demo](https://dgonz64.github.io/rhfa-demo-material-ui/demo/). [Project](https://github.com/dgonz64/rhfa-demo-material-ui)
 
 ## Installation
 
@@ -813,6 +814,24 @@ Renders a single field.
 | params.schemaTypeName | <code>string</code> | Name of the schema    (first argument while instantiating a schema) |
 | params.config | <code>object</code> | Form configuration |
 | ...params.rest | <code>object</code> | props passed to the component |
+
+
+## Importing base
+
+You can use the base bundle to import `AutoformBase` component. `AutoformBase` is like `Autoform` but doesn't use `react-dom` dependency.
+
+```javascript
+  import { Autoform, ... } from 'react-hook-form-auto/dist/base.js'
+```
+
+You can also do it in a more permanent way if you use webpack:
+
+```javascript
+  resolve: {
+    alias: {
+      'react-hook-form-auto': 'react-hook-form-auto/dist/base.js'
+    }
+  },
 
 
 # Help wanted / contribute

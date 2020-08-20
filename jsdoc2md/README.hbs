@@ -37,6 +37,7 @@ This library allows your React application to automatically generate forms using
     * [Rendering](#rendering)
 * [Extending](#extending)
 * [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
+* [Importing base](#importing-base)
 
 ## Play with the demos
 
@@ -745,6 +746,24 @@ To render the input or inputs, two functions are used:
 {{#function name="renderInput"~}}
 {{>body~}}
 {{/function}}
+
+## Importing base
+
+You can use the base bundle to import `AutoformBase` component. `AutoformBase` is like `Autoform` but doesn't use `react-dom` dependency.
+
+```javascript
+  import { Autoform, ... } from 'react-hook-form-auto/dist/base.js'
+```
+
+You can also do it in a more permanent way if you use webpack:
+
+```javascript
+  resolve: {
+    alias: {
+      'react-hook-form-auto': 'react-hook-form-auto/dist/base.js'
+    }
+  },
+
 
 # Help wanted / contribute
 
