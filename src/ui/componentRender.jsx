@@ -21,14 +21,13 @@ const validations = {
 }
 
 /**
- * Passes the validation parameters to react-hook-form
+ * Creates validation rules after schema
  *
- * @param {object} fieldSchema Schema for the field
- * @param {function} register react-hook-form register
+ * @param {object} fieldSchema
  */
-export function registerValidation(fieldSchema, register) {
+export function validationRules(fieldSchema) {
   const validationKeys = Object.keys(validations)
-  const result = validationKeys.reduce((result, key) => {
+  return validationKeys.reduce((result, key) => {
     if (key in fieldSchema) {
       const validation = fieldSchema[key]
       let data
@@ -49,11 +48,30 @@ export function registerValidation(fieldSchema, register) {
 
     return result
   }, {})
+}
 
-  if (Object.keys(result).length == 0)
+/**
+ * HoC for register that automatically adds validation rules
+ *
+ * @param {object} rules ReactHookForm rules
+ * @param {function} register useForm's register
+ */
+export function registerWithRules(rules, register) {
+  if (Object.keys(rules).length == 0)
     return register
   else
-    return params => params ? register(params, result) : register(result)
+    return params => params ? register(params, rules) : register(rules)
+}
+
+/**
+ * Passes the validation parameters to react-hook-form
+ *
+ * @param {object} fieldSchema Schema for the field
+ * @param {function} register react-hook-form register
+ */
+export function registerValidation(fieldSchema, register) {
+  const rules = validationRules(fieldSchema)
+  return registerWithRules(rules, register)
 }
 
 /**
@@ -188,7 +206,9 @@ export function renderInput({
   }
 
   const { render, wrapper } = skinElement
-  const validatedRegister = registerValidation(fieldSchema, register)
+  
+  const rules = validationRules(fieldSchema)
+  const validatedRegister = registerWithRules(rules, register)
   if (render) {
     let fullField
     if (typeof index == 'undefined')
@@ -208,6 +228,7 @@ export function renderInput({
       propOverrides,
       wrapper: wrapper || skin.defaultWrap,
       register: validatedRegister,
+      rules,
       styles,
       skin,
       errors,

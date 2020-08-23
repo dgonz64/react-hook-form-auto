@@ -51,7 +51,7 @@ export let AutoformBase = (props, ref) => {
 
   const finalSkin = { ...baseSkin, ...skin, ...skinOverride }
 
-  const setValue = (name, value, validate, skipSetInput) => {
+  const setValue = (name, value, options, skipSetInput) => {
     const [ container, attr ] = objectTraverse(coerceRef.current, name, {
       createIfMissing: true
     })
@@ -59,7 +59,7 @@ export let AutoformBase = (props, ref) => {
       container[attr] = value
 
     if (!skipSetInput)
-      formHook.setValue(name, value, validate)
+      formHook.setValue(name, value, options)
   }
 
   if (onErrors && Object.keys(errors).length > 0)

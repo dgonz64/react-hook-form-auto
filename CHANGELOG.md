@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.5
+
+### Added
+
+* Validation rules are passed to skin component in order to help with `<Controller />`.
+
+### Fixed
+
+* Now exporting render functions. Rarely needed but documented.
+
 ## 1.2.4
 
 ### Added

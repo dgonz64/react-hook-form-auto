@@ -17,3 +17,4 @@ export {
 } from './translation_utils'
 export { createSchema } from './createSchema'
 export { AutoformBase } from './ui/AutoformBase'
+export * from './ui/componentRender'
