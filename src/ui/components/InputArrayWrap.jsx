@@ -21,7 +21,7 @@ const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
       styles={styles}
       intent="add"
     >
-      <AddGlyph />
+      <AddGlyph styles={styles} />
     </Button>
   )
 }
@@ -44,7 +44,7 @@ const renderCloseButton = ({
       styles={styles}
       intent="remove"
     >
-      <RemoveGlyph />
+      <RemoveGlyph styles={styles} />
     </Button>
   )
 }

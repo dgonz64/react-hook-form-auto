@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.6
+
+### Added
+
+* Now passing `styles` to `addGlyph` and `removeGlyph` skin components.
+* Talk about React Native project.
+
 ## 1.2.5
 
 ### Added
