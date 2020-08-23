@@ -434,8 +434,9 @@ An object with three attributes is exported:
 
 | Attribute | Description |
 | --- | --- |
-| submit | Imperative submit. |
+| submit   | Imperative submit. |
 | setValue | Sets a value in any place of the document. You can use a path. As this library coerces values, it's better to use this than the one from react-hook-form to avoid inconsistences. |
+| reset    | Resets every field value to initial's. |
 | formHook | Call this in order to get react-hook-form vanilla reference object. |
 
 ## Translation
@@ -738,6 +739,7 @@ The rest of the properties a skin block can override:
 | `option`         | string            | Forces value (used in radios for example ) |
 | `inline`         | boolean           | Goes to the wrapper as `inline` |
 | `register`       | function          | `register` with validation ready (will be automatically passed as second param to ReactHookForm) |
+| `rules`          | object            | Validation rules (useful to help with `<Controller />`) |
 | `styles`         | object            | Style overriding |
 | `fieldSchema`    | object            | Schema specification for the field |
 | `schemaTypeName` | string (required) | Name of the schema that contains the field |
