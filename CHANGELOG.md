@@ -10,6 +10,7 @@
 ### Fixed
 
 * Now exporting render functions. Rarely needed but documented.
+* (Internal) Moved `trPath()` to `translation_utils.js`.
 
 ## 1.2.4
 

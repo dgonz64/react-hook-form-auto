@@ -92,22 +92,6 @@ export function createNumberedArray(length) {
 }
 
 /**
- * Generates a model translation path.
- *
- * @param {string} model Name of the model (ie: 'client')
- * @param {string} field Name of the field
- * @param {string} op Name of the option or any subthing.
- *
- * @returns {string} id for the translation string
- */
-export function trPath(model, field, op) {
-  if (typeof op == 'undefined')
-    return ['models', model, field].join('.')
-  else
-    return ['models', model, field, op].join('.')
-}
-
-/**
  * Converts options from different formats to
  * [ { label, value } ]
  *

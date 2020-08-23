@@ -1,8 +1,7 @@
 import React from 'react'
 // import { renderLectures } from './renderLectures'
 
-import { trField } from '../../translation_utils'
-import { trPath } from '../../utils'
+import { trField, trPath } from '../../translation_utils'
 
 const renderRemove = ({ idx, closeButton }) =>
   <td key={idx}>

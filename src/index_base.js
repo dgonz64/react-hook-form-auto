@@ -5,7 +5,6 @@ export {
   stringExists
 } from './translate'
 export {
-  trPath,
   processOptions,
   objectTraverse
 } from './utils'
@@ -13,7 +12,8 @@ export {
   setLanguageByName,
   trModel,
   trField,
-  trError
+  trError,
+  trPath
 } from './translation_utils'
 export { createSchema } from './createSchema'
 export { AutoformBase } from './ui/AutoformBase'
