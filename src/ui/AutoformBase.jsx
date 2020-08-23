@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle, forwardRef } from 'react'
-import { objectTraverse, isObject } from '../utils'
+import { objectTraverse, isObject, deepmerge } from '../utils'
 import { useForm } from 'react-hook-form'
 import { getComponents, renderInputs } from './componentRender'
 import { createCoercers } from '../coercing'
@@ -15,7 +15,7 @@ export let AutoformBase = (props, ref) => {
   const {
     schema,
     elementProps,
-    initialValues,
+    initialValues = {},
     children,
     onSubmit,
     onErrors,
@@ -24,6 +24,7 @@ export let AutoformBase = (props, ref) => {
     submitButtonText,
     skin,
     skinOverride,
+    skipManualReset,
     ...rest
   } = props
 
@@ -46,7 +47,8 @@ export let AutoformBase = (props, ref) => {
     handleSubmit,
     errors,
     watch,
-    reset
+    reset,
+    getValues
   } = formHook
 
   const finalSkin = { ...baseSkin, ...skin, ...skinOverride }
@@ -73,12 +75,43 @@ export let AutoformBase = (props, ref) => {
     schema
   })
 
+  const resetAlsoCoercers = (values, omit) => {
+    coerceRef.current = {}
+    deepmerge(coerceRef.current, values || {})
+
+    const currentValues = getValues()
+
+    if (!skipManualReset) {
+      // Reset by setting everything to initialValues or null.
+      function resetValues(obj, initials = {}, path = '', isArray = false) {
+        const fields = Object.keys(obj)
+        fields.forEach((field, idx) => {
+          const value = obj[field]
+          const elPath = isArray ?
+            `${path}[${idx}]` : (path ? `${path}.${field}` : field)
+          const initial = initials[field]
+          if (typeof value == 'object')
+            resetValues(value, initial, elPath, Array.isArray(value))
+          else {
+            const initialOrNull = typeof initial == 'undefined' ? null : initial
+            formHook.setValue(elPath, initialOrNull)
+          }
+        })
+      }
+
+      resetValues(currentValues, initialValues)
+    }
+
+    reset(values, omit)
+  }
+
   const submit = handleSubmit(coercedSubmit)
 
   useImperativeHandle(ref, () => ({
     submit,
     formHook: () => formHook,
-    setValue
+    setValue,
+    reset: resetAlsoCoercers
   }))
 
   const inputProps = {

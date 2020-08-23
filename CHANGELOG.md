@@ -5,6 +5,7 @@
 ### Added
 
 * Validation rules are passed to skin component in order to help with `<Controller />`.
+* Instance method `reset()` that works with `<Controller />`.
 
 ### Fixed
 

@@ -8,9 +8,6 @@ export function createCoercers({
   schema
 }) {
   return function coercedSubmit(doc) {
-    let result = {}
-    deepmerge(result, initialValues, doc, coerceRef.current)
-
     const coerceObject = ({ object, schemaDef }) => {
       const fields = Object.keys(schemaDef)
       const result = deepmerge({}, object)
@@ -44,7 +41,8 @@ export function createCoercers({
       })
     }
 
-    const coerced = coerceWithSchema({ doc: result, schema })
+    const wholeObj = deepmerge({}, initialValues, doc, coerceRef.current)
+    const coerced = coerceWithSchema({ doc: wholeObj, schema })
 
     onSubmit(coerced, doc)
   }
