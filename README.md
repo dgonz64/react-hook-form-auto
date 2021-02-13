@@ -36,6 +36,8 @@ This library allows your React application to automatically generate forms using
     * [Skin component](#skin-component)
     * [Rendering](#rendering)
 * [Extending](#extending)
+  * [With styles](#with-styles)
+  * [With skin](#overriding-skin)
 * [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
 * [Importing base](#importing-base)
 
@@ -623,9 +625,23 @@ Or you can drop it directly to `setTranslator()` if it's compatible.
 
 ## Extending
 
-### Creating a skin
+If you just need another appearance, you can do it changing styles. If you are adapting an existing UI library (like [Blueprint](https://blueprintjs.com/)) then it's better to extend skin.
 
-I made a tutorial adapting Material-UI to react-hook-form-auto. You can find it [here](https://github.com/dgonz64/rhfa-playground).
+### With styles
+
+The default skin from `react-hook-form-auto` uses css classes. You can override them providing your set. Example with css-modules:
+
+```javascript
+    import styles from './my_styles.css'
+
+    <Autoform styles={styles} />
+```
+
+The whole [rhfa-emergency-styles](https://github.com/dgonz64/rhfa-emergency-styles) does this and can serve as an example.
+
+### Overriding skin
+
+When you need to adapt behaviour, styles might not be enough. To solve this you can override full components.
 
 The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin, like this:
 
@@ -644,6 +660,10 @@ The inputs and auxiliary elements are created using a set of components. The map
 You can take a look at [defaultSkin.js](https://github.com/dgonz64/react-hook-form-auto/blob/master/src/ui/defaultSkin.jsx) and [`components/index.js`](https://github.com/dgonz64/react-hook-form-auto/tree/master/src/ui/components) from any skin to have a glimpse.
 
 Also find [here](https://github.com/dgonz64/rhfa-material-ui/blob/master/src/skinOverride.js#L56) a full skin override.
+
+I made a tutorial adapting Material-UI to react-hook-form-auto. You can find it [here](https://github.com/dgonz64/rhfa-playground).
+
+### Extension process
 
 There's an entry in the skin object for every field type. The value of the entry is an object with two attributes like in this example:
 
