@@ -216,7 +216,7 @@ Actually there aren't clearly defined goals. The library already suits my person
   - [ ] Need other? Open issue!
 - [ ] Translated messages from server/async
 - [x] Actually limit children
-- [ ] React Native support
+- [x] React Native support
 - [ ] Typescript
 
 # Documentation
@@ -627,9 +627,23 @@ Or you can drop it directly to `setTranslator()` if it's compatible.
 
 I made a tutorial adapting Material-UI to react-hook-form-auto. You can find it [here](https://github.com/dgonz64/rhfa-playground).
 
-The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin.
+The inputs and auxiliary elements are created using a set of components. The mapping can be set all together by overriding the skin, like this:
+
+```javascript
+    import { Autoform as RHFAutoform } from 'react-hook-form-auto'
+
+    import overrides from './skinOverride'
+
+    export const Autoform = (props) =>
+      <RHFAutoform
+        {...props}
+        skinOverride={overrides}
+      />
+```
 
 You can take a look at [defaultSkin.js](https://github.com/dgonz64/react-hook-form-auto/blob/master/src/ui/defaultSkin.jsx) and [`components/index.js`](https://github.com/dgonz64/react-hook-form-auto/tree/master/src/ui/components) from any skin to have a glimpse.
+
+Also find [here](https://github.com/dgonz64/rhfa-material-ui/blob/master/src/skinOverride.js#L56) a full skin override.
 
 There's an entry in the skin object for every field type. The value of the entry is an object with two attributes like in this example:
 

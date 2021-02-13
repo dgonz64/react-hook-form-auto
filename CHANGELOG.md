@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.7
+
+### Added
+
+* Actual example as to how to specify skin overrides.
+* Update React Native status.
+
 ## 1.2.6
 
 ### Added
