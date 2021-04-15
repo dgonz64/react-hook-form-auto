@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.8
+
+### Added
+
+* You can affect whole array fields with a more semantic `FieldPropsOverride` name.
+
 ## 1.2.7
 
 ### Added

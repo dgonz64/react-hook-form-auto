@@ -392,7 +392,7 @@ You can override field props individually. You can do this with a component call
       </Autoform>
 ```
 
-The name should specify the path without taking into account array order. For example, if a `pet` serves as an schema array for an `owner` and you want to override every pet name from `pets` field (array), you should use `pets.name` as the `name` prop:
+The name can specified without taking into account array ordinals. For example, if a `pet` serves as an schema array for an `owner` and you want to override every pet name from `pets` field (array), you should use `pets.name` as the `name` prop:
 
 ```javascript
     <FieldPropsOverride
@@ -400,6 +400,8 @@ The name should specify the path without taking into account array order. For ex
       ...overrides...
     />
 ```
+
+It can also be an specific path like `pets[0].name`.
 
 ### Coercers
 

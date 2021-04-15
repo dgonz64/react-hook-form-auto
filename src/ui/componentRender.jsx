@@ -83,7 +83,8 @@ function searchForOverrides(parent, name, children = []) {
   return childrenArr.reduce((override, child) => {
     const childName = child.props.name
     const isOverride = child.type.name == 'FieldPropsOverride'
-    if (isOverride && name == childName) {
+    const unbracked = name.replace(/ *\[[^)]*\] */g, '')
+    if (isOverride && (childName == name || unbracked == name)) {
       const cloned = Object.assign({}, child.props)
       delete cloned.name
 
