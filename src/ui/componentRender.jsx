@@ -83,10 +83,14 @@ function searchForOverrides(parent, name, children = []) {
   return childrenArr.reduce((override, child) => {
     const childName = child.props.name
     const isOverride = child.type.name == 'FieldPropsOverride'
-    if (isOverride && name == childName)
-      return child.props
-    else
+    if (isOverride && name == childName) {
+      const cloned = Object.assign({}, child.props)
+      delete cloned.name
+
+      return cloned
+    } else {
       return override
+    }
   }, {})
 }
 
@@ -216,6 +220,8 @@ export function renderInput({
     else
       fullField = `${parent || ''}[${index}].${field}`
 
+    const overrides = searchForOverrides(parent, fullField, propOverrides)
+
     const baseProps = {
       ...rest,
       key: fullField,
@@ -233,7 +239,8 @@ export function renderInput({
       skin,
       errors,
       defaultValue: initialValue ?? defaultValue,
-      ...searchForOverrides(parent, fullField, propOverrides)
+      overrides,
+      ...overrides
     }
 
     let allProps
