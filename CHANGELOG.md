@@ -6,6 +6,11 @@
 
 * Actual example as to how to specify skin overrides.
 * Update React Native status.
+* Pass overrides also separately in the `overrides` prop.
+
+### Fixed
+
+* Some security concerns
 
 ## 1.2.6
 

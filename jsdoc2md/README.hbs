@@ -216,9 +216,9 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] Styles to make it look like bootstrap4
 - [x] _Native_ components for famous ui libraries like bootstrap4
   - [ ] Need other? Open issue!
-- [ ] Translated messages from server/async
 - [x] Actually limit children
 - [x] React Native support
+- [ ] Translated messages from server/async
 - [ ] Typescript
 
 # Documentation
