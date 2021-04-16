@@ -4,11 +4,7 @@ import classnames from 'classnames'
 import { schemaTypeEx } from '../utils'
 import { tr } from '../translate'
 import { trError } from '../translation_utils'
-
-/**
- * Allows to specify extra props for a field in runtime.
- */
-export const FieldPropsOverride = () => null
+import { FieldPropsOverride } from './components/FieldPropsOverride'
 
 const validations = {
   required: ({ value, message }) => message,
@@ -82,7 +78,7 @@ function searchForOverrides(parent, name, children = []) {
 
   return childrenArr.reduce((override, child) => {
     const childName = child.props.name
-    const isOverride = child.type.name == 'FieldPropsOverride'
+    const isOverride = child.type == FieldPropsOverride
     const unbracked = name.replace(/ *\[[^)]*\] */g, '')
     if (isOverride && (childName == name || unbracked == name)) {
       const cloned = Object.assign({}, child.props)

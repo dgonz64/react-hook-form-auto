@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.9
+
+### Fixed
+
+* Fixed FieldPropsOverride identification after minification
+
 ## 1.2.8
 
 ### Added
