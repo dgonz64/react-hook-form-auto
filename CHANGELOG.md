@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.10
+
+### Fixed
+
+* Fixed FieldPropsOverride overriding everything
+
 ## 1.2.9
 
 ### Fixed
