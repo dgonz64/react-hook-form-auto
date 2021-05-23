@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.11
+
+### Added
+
+* React 7 support
+
+### Fixed
+
+* Updated some modules for security
+
 ## 1.2.10
 
 ### Fixed

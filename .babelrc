@@ -4,12 +4,14 @@
 			"targets": {
 				"node": true
 			}
-		}]
+		}],
+		[ "@babel/preset-react", {
+      "runtime": "automatic"
+    }]
 	],
 	"plugins": [
 		"@babel/plugin-transform-spread",
 		"@babel/plugin-proposal-object-rest-spread",
 		"@babel/plugin-proposal-class-properties",
-		"@babel/transform-react-jsx"
 	]
 }
