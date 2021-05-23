@@ -167,8 +167,6 @@ export let InputArrayWrap = ({
 
       const taint = `${name}[${idx}].${deletedMark}`
       setValue(taint, true)
-
-      formHook.trigger(counterField)
     }
 
     const closeButton = renderCloseButton({
@@ -210,7 +208,6 @@ export let InputArrayWrap = ({
   })
 
   const handleAdd = () => {
-    formHook.trigger(counterField)
     dispatch(inputArray.add())
     checkSetErrorMessage(items.num + 1)
   }

@@ -9,6 +9,7 @@
 ### Fixed
 
 * Updated some modules for security
+* Removed unneeded field triggers
 
 ## 1.2.10
 
