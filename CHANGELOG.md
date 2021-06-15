@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.12
+
+### Fixed
+
+* Make clear in docs that you need version 6 of `react-hook-form`
+
 ## 1.2.11
 
 ### Added

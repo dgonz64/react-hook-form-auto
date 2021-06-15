@@ -57,12 +57,12 @@ This library allows your React application to automatically generate forms using
 
 ## Installation
 
-    $ npm install react-hook-form react-hook-form-auto --save
+    $ npm install react-hook-form@6 react-hook-form-auto --save
 
 ## Deprecated
 
-* 1.2.0 works with react-hook-form 6+.
-* 1.1.0 works with react-hook-form 4+. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
+* 1.2.0 works with react-hook-form 6.
+* 1.1.0 works with react-hook-form 4 and 5. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
 ## Usage
 
@@ -220,6 +220,7 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] React Native support
 - [ ] Translated messages from server/async
 - [ ] Typescript
+- [ ] Make it compatible with `react-hook-form` 7.
 
 # Documentation
 
