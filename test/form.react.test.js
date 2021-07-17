@@ -66,7 +66,7 @@ test('basic tests in input', () => {
   expect(petName.prop('name')).toBe('pet.name')
   expect(petName.prop('defaultValue')).toBe('Print Screen')
 
-  const pet0Name = form.find('input[name="pets[0].name"]')
+  const pet0Name = form.find('input[name="pets.0.name"]')
   expect(pet0Name).toHaveLength(1)
 
   const carSizes = form.find('select[name="carSize"] option')

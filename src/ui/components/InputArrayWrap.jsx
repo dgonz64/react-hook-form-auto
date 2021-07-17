@@ -165,7 +165,7 @@ export let InputArrayWrap = ({
       dispatch(inputArray.remove(idx))
       checkSetErrorMessage(items.num - 1)
 
-      const taint = `${name}[${idx}].${deletedMark}`
+      const taint = `${name}.${idx}.${deletedMark}`
       setValue(taint, true)
     }
 

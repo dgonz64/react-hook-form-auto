@@ -47,27 +47,14 @@ export function validationRules(fieldSchema) {
 }
 
 /**
- * HoC for register that automatically adds validation rules
- *
- * @param {object} rules ReactHookForm rules
- * @param {function} register useForm's register
- */
-export function registerWithRules(rules, register) {
-  if (Object.keys(rules).length == 0)
-    return register
-  else
-    return params => params ? register(params, rules) : register(rules)
-}
-
-/**
  * Passes the validation parameters to react-hook-form
  *
  * @param {object} fieldSchema Schema for the field
  * @param {function} register react-hook-form register
  */
-export function registerValidation(fieldSchema, register) {
+export function registerValidation(name, fieldSchema, register) {
   const rules = validationRules(fieldSchema)
-  return registerWithRules(rules, register)
+  return register(name, rules)
 }
 
 /**
@@ -79,7 +66,7 @@ function searchForOverrides(parent, name, children = []) {
   return childrenArr.reduce((override, child) => {
     const childName = child.props.name
     const isOverride = child.type == FieldPropsOverride
-    const unbracked = name.replace(/ *\[[^)]*\] */g, '')
+    const unbracked = name.replace(/ *[\[.][^)]*[\].] */g, '')
     if (isOverride && (childName == name || childName == unbracked)) {
       const cloned = Object.assign({}, child.props)
       delete cloned.name
@@ -102,6 +89,11 @@ function renderSingleInput(props) {
     option,
     inline,
     register,
+    registerProps: {
+      onChange,
+      onBlur,
+      ref
+    },
     key,
     styles,
     fieldSchema,
@@ -115,11 +107,15 @@ function renderSingleInput(props) {
   const $wrapper = wrapper
   const $component = component
   const isComponent = typeof component != 'string'
-  const baseProps = {
-    key: name,
-    name: name,
-    type: type,
-    value: option,
+  let baseProps = {
+    key: actualKey,
+    name,
+    type,
+    onChange: (par1, par2) => {
+      debugger
+      onChange(par1, par2)
+    },
+    onBlur,
     defaultValue,
     className: classnames(styles.input, styles.standard, {
       [styles.errored]: errors[field]
@@ -127,11 +123,23 @@ function renderSingleInput(props) {
     ...fieldSchema.addInputProps
   }
 
-  if (!isComponent && !noRef)
-    baseProps.ref = register
+  if (option)
+    baseProps.value = option
 
-  const componentProps = isComponent ?
-    { ...baseProps, ...rest, field, errors, fieldSchema, styles, register } : baseProps
+  let componentProps
+  if (isComponent) {
+    componentProps = {
+      ...baseProps,
+      ...rest,
+      field,
+      errors,
+      fieldSchema,
+      styles,
+      register
+    }
+  } else {
+    componentProps = baseProps
+  }
 
   if (noAutocomplete || fieldSchema.noAutocomplete)
     componentProps.autoComplete = 'off'
@@ -209,13 +217,13 @@ export function renderInput({
   const { render, wrapper } = skinElement
   
   const rules = validationRules(fieldSchema)
-  const validatedRegister = registerWithRules(rules, register)
   if (render) {
     let fullField
     if (typeof index == 'undefined')
       fullField = parent ? `${parent}.${field}` : field
     else
-      fullField = `${parent || ''}[${index}].${field}`
+      fullField = `${parent || ''}.${index}.${field}`
+    const registerProps = register(fullField, rules)
 
     const overrides = searchForOverrides(parent, fullField, propOverrides)
 
@@ -230,7 +238,8 @@ export function renderInput({
       parent,
       propOverrides,
       wrapper: wrapper || skin.defaultWrap,
-      register: validatedRegister,
+      register,
+      registerProps,
       rules,
       styles,
       skin,
@@ -269,7 +278,6 @@ export function renderInputs({
   schema,
   config = {},
   children,
-  register,
   errors,
   propOverrides,
   initialValues = {},
@@ -282,7 +290,6 @@ export function renderInputs({
   return schemaKeys.map(field =>
     renderInput({
       ...rest,
-      register,
       field,
       config,
       errors,

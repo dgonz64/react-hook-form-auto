@@ -33,7 +33,7 @@
     "minimist": "1.2.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-hook-form": "^6.3.0",
+    "react-hook-form": "^7.11.0",
     "rimraf": "^3.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
@@ -41,7 +41,7 @@
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17",
-    "react-hook-form": "^6.3.0"
+    "react-hook-form": "^7"
   },
   "dependencies": {
     "classnames": "^2.2.6"

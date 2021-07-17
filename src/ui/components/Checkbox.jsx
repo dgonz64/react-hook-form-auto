@@ -4,6 +4,8 @@ import { trModel } from '../../translation_utils'
 export let Checkbox = ({
   schemaTypeName,
   name,
+  onChange,
+  onBlur,
   defaultValue,
   styles = {},
   field 
@@ -17,7 +19,8 @@ export let Checkbox = ({
         id={name}
         type="checkbox"
         name={name}
-        ref={ref}
+        onChange={onChange}
+        onBlur={onBlur}
         defaultChecked={defaultChecked}
         className={styles.checkbox}
       />

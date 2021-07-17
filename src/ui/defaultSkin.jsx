@@ -4,7 +4,6 @@ import classnames from 'classnames'
 import { InputWrap } from './components/InputWrap'
 import { RadiosWrap } from './components/RadiosWrap'
 import { Radio } from './components/Radio'
-import { InputArrayWrap } from './components/InputArrayWrap'
 import { InputArrayTable } from './components/InputArrayTable'
 import { InputArrayPanel } from './components/InputArrayPanel'
 import { Select } from './components/Select'
@@ -53,7 +52,15 @@ export default {
   },
   radios: {
     render: (props) => {
-      const { schemaTypeName, field, fieldSchema, register, ...rest } = props
+      const {
+        schemaTypeName,
+        field,
+        fieldSchema,
+        onChange,
+        onBlur,
+        ref,
+        ...rest
+      } = props
       const { options } = fieldSchema
       const optionsProcessed = processOptions({
         schemaTypeName,
@@ -77,7 +84,8 @@ export default {
               option={op.value}
               label={op.label}
               field={props.field}
-              ref={register}
+              onChange={onChange}
+              onBlur={onBlur}
               inline
             />
           )
@@ -93,11 +101,12 @@ export default {
   boolean: {
     coerce: value => Boolean(value),
     render: (props) => {
-      const { register, ...rest } = props
+      const { onChange, onBlur, ...rest } = props
 
       return {
         ...rest,
-        ref: register,
+        onChange,
+        onBlur,
         component: Checkbox,
         inline: true
       }
