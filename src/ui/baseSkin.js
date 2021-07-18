@@ -64,8 +64,7 @@ export default {
       return coerceObject({ object: obj, schemaDef: otherSchema })
     },
     render: {
-      component: Submodel,
-      inline: true
+      component: Submodel
     }
   }
 }

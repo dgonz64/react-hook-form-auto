@@ -2,6 +2,7 @@ import React, { forwardRef, cloneElement } from 'react'
 import { trField } from '../../translation_utils'
 
 const Wrap = ({
+  id,
   name,
   children,
   inline,
@@ -24,7 +25,7 @@ const Wrap = ({
       >
         <label
           key="label"
-          htmlFor={name}
+          htmlFor={id}
           className={styles.label}
         >
           {label}
@@ -37,6 +38,7 @@ const Wrap = ({
 
 export let InputWrap = (props, ref) => {
   const {
+    id,
     name,
     field,
     children,
@@ -54,6 +56,7 @@ export let InputWrap = (props, ref) => {
 
   return (
     <Wrap
+      id={id}
       name={name}
       inline={inline}
       styles={styles}

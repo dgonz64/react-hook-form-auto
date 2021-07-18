@@ -80,6 +80,7 @@ function searchForOverrides(parent, name, children = []) {
 
 function renderSingleInput(props) {
   const {
+    id,
     component,
     wrapper,
     name,
@@ -108,6 +109,7 @@ function renderSingleInput(props) {
   const $component = component
   const isComponent = typeof component != 'string'
   let baseProps = {
+    id,
     key: actualKey,
     name,
     type,
@@ -146,6 +148,7 @@ function renderSingleInput(props) {
 
   return (
     <$wrapper
+      id={id}
       key={actualKey}
       name={name}
       field={field}
@@ -227,8 +230,11 @@ export function renderInput({
 
     const overrides = searchForOverrides(parent, fullField, propOverrides)
 
+    const id = `${schemaTypeName}-${fullField}`
+
     const baseProps = {
       ...rest,
+      id,
       key: fullField,
       name: fullField,
       field,
