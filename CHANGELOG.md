@@ -5,6 +5,7 @@
 ### Added
 
 * Compatibility with react-hook-form 7
+* [Guide for skin migrations](docs/migrate-1.2-to-1.3.md)
 * Inputs are bound individually to errors. That reduces whole form re-renders.
 * (skins) `react-hook-form-auto` now takes care of register and not the skin. The skin will receive `onChange` and `onBlur`
 * (skins) Can take care of the logic for controlled components. Just add `controlled: true` to your skin entry and the skin component will receive also `value`.
@@ -15,6 +16,7 @@
 * `onErrors` prop of `Autoform` is only called in submit
 * label's `for` and field's `id` now include the schema name in order to avoid potential collisions
 * `InputWrap` is now in charge of `array` type error display
+* Skin documentation was updated
 * (skins) `errors` are now only one and it's a string called `errorText`.
 * (skins) `array` the fields now unregister removed subobjects
 * (internal) `objectTraverse` now supports `returnValue` option that returns the value instead of its context

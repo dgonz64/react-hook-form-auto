@@ -1,6 +1,6 @@
 # Affects skins
 
-After a [good question](https://github.com/dgonz64/react-hook-form-auto/issues/16) I though the best way to do it was to upgrade to react-hook-form 7 because tracking `ref` felt kind of hacky. If you don't have skin components, you are good to go. Just update corresponding the library of the family, and react-hook-form.
+After a [good question](#16) I though the best way to manage field change reaction was to upgrade to react-hook-form 7 because tracking `ref` felt kind of hacky. If you don't have skin components, you are good to go. Just update corresponding the library of the family, and react-hook-form.
 
 If you made a skin, I hope this migration guide helps.
 

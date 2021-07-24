@@ -10,6 +10,7 @@ The exception is if you made a skin for your project, then you should follow [th
 
 ## Contents
 
+* [Installation](#installation)
 * [Usage](#usage)
   * [1. Write schema](#1-write-schema)
   * [2. Render a form](#2-render-a-form)
