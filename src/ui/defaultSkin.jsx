@@ -4,7 +4,6 @@ import classnames from 'classnames'
 import { InputWrap } from './components/InputWrap'
 import { RadiosWrap } from './components/RadiosWrap'
 import { Radio } from './components/Radio'
-import { InputArrayWrap } from './components/InputArrayWrap'
 import { InputArrayTable } from './components/InputArrayTable'
 import { InputArrayPanel } from './components/InputArrayPanel'
 import { Select } from './components/Select'
@@ -28,7 +27,8 @@ export default {
   string: {
     render: props => ({
       ...props,
-      component: props.fieldSchema.textarea ? 'textarea' : 'input'
+      component: props.fieldSchema.textarea ? 'textarea' : 'input',
+      type: 'text'
     }),
   },
   password: {
@@ -53,7 +53,13 @@ export default {
   },
   radios: {
     render: (props) => {
-      const { schemaTypeName, field, fieldSchema, register, ...rest } = props
+      const {
+        schemaTypeName,
+        field,
+        fieldSchema,
+        ref,
+        ...rest
+      } = props
       const { options } = fieldSchema
       const optionsProcessed = processOptions({
         schemaTypeName,
@@ -77,7 +83,6 @@ export default {
               option={op.value}
               label={op.label}
               field={props.field}
-              ref={register}
               inline
             />
           )
@@ -93,11 +98,8 @@ export default {
   boolean: {
     coerce: value => Boolean(value),
     render: (props) => {
-      const { register, ...rest } = props
-
       return {
-        ...rest,
-        ref: register,
+        ...props,
         component: Checkbox,
         inline: true
       }

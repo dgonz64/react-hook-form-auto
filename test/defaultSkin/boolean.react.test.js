@@ -19,12 +19,12 @@ test('Allows checkboxes', () => {
     <Autoform schema={custom} />
   )
 
-  const input = app.find('#bin')
+  const input = app.find('input[name="bin"]')
   expect(input.prop('type')).toBe('checkbox')
 
   const label = app.find('label')
   expect(label).toHaveLength(1)
-  expect(label.prop('htmlFor')).toBe('bin')
+  expect(label.prop('htmlFor')).toBe('binarier-bin')
   expect(label.contains('models.binarier.bin')).toBe(true)
 })
 

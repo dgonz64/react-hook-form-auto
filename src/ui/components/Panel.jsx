@@ -2,17 +2,19 @@ import React from 'react'
 import classnames from 'classnames'
 
 export const Panel = ({
+  className,
   header,
   children,
   noMargin,
   styles = {}
 }) => {
-  const contentClasses = classnames(styles.content, {
+  const panelClasses = classnames(styles.panel, className)
+  const contentClasses = classnames(className, styles.content, {
     [styles.contentMargin]: !noMargin
   })
 
   return (
-    <div className={styles.panel}>
+    <div className={panelClasses}>
       <div className={styles.title}>
         {header}
       </div>

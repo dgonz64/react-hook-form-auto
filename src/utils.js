@@ -144,9 +144,10 @@ export function processOptions({
  * Transforms typical form path to array. Example:
  *
  * `pathToArray("pets[4].name") --> ['pets', '4', 'name']`
+ * `pathToArray("pets.4.name") --> ['pets', '4', 'name']`
  */
 export function pathToArray(path) {
-  const unsquared = path.replace(/\[(.*?)\]/g, '.$1')
+  const unsquared = path.replace(/[[.](.*?)[\].]/g, '.$1.')
   return unsquared.split('.')
 }
 
@@ -154,12 +155,13 @@ export function pathToArray(path) {
  * Traverses an object using an array of keys.
  *
  * @param {object} object Object to traverse
- * @param {string|array} path Path in the form `"pets[4].name"`
- *  or `['pets', '4', 'name']`
+ * @param {string|array} path Path in the form `"pets.4.name"`,
+ *  `"pets[4].name"` or `['pets', '4', 'name']`
  * @param {object} options Optional options:
  *  {
- *    createIfMissing: Creates missing entities with
- *      objects
+ *    createIfMissing: false, // Creates missing entities with objects,
+ *    returnValue: false,     // Ultimate value if you are not interested
+ *                            // in context
  *  }
  *
  * @returns {object} Array in the form `[{ object, name }, ...]`
@@ -174,24 +176,42 @@ export function pathToArray(path) {
  * hint to when to create arrays or objects
  */
 export function objectTraverse(object, pathOrArray, options = {}) {
-  const { createIfMissing } = options
+  const {
+    createIfMissing,
+    returnValue
+  } = options
+
   const arrayed = Array.isArray(pathOrArray) ?
     pathOrArray : pathToArray(pathOrArray)
   const [ next, ...rest ] = arrayed
 
   if (next in object) {
-    if (rest.length == 0)
-      return [ object, next ]
-    else
+    if (rest.length == 0) {
+      if (returnValue)
+        return object[next]
+      else
+        return [ object, next ]
+    } else {
       return objectTraverse(object[next], rest, options)
+    }
   } else {
     if (createIfMissing) {
       object[next] = {}
 
       // Repeat
       return objectTraverse(object, arrayed, options)
-    } else
-      return []
+    } else {
+      if (returnValue)
+        return null
+      else
+        return []
+    }
   }
 }
 
+export function inputName({ parent, index, field }) {
+    if (typeof index == 'undefined')
+      return parent ? `${parent}.${field}` : field
+    else
+      return `${parent || ''}.${index}.${field}`
+}

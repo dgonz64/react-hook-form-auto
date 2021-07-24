@@ -1,5 +1,4 @@
-import React, { forwardRef, cloneElement } from 'react'
-import PropTypes from 'prop-types'
+import React, { forwardRef } from 'react'
 
 import { renderInputs } from '../componentRender'
 import { trModel } from '../../translation_utils'

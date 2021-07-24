@@ -25,7 +25,7 @@ test('Allows radios', () => {
   const firstLabel = labels.first()
   expect(firstLabel.contains('models.radiator.radios._field')).toBe(true)
 
-  const op1 = app.find('#radios-op1')
+  const op1 = app.find('#radiator-radios-op1')
   expect(op1.prop('type')).toBe('radio')
   expect(op1.prop('value')).toBe('op1')
 

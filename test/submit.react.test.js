@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
 import config from './utils/enzymeConfig'
+import { changeInput, changeSelect, changeCheckbox } from './utils/changeField'
 import {
   createSchema,
   Autoform,
@@ -42,19 +43,19 @@ test('Submits', async () => {
   )
 
   const input = app.find('input[name="name"]')
-  input.instance().value = 'Hello'
+  changeInput(input, 'Hello')
+
+  const radiator = app.find('#simple-radiator-b')
+  changeInput(radiator, 'b')
 
   const numberer = app.find('input[name="numberer"]')
-  numberer.instance().value = 128
-
-  const radiator = app.find('#radiator-b')
-  radiator.instance().checked = true
+  changeInput(numberer, '128')
 
   const selector = app.find('select[name="selector"]')
-  selector.instance().value = 'd'
+  changeSelect(selector, 'd')
 
   const booler = app.find('input[name="booler"]')
-  booler.instance().checked = true
+  changeCheckbox(booler, true)
 
   const Form = app.find(Autoform)
   await act(async () => {

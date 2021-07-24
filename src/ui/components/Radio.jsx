@@ -1,32 +1,37 @@
 import React, { forwardRef } from 'react'
 
 export let Radio = ({
+  id,
   schemaTypeName,
   name,
   option,
+  onChange,
+  onBlur,
   label,
   styles,
   field,
   defaultValue
 }, ref) => {
-  const id = `${name}-${option}`
+  const fullId = `${id}-${option}`
   const checked = defaultValue == option
 
   return (
     <div key={option} className={styles.radioWrap}>
       <input
         key="val"
-        id={id}
+        id={fullId}
         type="radio"
         name={name}
         value={option}
+        onChange={onChange}
+        onBlur={onBlur}
         ref={ref}
         defaultChecked={checked}
         className={styles.radio}
       />
       <label
         key="label"
-        htmlFor={id}
+        htmlFor={fullId}
         className={styles.radioLabel}
       >
         {label}

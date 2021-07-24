@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
 import config from './utils/enzymeConfig'
+import { changeInput } from './utils/changeField'
 
 import { Autoform } from './utils/buttonHack'
 import { createParenter } from './utils/createParenter'
@@ -14,8 +15,8 @@ const parent = createParenter({
   }
 })
 
-const findInput = (app, idx) =>
-  app.find(`input[name="childs[${idx}].name"]`)
+const findNameInput = (app, idx) =>
+  app.find(`input[name="childs.${idx}.name"]`)
 
 test('Allows to add in an arrayPanel', async () => {
   const app = mount(
@@ -25,14 +26,13 @@ test('Allows to add in an arrayPanel', async () => {
   const button = app.find('button').first()
   await act(async () => {
     await button.simulate('click')
-    await app.update()
   })
 
-  const first = findInput(app, 0)
-  first.instance().value = '111'
+  const first = findNameInput(app, 0)
+  changeInput(first, '111')
 
-  const second = findInput(app, 1)
-  second.instance().value = '222'
+  const second = findNameInput(app, 1)
+  changeInput(second, '222')
 
   const buttons = app.find('button')
   expect(buttons).toHaveLength(3)
@@ -40,10 +40,10 @@ test('Allows to add in an arrayPanel', async () => {
     await buttons.at(1).simulate('click')
   })
 
-  const firstNew = findInput(app, 0)
+  const firstNew = findNameInput(app, 0)
   expect(firstNew).toHaveLength(1)
 
-  const secondNew = findInput(app, 1)
+  const secondNew = findNameInput(app, 1)
   expect(secondNew).toHaveLength(1)
   expect(secondNew.instance().value).toBe('222')
 
@@ -52,32 +52,32 @@ test('Allows to add in an arrayPanel', async () => {
   expect(appText).not.toMatch('error.maxChildren')
 })
 
-test('Complains when lacks children', () => {
+test('Complains when lacks children', async () => {
   const app = mount(
     <Autoform schema={parent} />
   )
 
   const buttons = app.find('button')
   expect(buttons).toHaveLength(2)
-  buttons.at(1).simulate('click')
+  await buttons.at(1).simulate('click')
 
   expect(app.text()).toMatch('error.minChildren')
 })
 
-test('Complains when has too many children and then calms down', () => {
+test('Complains when has too many children and then calms down', async () => {
   const app = mount(
     <Autoform schema={parent} />
   )
 
   const button = app.find('button').first()
-  button.simulate('click')
-  button.simulate('click')
+  await button.simulate('click')
+  await button.simulate('click')
 
   expect(app.text()).toMatch('error.maxChildren')
 
   const buttons = app.find('button')
   expect(buttons).toHaveLength(4)
-  buttons.at(1).simulate('click')
+  await buttons.at(1).simulate('click')
 
   expect(app.text()).not.toMatch('error.maxChildren')
   expect(app.text()).not.toMatch('error.minChildren')

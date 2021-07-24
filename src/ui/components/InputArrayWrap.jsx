@@ -4,10 +4,13 @@ import React, {
   useRef,
   useEffect
 } from 'react'
+import classnames from 'classnames'
+
 import { renderInputs } from '../componentRender'
 import { inputArray } from '../ducks'
 import { tr, trModel } from '../../translation_utils'
 import { deletedMark } from '../deletedMark'
+import { inputName } from '../../utils'
 
 const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
   const boundAdd = e => {
@@ -77,15 +80,6 @@ const renderPanelHeader = ({
   )
 }
 
-export const renderLectures = ({ error, styles, Text }) => {
-  if (error && error.message) {
-    return (
-      <Text className={styles.error}>{error.message}</Text>
-    )
-  } else
-    return null
-}
-
 /**
  * Used for the arrays in models, for
  * example clients: [Clients]
@@ -97,12 +91,12 @@ export let InputArrayWrap = ({
   arrayHandler,
   register,
   unregister,
+  errorText = '',
   fieldSchema,
   fieldSchema: { type },
   schemaTypeName,
   formHook,
   defaultValue,
-  errors = {},
   initiallyEmpty,
   onRemove,
   config,
@@ -110,6 +104,7 @@ export let InputArrayWrap = ({
   isTable,
   setValue,
   skin,
+  skinElement,
   ...rest
 }) => {
   const [ items, dispatch ] = useReducer(
@@ -127,11 +122,8 @@ export let InputArrayWrap = ({
   const Div = skin.div.render
   const Text = skin.text.render
 
-  const fieldErrors = errors[name] || {}
-
   const aliveItems = items.keys.filter(idx => idx !== null)
-  const counterField = `${name}__count`
-  const arrayErrors = errors[counterField]
+  const counterField = skinElement.nameForErrors(name)
 
   const getErrorMessage = (num) => {
     if ('minChildren' in fieldSchema) {
@@ -165,8 +157,18 @@ export let InputArrayWrap = ({
       dispatch(inputArray.remove(idx))
       checkSetErrorMessage(items.num - 1)
 
-      const taint = `${name}[${idx}].${deletedMark}`
+      const taint = `${name}.${idx}.${deletedMark}`
       setValue(taint, true)
+
+      const fieldNames = schema.getFieldNames()
+      fieldNames.forEach(fieldName => {
+        const toUnregister = inputName({
+          parent: name,
+          index: idx,
+          field: fieldName
+        })
+        unregister(toUnregister)
+      })
     }
 
     const closeButton = renderCloseButton({
@@ -199,7 +201,6 @@ export let InputArrayWrap = ({
         styles,
         register,
         unregister,
-        errors: fieldErrors[idx],
         arrayIdx: idx,
         arrayInitialValues: itemDefault,
         skin
@@ -224,12 +225,16 @@ export let InputArrayWrap = ({
     Text
   }
 
+  const panelClasses = classnames({
+    [styles.errored]: errorText
+  })
+
   return (
     <Panel
+      className={panelClasses}
       header={renderPanelHeader(panelProps)}
       styles={styles}
     >
-      { renderLectures({ styles, error: arrayErrors, Text }) }
       <$arrayHandler
         schema={schema}
         config={config}

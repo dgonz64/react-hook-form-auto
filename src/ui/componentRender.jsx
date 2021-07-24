@@ -1,10 +1,13 @@
 import React, { Children } from 'react'
-import classnames from 'classnames'
 
-import { schemaTypeEx } from '../utils'
+import {
+  schemaTypeEx,
+  inputName
+} from '../utils'
 import { tr } from '../translate'
 import { trError } from '../translation_utils'
 import { FieldPropsOverride } from './components/FieldPropsOverride'
+import { AutofieldContainer } from './AutofieldContainer'
 
 const validations = {
   required: ({ value, message }) => message,
@@ -47,27 +50,15 @@ export function validationRules(fieldSchema) {
 }
 
 /**
- * HoC for register that automatically adds validation rules
- *
- * @param {object} rules ReactHookForm rules
- * @param {function} register useForm's register
- */
-export function registerWithRules(rules, register) {
-  if (Object.keys(rules).length == 0)
-    return register
-  else
-    return params => params ? register(params, rules) : register(rules)
-}
-
-/**
  * Passes the validation parameters to react-hook-form
  *
+ * @param {string} name Field name
  * @param {object} fieldSchema Schema for the field
  * @param {function} register react-hook-form register
  */
-export function registerValidation(fieldSchema, register) {
+export function registerValidation(name, fieldSchema, register) {
   const rules = validationRules(fieldSchema)
-  return registerWithRules(rules, register)
+  return register(name, rules)
 }
 
 /**
@@ -78,9 +69,9 @@ function searchForOverrides(parent, name, children = []) {
 
   return childrenArr.reduce((override, child) => {
     const childName = child.props.name
+    const dottedChild = childName && childName.replace(/(\[|\]\.)/g, '.')
     const isOverride = child.type == FieldPropsOverride
-    const unbracked = name.replace(/ *\[[^)]*\] */g, '')
-    if (isOverride && (childName == name || childName == unbracked)) {
+    if (isOverride && dottedChild == name) {
       const cloned = Object.assign({}, child.props)
       delete cloned.name
 
@@ -89,70 +80,6 @@ function searchForOverrides(parent, name, children = []) {
       return override
     }
   }, {})
-}
-
-function renderSingleInput(props) {
-  const {
-    component,
-    wrapper,
-    name,
-    field,
-    type,
-    defaultValue,
-    option,
-    inline,
-    register,
-    key,
-    styles,
-    fieldSchema,
-    noRef,
-    errors = {},
-    noAutocomplete,
-    ...rest
-  } = props
-
-  const actualKey = option ? `${key}.${option}` : key
-  const $wrapper = wrapper
-  const $component = component
-  const isComponent = typeof component != 'string'
-  const baseProps = {
-    key: name,
-    name: name,
-    type: type,
-    value: option,
-    defaultValue,
-    className: classnames(styles.input, styles.standard, {
-      [styles.errored]: errors[field]
-    }),
-    ...fieldSchema.addInputProps
-  }
-
-  if (!isComponent && !noRef)
-    baseProps.ref = register
-
-  const componentProps = isComponent ?
-    { ...baseProps, ...rest, field, errors, fieldSchema, styles, register } : baseProps
-
-  if (noAutocomplete || fieldSchema.noAutocomplete)
-    componentProps.autoComplete = 'off'
-
-  return (
-    <$wrapper
-      key={actualKey}
-      name={name}
-      field={field}
-      styles={styles}
-      fieldSchema={fieldSchema}
-      errors={errors}
-      inline={inline}
-      addWrapperProps={fieldSchema.addWrapperProps}
-      {...rest}
-    >
-      <$component
-        {...componentProps}
-      />
-    </$wrapper>
-  )
 }
 
 /**
@@ -177,14 +104,12 @@ export function renderInput({
     defaultValue
   },
   initialValue,
-  register,
   parent,
   children,
   propOverrides,
   schemaTypeName,
   config = {},
   index,
-  errors,
   skin,
   styles,
   ...rest
@@ -206,52 +131,35 @@ export function renderInput({
       + 'that doesn\'t exist in skin.'
   }
 
-  const { render, wrapper } = skinElement
-  
   const rules = validationRules(fieldSchema)
-  const validatedRegister = registerWithRules(rules, register)
-  if (render) {
-    let fullField
-    if (typeof index == 'undefined')
-      fullField = parent ? `${parent}.${field}` : field
-    else
-      fullField = `${parent || ''}[${index}].${field}`
+  const fullField = inputName({ parent, index, field })
+  const id = `${schemaTypeName}-${fullField}`
 
-    const overrides = searchForOverrides(parent, fullField, propOverrides)
+  const overrides = searchForOverrides(parent, fullField, propOverrides)
 
-    const baseProps = {
-      ...rest,
-      key: fullField,
-      name: fullField,
-      field,
-      fieldSchema,
-      schemaTypeName,
-      config,
-      parent,
-      propOverrides,
-      wrapper: wrapper || skin.defaultWrap,
-      register: validatedRegister,
-      rules,
-      styles,
-      skin,
-      errors,
-      defaultValue: initialValue ?? defaultValue,
-      overrides,
-      ...overrides
-    }
+  defaultValue = typeof initialValue == 'undefined' ?
+    defaultValue : initialValue
 
-    let allProps
-    if (typeof render == 'function')
-      allProps = render ? render(baseProps) : baseProps
-    else
-      allProps = { ...baseProps, ...render }
-
-    if (Array.isArray(allProps))
-      return allProps.map(renderSingleInput)
-    else
-      return renderSingleInput(allProps)
-  } else
-    return null
+  return (
+    <AutofieldContainer
+      {...rest}
+      id={id}
+      key={fullField}
+      name={fullField}
+      field={field}
+      fieldSchema={fieldSchema}
+      schemaTypeName={schemaTypeName}
+      config={config}
+      parent={parent}
+      propOverrides={propOverrides}
+      rules={rules}
+      styles={styles}
+      skin={skin}
+      skinElement={skinElement}
+      defaultValue={defaultValue}
+      overrides={overrides}
+    />
+  )
 }
 
 /**
@@ -269,8 +177,6 @@ export function renderInputs({
   schema,
   config = {},
   children,
-  register,
-  errors,
   propOverrides,
   initialValues = {},
   styles = {},
@@ -282,10 +188,8 @@ export function renderInputs({
   return schemaKeys.map(field =>
     renderInput({
       ...rest,
-      register,
       field,
       config,
-      errors,
       propOverrides: propOverrides || children,
       fieldSchema: schemaDef[field],
       schemaTypeName: schema.getType(),

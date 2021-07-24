@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
 import config from './utils/enzymeConfig'
+import { changeInput } from './utils/changeField'
 import {
   createSchema,
   Autoform,
@@ -46,10 +47,10 @@ test('Passes with pattern', async () => {
   )
 
   const input = app.find('input[name="name"]')
-  input.instance().value = 'abcd'
+  changeInput(input, 'abcd')
 
   const inputWeight = app.find('input[name="weight"]')
-  inputWeight.instance().value = 15
+  changeInput(inputWeight, '15')
 
   const form = app.find(Autoform)
   await act(async () => {
@@ -63,7 +64,7 @@ test('Passes with pattern', async () => {
   })
 })
 
-test('Gives error with message when pattern is bad', async () => {
+test('Calls onErrors with message when pattern is bad', async () => {
   const { wasSubmitted, mockSubmit } = createSubmitMocks()
 
   const app = mount(
@@ -71,12 +72,11 @@ test('Gives error with message when pattern is bad', async () => {
   )
 
   const input = app.find('input[name="name"]')
-  input.instance().value = 'abcx'
+  changeInput(input, 'abcx')
 
   const form = app.find(Autoform)
   await act(async () => {
     await form.simulate('submit')
-    form.update()
   })
 
   expect.assertions(1)
@@ -99,9 +99,9 @@ test('Passes with validation function', async () => {
   )
 
   const name = app.find('input[name="name"]')
-  name.instance().value = 'abcd'
+  changeInput(name, 'abcd')
   const weight = app.find('input[name="weight"]')
-  weight.instance().value = 15
+  changeInput(weight, '15')
 
   const form = app.find(Autoform)
   await act(async () => {
@@ -124,9 +124,9 @@ test('Fails successfuly with validation function', async () => {
   )
 
   const name = app.find('input[name="name"]')
-  name.instance().value = 'abcd'
+  changeInput(name, 'abcd')
   const weight = app.find('input[name="weight"]')
-  weight.instance().value = 150
+  changeInput(weight, '150')
 
   const form = app.find(Autoform)
   await act(async () => {
@@ -159,14 +159,15 @@ test('Fails successfuly with nested components', async () => {
 
   const { calls } = mockSubmit.mock
   return wasSubmitted.then(() => {
-    expect(calls[0][0].name.message).toBe('error.required')
-    expect(calls[0][0].childs).toHaveLength(1)
-    expect(calls[0][0].childs[0].name.message).toBe('error.required')
-    expect(calls[0][0].child.name.message).toBe('error.required')
+    const doc = calls[0][0]
+    expect(doc.name.message).toBe('error.required')
+    expect(doc.childs).toHaveLength(1)
+    expect(doc.childs[0].name.message).toBe('error.required')
+    expect(doc.child.name.message).toBe('error.required')
 
     const fields = [
       'name',
-      'childs[0].name',
+      'childs.0.name',
       'child.name'
     ]
 

@@ -1,7 +1,8 @@
-import React, { forwardRef, cloneElement } from 'react'
+import React, { forwardRef } from 'react'
 import { trField } from '../../translation_utils'
 
 const Wrap = ({
+  id,
   name,
   children,
   inline,
@@ -24,7 +25,7 @@ const Wrap = ({
       >
         <label
           key="label"
-          htmlFor={name}
+          htmlFor={id}
           className={styles.label}
         >
           {label}
@@ -37,23 +38,24 @@ const Wrap = ({
 
 export let InputWrap = (props, ref) => {
   const {
+    id,
     name,
-    field,
+    formHook,
     children,
     schemaTypeName,
     styles,
     labelOverride,
     inline,
-    errors = {},
-    addWrapperProps
+    addWrapperProps,
+    errorText = ''
   } = props
 
   const label = typeof labelOverride != 'undefined' ?
     labelOverride : trField(props)
-  const error = errors[field]
 
   return (
     <Wrap
+      id={id}
       name={name}
       inline={inline}
       styles={styles}
@@ -61,10 +63,10 @@ export let InputWrap = (props, ref) => {
       {...addWrapperProps}
     >
       {children}
-      { error &&
+      { errorText &&
         <div className={styles.error}>
           <div className={styles.errorMessage}>
-            {error.message}
+            {errorText}
           </div>
         </div>
       }

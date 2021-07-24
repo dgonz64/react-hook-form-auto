@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 
 import config from './utils/enzymeConfig'
+import { changeInput } from './utils/changeField'
 import {
   createSchema,
   Autoform,
@@ -40,13 +41,13 @@ test('Coerces', async () => {
   )
 
   const input = app.find('input[name="name"]')
-  input.instance().value = 'Hello'
+  await changeInput(input, 'Hello')
 
-  const amount0 = app.find('input[name="subs[0].amount"]')
-  amount0.instance().value = '42'
+  const amount0 = app.find('input[name="subs.0.amount"]')
+  await changeInput(amount0, '42')
 
   const amount = app.find('input[name="sub.amount"]')
-  amount.instance().value = '666'
+  await changeInput(amount, '666')
 
   const Form = app.find(Autoform)
   await act(async () => {

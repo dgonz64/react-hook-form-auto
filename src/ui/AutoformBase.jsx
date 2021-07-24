@@ -38,15 +38,15 @@ export let AutoformBase = (props, ref) => {
     initialValues : {}
 
   const formHook = useForm({
+    mode: 'all',
     defaultValues: initial
   })
   const {
+    control,
     formState,
     register,
     unregister,
     handleSubmit,
-    errors,
-    watch,
     reset,
     getValues
   } = formHook
@@ -63,9 +63,6 @@ export let AutoformBase = (props, ref) => {
     if (!skipSetInput)
       formHook.setValue(name, value, options)
   }
-
-  if (onErrors && Object.keys(errors).length > 0)
-    onErrors(errors)
 
   const coercedSubmit = createCoercers({
     initialValues: initial,
@@ -105,7 +102,7 @@ export let AutoformBase = (props, ref) => {
     reset(values, omit)
   }
 
-  const submit = handleSubmit(coercedSubmit)
+  const submit = handleSubmit(coercedSubmit, onErrors)
 
   useImperativeHandle(ref, () => ({
     submit,
@@ -125,7 +122,6 @@ export let AutoformBase = (props, ref) => {
     register,
     unregister,
     styles,
-    errors,
     coerceRef,
     skin: finalSkin,
     formHook,

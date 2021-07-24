@@ -2,8 +2,11 @@ import React, { forwardRef } from 'react'
 import { trModel } from '../../translation_utils'
 
 export let Checkbox = ({
+  id,
   schemaTypeName,
   name,
+  onChange,
+  onBlur,
   defaultValue,
   styles = {},
   field 
@@ -14,16 +17,17 @@ export let Checkbox = ({
     <div key={name} className={styles.checkboxWrap}>
       <input
         key="val"
-        id={name}
+        id={id}
         type="checkbox"
         name={name}
-        ref={ref}
+        onChange={onChange}
+        onBlur={onBlur}
         defaultChecked={defaultChecked}
         className={styles.checkbox}
       />
       <label
         key="label"
-        htmlFor={name}
+        htmlFor={id}
         className={styles.checkboxLabel}
       >
         {trModel(schemaTypeName, name)}
