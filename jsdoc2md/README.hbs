@@ -2,6 +2,12 @@
 
 This library allows your React application to automatically generate forms using [ReactHookForm](https://react-hook-form.com/). The form and validations are generated following a schema inspired by [SimpleSchema](https://github.com/aldeed/simple-schema-js).
 
+## New in 1.3.0
+
+Now works with react-hook-form 7 :baloon:. All the members of the family, like `rhfa-react-native` are updated too. You can update the corresponding one and it should work. If not, please open an issue.
+
+The exception is if you made a skin for your project, then you should follow [this guide](docs/migrate-1.2-to-1.3.md).
+
 ## Contents
 
 * [Usage](#usage)
@@ -31,15 +37,20 @@ This library allows your React application to automatically generate forms using
     * [Translation utils](#translation-utils)
     * [Use your own](#use-your-own-translation-system)
   * [Extending](#extending)
-    * [Skinning tutorial](#creating-a-skin)
-  * [Overriding](#overriding)
-    * [Skin component](#skin-component)
-    * [Rendering](#rendering)
-* [Extending](#extending)
-  * [With styles](#with-styles)
-  * [With skin](#overriding-skin)
-* [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
-* [Importing base](#importing-base)
+    * [Extending tutorial](https://github.com/dgonz64/rhfa-playground)
+    * [With styles](#with-styles)
+    * [Overriding skin](#overriding-skin)
+      * [`coerce`](#coerce)
+      * [`render`](#render)
+        * [object](#render-is-an-object)
+        * [function](#render-is-a-function)
+        * [`onChange`, `onBlur`](#onchange-and-onblur-in-render)
+          * [Directly](#use-it-directly-recommended)
+          * [`setValue`](#use-setvalue)
+      * [Other skin attributes](#other-skin-block-attributes)
+      * [`skin[type].render` props](#skin-type-render)
+      * [`skin[type].render.component` props](#skin-type-render-component)
+  * [Importing base](#importing-base)
 
 ## Play with the demos
 
@@ -53,15 +64,16 @@ This library allows your React application to automatically generate forms using
 * [Play with the bootstrap4 demo](https://dgonz64.github.io/react-hook-form-auto-demo-bootstrap4/demo/). [Project](https://github.com/dgonz64/react-hook-form-auto-demo-bootstrap4).
 * [Play with emergency styles demo](https://dgonz64.github.io/react-hook-form-auto-demo/demo). [Project](https://github.com/dgonz64/react-hook-form-auto-demo).
 * [Play with Material-UI demo](https://dgonz64.github.io/rhfa-demo-material-ui/demo/). [Project](https://github.com/dgonz64/rhfa-demo-material-ui)
-* **(new!)** [React Native](https://github.com/dgonz64/rhfa-demo-react-native)
+* [React Native](https://github.com/dgonz64/rhfa-demo-react-native)
 
 ## Installation
 
-    $ npm install react-hook-form@6 react-hook-form-auto --save
+    $ npm install react-hook-form react-hook-form-auto --save
 
 ## Deprecated
 
-* 1.2.0 works with react-hook-form 6.
+* 1.3.0 works with react-hook-form 7. If you didn't override the skin, it should work out of the box after update. Please follow [this guide](docs/migrate-1.2-to-1.3.md).
+* 1.2.0 works with react-hook-form 6: `npm install react-hook-form@6 react-hook-form-auto@1.2 --save`
 * 1.1.0 works with react-hook-form 4 and 5. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
 ## Usage
@@ -122,7 +134,7 @@ It also allows you to build arrays from other schemas. Simply specify the other 
 
 #### 3a. Make it less ugly with some styling
 
-Install the emergency styles if you don't want to bundle a whole bootstrap.
+Install the emergency styles if you don't want to bundle a whole css library.
 
     $ npm install rhfa-emergency-styles --save
 
@@ -219,8 +231,7 @@ Actually there aren't clearly defined goals. The library already suits my person
 - [x] Actually limit children
 - [x] React Native support
 - [ ] Translated messages from server/async
-- [ ] Typescript
-- [ ] Make it compatible with `react-hook-form` 7.
+- [x] Make it compatible with `react-hook-form` 7.
 
 # Documentation
 
@@ -317,7 +328,7 @@ The string returned will be translated. The translation will receive the field's
 
 ### The `validate` validator
 
-The function used to validate the field, as any other validator, can return
+The function used to validate the field, as any other validator, can return:
 
 * true to fail (and automatically generate message) or false to pass
 * An string that will be the error message
@@ -337,6 +348,7 @@ There are some other attributes you can pass while defining the field schema:
 The schema establishes the validation and inputs. The instance can be stored anywhere, like your own model object or a module. At the moment it doesn't change over time.
 
 ### createSchema
+
 {{#function name="createSchema"~}}
 {{>body~}}
 {{/function}}
@@ -640,7 +652,7 @@ Function that converts result to its correct datatype.
 
 Properties for the rendered component.
 
-The attribute `component` is the React component used to render the whole HTML for the input, including label and any other wrappers.
+The attribute `component` is the React component used to render the input inside the wrappers.
 
 ```javascript
     select: {
@@ -650,7 +662,7 @@ The attribute `component` is the React component used to render the whole HTML f
     },
 ```
 
-##### Object
+##### render is an object
 
 Props merged to component's default:
 
@@ -664,7 +676,9 @@ Props merged to component's default:
     },
 ```
 
-##### Function
+If the component is a string, like in this example, it will only receive `<input />`-like props, like `name` and `onChange`.
+
+##### render is a function
 
 Function that takes the component's intended props and returns component's final props:
 
@@ -677,16 +691,16 @@ Function that takes the component's intended props and returns component's final
     },
 ```
 
-#### Register in render
+#### `onChange` and `onBlur` in render
 
-The `component` in the `render` property is also in charge of the field connection with `register`. For that matter you have two options:
+The `component` in the `render` property is also in charge of the field update: For that matter you have two options
 
-Find a way to pass `ref="register"` to the final <input /> dom element:
+##### Use it directly (recommended)
 
 ```javascript
-  const Input = ({ name, register }) =>
+  const Input = ({ name, onChange, onBlur }) =>
     <MyAwesomeWrapping>
-      <input name={name} ref={register} />
+      <input name={name} onChange={onChange} onBlur={onBlur} />
     </MyAwesomeWrapping>
 
   const mySkinOverride = {
@@ -698,11 +712,12 @@ Find a way to pass `ref="register"` to the final <input /> dom element:
   }
 ```
 
-Another way is to register manually and call `setValue` on every change. The component is still uncontrolled but model's value will be updated.
+##### Use `setValue`
+
+Another way is to use `setValue(name, newValue)` on every change. The component is still uncontrolled but model's value will be updated.
 
 ```javascript
   render: ({ name, register, setValue }) => {
-    register({ name })
     const setValueFromEvent = event => {
       setValue(name, event.target.value)
     }
@@ -713,11 +728,36 @@ Another way is to register manually and call `setValue` on every change. The com
   }
 ```
 
-## Overriding
+### Other skin block attributes
+
+```javascript
+    range: {
+      coerce: value => parseFloat(value),
+      controlled: true,
+      skipRegister: true,
+      nameForErrors: name => `${name}__counter`,
+      render: {
+        component: 'input',
+        type: 'range'
+      }
+    },
+```
+
+| Attribute | Means |
+| --------- | ----- |
+| `controlled` | Will `useController()`. Render component will receive also `value` prop |
+| `skipRegister` | Will not automatically register this field. Hasn't any meaning if `controlled` is `true` |
+| `nameForErrors` | Function that receives `name` and returns a transformed name used to navigate through the `errors` object returned from `react-hook-form`'s `useFormState`. Helps to create errors for non registered field like `minChildren` does. |
+
+## Overriding skin
 
 You can override (or add) specific types by using `<Autoform />`'s `skinOverride` prop.
 
-### Skin component
+### Avoid `array` and `schema`
+
+Only override `array` and `schema` types if you know `react-hook-form-auto` internals. For example both need `skipRegister`.
+
+### `skin[type].render
 
 The rest of the properties a skin block can override:
 
@@ -725,39 +765,56 @@ The rest of the properties a skin block can override:
 | ---------------- | ----------------- | ------------------------------------------ |
 | `component`      | element           | Component used to render the input |
 | `wrapper`        | function          | Override wrapper `skin.defaultWrap` |
-| `name`           | string            | Complete field name (with hierarchy) |
-| `field`          | string            | This field name |
+| `name`           | string            | (**Must not be changed**) Complete field name (with hierarchy) |
+| `field`          | string            | (**Shouldn't be changed**) This field name |
 | `option`         | string            | Forces value (used in radios for example ) |
 | `inline`         | boolean           | Goes to the wrapper as `inline` |
-| `register`       | function          | `register` with validation ready (will be automatically passed as second param to ReactHookForm) |
-| `rules`          | object            | Validation rules (useful to help with `<Controller />`) |
 | `styles`         | object            | Style overriding |
 | `fieldSchema`    | object            | Schema specification for the field |
 | `schemaTypeName` | string (required) | Name of the schema that contains the field |
 | `parent`         | string            | Name of the containing field |
 | `config`         | object            | Override config for this input |
-| `index`          | number            | Name for arrays |
-| `errors`         | object            | Validation error overriding |
-| `formHook`       | object            | ReacHookForm's register() object |
+| `index`          | number            | Index for arrays |
+| `formHook`       | object            | ReacHookForm's register() returned object |
 | `autoformProps`  | object            | Properties passed to Autoform |
-| `arrayIdx`       | number            | Index of the element in array if applies |
-| `arrayInitialValues` | object        | Initial values of the array element if applies |
+| `skinElement`    | object            | skin resolver for the type of this field (for example `skin.boolean`) |
 
-There are also other props passed depending on current implementation of `renderInput`, the function in charge of choosing the component and render it.
+### `skin[type].render.component`
 
-### InputWrap
+The value of this field is used to render the input component. If it's a component, the will receive these props, appart from the rest of the `skin[type].render` block.
+
+| Prop             |   Type   | Use |
+| ---------------- | -------- | --------------------------------------------------- |
+| `id`             | string     | Id usable to match label in dom  |
+| `name`             | string     | Full path name for the `<input />` |
+| `type`             | string     | `type` as would be passed to `<input />`  |
+| `defaultValue`     | any     | As calculated from initialValues, schema and skin |
+| `onChange`     | function     | Should be called back with dom `change` event handler |
+| `onBlur`     | function     | Callback for dom `blur` |
+| `className`     | function     | Calculated classes |
+| `field`     | function     | Relative field name |
+| `errorText`     | string     | Validation errors or `''` |
+| `fieldSchema`     | object     | Part of the schema that refers to this field |
+| `formHook`     | object     | As returned from the `useForm()` call |
+| `styles`     | object     | All the styles in case you do class styling |
+| `skinElement`    | object     | Complete skin block specific to this type of field (for example `skin.number`) |
+| `value`     | any     | Only for controlled types (`skin[type].controlled == true`) |
+| ...          | any         | ...any other prop added in schema with `addInputProps` |
+
+### `InputWrap`
 
 It's a common component used to create all the input structure, including wrappers. You can use it to avoid boilerplate.
 
 | Prop             |   Type   | Use |
 | ---------------- | -------- | --------------------------------------------------- |
 | `children`       | element     | (optional) You can use InputWrap to... wrap. |
+| `id`             | string     | id for the `for` attribute of the label |
 | `name`           | string   | Full name (with hierarchy) |
-| `field`          | element  | Field name |
 | `schemaTypeName` | string   | Name of the schema as created |
 | `styles`         | object   | Styles |
 | `labelOverride`  | string   | Label overriding |
-| `errors`         | object   | Validation errors |
+| `inline`         | boolean  | Will omit label |
+| `errorText`      | string   | Validation error |
 
 The props for the input component are different depending if the `inputComponent` is a string, like `'input'` or a React component.
 
@@ -765,10 +822,15 @@ The props for the input component are different depending if the `inputComponent
 
 For a 'lowercase' component like `<input />`, props passed are
 
+* id
 * name
 * type
 * option (if provided, for the value)
 * defaultValue
+* onChange
+* onBlur
+* className calculated
+* ...any fields added to schema's `addInputProps`
 
 #### Class component (ie. `MySlider`)
 
@@ -804,7 +866,7 @@ You can also do it in a more permanent way if you use webpack:
       'react-hook-form-auto': 'react-hook-form-auto/dist/base.js'
     }
   },
-
+```
 
 # Help wanted / contribute
 
@@ -822,6 +884,8 @@ The most important files:
 
 * `src/ui/components/componentRender.jsx` processes the schema to build the inputs and allows skin overrides
 * `src/ui/Autoform.jsx` The component and the coercing logic
+* `src/ui/AutofieldContainer.jsx` Registers or calls `useController()`
+* `src/ui/Autofield.jsx` Wraps component within wrapper
 * `jsdoc2md/README.hbs` Documentation source
 
 See also the [contributing doc](https://github.com/dgonz64/react-hook-form-auto/blob/master/CONTRIBUTING.md).

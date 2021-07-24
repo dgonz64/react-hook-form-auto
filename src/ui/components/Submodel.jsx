@@ -1,4 +1,4 @@
-import React, { forwardRef, cloneElement } from 'react'
+import React, { forwardRef } from 'react'
 
 import { renderInputs } from '../componentRender'
 import { trModel } from '../../translation_utils'

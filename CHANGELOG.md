@@ -1,10 +1,36 @@
 # Changelog
 
-## 1.2.12
+## 1.3.0
+
+### Added
+
+* Compatibility with react-hook-form 7
+* Inputs are bound individually to errors. That reduces whole form re-renders.
+* (skins) `react-hook-form-auto` now takes care of register and not the skin. The skin will receive `onChange` and `onBlur`
+* (skins) Can take care of the logic for controlled components. Just add `controlled: true` to your skin entry and the skin component will receive also `value`.
+* (skins) Can choose a name for error field with `nameForErrors` skin attribute
+
+### Changed
+
+* `onErrors` prop of `Autoform` is only called in submit
+* label's `for` and field's `id` now include the schema name in order to avoid potential collisions
+* `InputWrap` is now in charge of `array` type error display
+* (skins) `errors` are now only one and it's a string called `errorText`.
+* (skins) `array` the fields now unregister removed subobjects
+* (internal) `objectTraverse` now supports `returnValue` option that returns the value instead of its context
+* (internal) Tests updated for the new DOM layout
+* (internal) `componentRender` refactor, separated to `componentRender`, `AutofieldContainer` and `AutoField`
+* (internal, important for tests) field names follow the new `react-hook-form` dotted syntax. You can continue to use the bracked syntax in `FieldPropsOverride` for example.
 
 ### Fixed
 
-* Make clear in docs that you need version 6 of `react-hook-form`
+* Make clear in docs that you need version 6 of `react-hook-form` for older versions of this library in the deprecation section
+* Uncontrolled components with only update individually when there are errors instead of rendering the whole tree
+* `array` type component now unregister
+
+### Removed
+
+* Removed typescript from project roadmap. Pull requests are welcome.
 
 ## 1.2.11
 

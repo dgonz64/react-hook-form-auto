@@ -13,6 +13,8 @@ import { deletedMark } from './deletedMark'
 
 export default {
   array: {
+    skipRegister: true,
+    nameForErrors: name => `${name}__count`,
     coerce: (arr = [], { coerceObject, schemaDef, fieldName }) => {
       const otherSchema = getOtherSchema(schemaDef, fieldName, {
         isArray: true
@@ -58,6 +60,7 @@ export default {
     },
   },
   schema: {
+    skipRegister: true,
     coerce: (obj = {}, { coerceObject, schemaDef, fieldName }) => {
       const otherSchema = getOtherSchema(schemaDef, fieldName, { isArray: false })
 

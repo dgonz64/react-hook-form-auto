@@ -30,5 +30,10 @@ export function createSchema(typeName, schema) {
      * @returns {string} Schema name (also called ``typeName``).
      */
     getType: () => typeName,
+
+    /**
+     * Returns the name of the fields.
+     */
+    getFieldNames: () => Object.keys(schema)
   }
 }

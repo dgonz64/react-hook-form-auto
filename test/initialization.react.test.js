@@ -36,10 +36,10 @@ test('Sets initial values', () => {
   const numChildren = app.find('.button')
   expect(numChildren).toHaveLength(3)
 
-  const child1Name = app.find('input[name="childs[0].name"]')
+  const child1Name = app.find('input[name="childs.0.name"]')
   expect(child1Name.prop('defaultValue')).toBe('One')
 
-  const child2Name = app.find('input[name="childs[1].name"]')
+  const child2Name = app.find('input[name="childs.1.name"]')
   expect(child2Name.prop('defaultValue')).toBe('Two')
 
   const aloneName = app.find('input[name="child.name"]')
@@ -62,7 +62,7 @@ test('Radios have initial values', () => {
     <Autoform schema={schema} initialValues={radioInitial} />
   )
 
-  const input = app.find('#ops-bbb')
+  const input = app.find('#schema-ops-bbb')
   expect(input.prop('defaultChecked')).toBe(true)
 })
 
@@ -81,6 +81,6 @@ test('Checkbox initial values', () => {
     <Autoform schema={schema} initialValues={booleanInitial} />
   )
 
-  const input = app.find('#boolean')
+  const input = app.find('input[name="boolean"]')
   expect(input.prop('defaultChecked')).toBe(true)
 })

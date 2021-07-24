@@ -5,6 +5,8 @@ export let Radio = ({
   schemaTypeName,
   name,
   option,
+  onChange,
+  onBlur,
   label,
   styles,
   field,
@@ -21,6 +23,8 @@ export let Radio = ({
         type="radio"
         name={name}
         value={option}
+        onChange={onChange}
+        onBlur={onBlur}
         ref={ref}
         defaultChecked={checked}
         className={styles.radio}

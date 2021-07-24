@@ -58,7 +58,7 @@ test('basic tests in input', () => {
   const petName = form.find('input[name="pet.name"]')
 
   expect(form).toHaveLength(1)
-  expect(labels).toHaveLength(8)
+  expect(labels).toHaveLength(9)
   expect(inputs).toHaveLength(6)
 
   const label = labels.at(1)

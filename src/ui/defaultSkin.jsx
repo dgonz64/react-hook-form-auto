@@ -27,7 +27,8 @@ export default {
   string: {
     render: props => ({
       ...props,
-      component: props.fieldSchema.textarea ? 'textarea' : 'input'
+      component: props.fieldSchema.textarea ? 'textarea' : 'input',
+      type: 'text'
     }),
   },
   password: {
@@ -56,8 +57,6 @@ export default {
         schemaTypeName,
         field,
         fieldSchema,
-        onChange,
-        onBlur,
         ref,
         ...rest
       } = props
@@ -84,8 +83,6 @@ export default {
               option={op.value}
               label={op.label}
               field={props.field}
-              onChange={onChange}
-              onBlur={onBlur}
               inline
             />
           )
@@ -101,12 +98,8 @@ export default {
   boolean: {
     coerce: value => Boolean(value),
     render: (props) => {
-      const { onChange, onBlur, ...rest } = props
-
       return {
-        ...rest,
-        onChange,
-        onBlur,
+        ...props,
         component: Checkbox,
         inline: true
       }

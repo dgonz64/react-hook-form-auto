@@ -7,7 +7,8 @@ export const createParenter = ({
 } = {}) => {
   const child = createSchema('childer', {
     name: {
-      type: 'string'
+      type: 'string',
+      required: everythingRequired
     }
   })
 

@@ -25,7 +25,7 @@ test('Allows submodels', () => {
   const input = app.find('input[name="fav.name"]')
   expect(input).toHaveLength(1)
 
-  const label = app.find('label[htmlFor="fav.name"]')
+  const label = app.find('label[htmlFor="pet-fav.name"]')
   expect(label.contains('models.pet.name._field')).toBe(true)
 })
 
