@@ -49,8 +49,8 @@ The exception is if you made a skin for your project, then you should follow [th
           * [Directly](#use-it-directly-recommended)
           * [`setValue`](#use-setvalue)
       * [Other skin attributes](#other-skin-block-attributes)
-      * [`skin[type].render` props](#skin-type-render)
-      * [`skin[type].render.component` props](#skin-type-render-component)
+      * [`skin[type].render` props](#skintyperender)
+      * [`skin[type].render.component` props](#skintyperendercomponent)
   * [Importing base](#importing-base)
 
 ## Play with the demos
@@ -806,7 +806,7 @@ You can override (or add) specific types by using `<Autoform />`'s `skinOverride
 
 Only override `array` and `schema` types if you know `react-hook-form-auto` internals. For example both need `skipRegister`.
 
-### `skin[type].render
+### `skin[type].render`
 
 The rest of the properties a skin block can override:
 
