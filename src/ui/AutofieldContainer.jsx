@@ -1,6 +1,11 @@
 import React from 'react'
 import { useController } from 'react-hook-form'
 import { Autofield } from './Autofield'
+import {
+  objectTraverse,
+  valueFromEvent
+} from '../utils'
+import { useAutofieldState } from '../autoform_state'
 
 export const AutofieldContainer = (props) => {
   const {
@@ -11,13 +16,24 @@ export const AutofieldContainer = (props) => {
     schemaTypeName,
     skinElement,
     formHook: { control },
+    formHook,
     register,
     rules,
     overrides,
-    skin
+    skin,
+    stateControl,
+    setVisible,
+    setHelperText,
+    setValue,
+    arrayControl
   } = props
 
-  let baseProps = Object.assign({}, props)
+  const {
+    visible,
+    helperText
+  } = useAutofieldState({ name, stateControl })
+
+  let baseProps = Object.assign({}, props, { helperText })
 
   const { controlled } = skinElement
 
@@ -36,6 +52,34 @@ export const AutofieldContainer = (props) => {
       const registerProps = register(name, rules)
       baseProps.onBlur = registerProps.onBlur
       baseProps.onChange = registerProps.onChange
+      baseProps.inputRef = registerProps.ref
+    }
+  }
+
+  // Allow field schema onChange
+  if ('onChange' in fieldSchema) {
+    const { onChange } = baseProps
+
+    const onChangeArguments = {
+      name,
+      setVisible,
+      setHelperText,
+      formHook,
+      setValue,
+      arrayControl
+    }
+
+    baseProps.onChange = (event) => {
+      const value = valueFromEvent(event)
+      onChange(event)
+
+      fieldSchema.onChange(value, onChangeArguments)
+    }
+
+    baseProps.setValue = (name, value) => {
+      setValue(name, value)
+
+      fieldSchema.onChange(value, onChangeArguments)
     }
   }
 
@@ -48,7 +92,7 @@ export const AutofieldContainer = (props) => {
     transformedProps = { ...baseProps, ...render }
   transformedProps = { ...transformedProps, ...overrides }
 
-  if (transformedProps.component) {
+  if (visible && transformedProps.component) {
     return (
       <Autofield
         {...transformedProps}

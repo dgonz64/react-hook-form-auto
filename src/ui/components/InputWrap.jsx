@@ -47,6 +47,7 @@ export let InputWrap = (props, ref) => {
     labelOverride,
     inline,
     addWrapperProps,
+    helperText = '',
     errorText = ''
   } = props
 
@@ -63,6 +64,11 @@ export let InputWrap = (props, ref) => {
       {...addWrapperProps}
     >
       {children}
+      { helperText &&
+        <div className={styles.helper}>
+          {helperText}
+        </div>
+      }
       { errorText &&
         <div className={styles.error}>
           <div className={styles.errorMessage}>

@@ -14,6 +14,8 @@ export const Autofield = (props) => {
     formHook,
     defaultValue,
     fieldSchema,
+    helperText,
+    inputRef,
     type,
     option,
     inline,
@@ -69,7 +71,10 @@ export const Autofield = (props) => {
       skinElement
     }
   } else {
-    componentProps = componentBaseProps
+    componentProps = {
+      ...componentBaseProps,
+      ref: inputRef
+    }
   }
 
   if (noAutocomplete || fieldSchema.noAutocomplete)
@@ -85,6 +90,7 @@ export const Autofield = (props) => {
       styles={styles}
       fieldSchema={fieldSchema}
       errorText={errorText}
+      helperText={helperText || fieldSchema.helperText}
       inline={inline}
       addWrapperProps={fieldSchema.addWrapperProps}
     >
@@ -94,4 +100,3 @@ export const Autofield = (props) => {
     </$wrapper>
   )
 }
-

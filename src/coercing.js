@@ -1,8 +1,12 @@
-import { deepmerge, schemaTypeEx } from './utils'
+import {
+  deepmerge,
+  schemaTypeEx,
+  objectTraverse
+} from './utils'
 
 export function createCoercers({
   initialValues,
-  coerceRef,
+  stateRef,
   skin,
   onSubmit,
   schema
@@ -41,7 +45,22 @@ export function createCoercers({
       })
     }
 
-    const wholeObj = deepmerge({}, initialValues, doc, coerceRef.current)
+    const fields = Object.keys(stateRef.current)
+    const values = fields.reduce((values, field) => {
+      const state = stateRef.current[field]
+
+      if (state.changed) {
+        const [ container, attr ] = objectTraverse(values, field, {
+          createIfMissing: true
+        })
+        if (container && attr)
+          container[attr] = state.value
+      }
+
+      return values
+    }, {})
+
+    const wholeObj = deepmerge({}, initialValues, doc, values)
     const coerced = coerceWithSchema({ doc: wholeObj, schema })
 
     onSubmit(coerced, doc)

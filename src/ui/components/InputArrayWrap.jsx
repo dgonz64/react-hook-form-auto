@@ -152,19 +152,24 @@ export let InputArrayWrap = ({
     }
   }
 
+  const handleAdd = () => {
+    dispatch(inputArray.add())
+    checkSetErrorMessage(items.num + 1)
+  }
+
   const itemsInputs = aliveItems.map(idx => {
-    const handleRemove = (idx) => {
-      dispatch(inputArray.remove(idx))
+    const handleRemove = (removeIdx) => {
+      dispatch(inputArray.remove(removeIdx))
       checkSetErrorMessage(items.num - 1)
 
-      const taint = `${name}.${idx}.${deletedMark}`
+      const taint = `${name}.${removeIdx}.${deletedMark}`
       setValue(taint, true)
 
       const fieldNames = schema.getFieldNames()
       fieldNames.forEach(fieldName => {
         const toUnregister = inputName({
           parent: name,
-          index: idx,
+          index: removeIdx,
           field: fieldName
         })
         unregister(toUnregister)
@@ -203,15 +208,16 @@ export let InputArrayWrap = ({
         unregister,
         arrayIdx: idx,
         arrayInitialValues: itemDefault,
-        skin
+        skin,
+        arrayControl: {
+          items,
+          index: idx,
+          remove: handleRemove,
+          add: handleAdd
+        }
       })
     }
   })
-
-  const handleAdd = () => {
-    dispatch(inputArray.add())
-    checkSetErrorMessage(items.num + 1)
-  }
 
   const panelProps = {
     onAdd: handleAdd,

@@ -1,8 +1,8 @@
-import React, { useRef, useImperativeHandle, forwardRef } from 'react'
+import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react'
 import { objectTraverse, isObject, deepmerge } from '../utils'
 import { useForm } from 'react-hook-form'
 import { getComponents, renderInputs } from './componentRender'
-import { createCoercers } from '../coercing'
+import { useAutoformState } from '../autoform_state'
 
 import baseSkin from './baseSkin'
 
@@ -32,14 +32,9 @@ export let AutoformBase = (props, ref) => {
     throw new Error('<Autoform /> was rendered without schema.')
   }
 
-  const coerceRef = useRef({})
-
-  const initial = initialValues && isObject(initialValues) ?
-    initialValues : {}
-
   const formHook = useForm({
     mode: 'all',
-    defaultValues: initial
+    defaultValues: initialValues
   })
   const {
     control,
@@ -53,54 +48,21 @@ export let AutoformBase = (props, ref) => {
 
   const finalSkin = { ...baseSkin, ...skin, ...skinOverride }
 
-  const setValue = (name, value, options, skipSetInput) => {
-    const [ container, attr ] = objectTraverse(coerceRef.current, name, {
-      createIfMissing: true
-    })
-    if (container && attr)
-      container[attr] = value
-
-    if (!skipSetInput)
-      formHook.setValue(name, value, options)
-  }
-
-  const coercedSubmit = createCoercers({
-    initialValues: initial,
-    coerceRef,
-    skin: finalSkin,
+  const {
+    coercedSubmit,
+    setValue,
+    setVisible,
+    setHelperText,
+    resetState,
+    stateControl
+  } = useAutoformState({
+    initialValues,
     onSubmit,
-    schema
+    schema,
+    skin: finalSkin,
+    formHook,
+    skipManualReset
   })
-
-  const resetAlsoCoercers = (values, omit) => {
-    coerceRef.current = {}
-    deepmerge(coerceRef.current, values || {})
-
-    const currentValues = getValues()
-
-    if (!skipManualReset) {
-      // Reset by setting everything to initialValues or null.
-      function resetValues(obj, initials = {}, path = '', isArray = false) {
-        const fields = Object.keys(obj)
-        fields.forEach((field, idx) => {
-          const value = obj[field]
-          const elPath = isArray ?
-            `${path}[${idx}]` : (path ? `${path}.${field}` : field)
-          const initial = initials[field]
-          if (typeof value == 'object')
-            resetValues(value, initial, elPath, Array.isArray(value))
-          else {
-            const initialOrNull = typeof initial == 'undefined' ? null : initial
-            formHook.setValue(elPath, initialOrNull)
-          }
-        })
-      }
-
-      resetValues(currentValues, initialValues)
-    }
-
-    reset(values, omit)
-  }
 
   const submit = handleSubmit(coercedSubmit, onErrors)
 
@@ -108,24 +70,27 @@ export let AutoformBase = (props, ref) => {
     submit,
     formHook: () => formHook,
     setValue,
-    reset: resetAlsoCoercers
+    setVisible,
+    reset: resetState
   }))
 
   const inputProps = {
     ...rest,
     ...elementProps,
     reset,
-    setValue,
     children,
-    initialValues: initial,
+    initialValues,
     schema,
     register,
     unregister,
     styles,
-    coerceRef,
     skin: finalSkin,
     formHook,
-    autoformProps: props
+    autoformProps: props,
+    stateControl,
+    setValue,
+    setVisible,
+    setHelperText
   }
 
   const Button = finalSkin.button.render

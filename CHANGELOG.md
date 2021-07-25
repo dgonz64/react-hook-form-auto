@@ -7,6 +7,8 @@
 * Compatibility with react-hook-form 7
 * [Guide for skin migrations](docs/migrate-1.2-to-1.3.md)
 * Inputs are bound individually to errors. That reduces whole form re-renders.
+* EXPERIMENTAL: Allows field value reaction with `onChange` in the schema definition. [Documentation](docs/schema-onchange.md)
+* Schemas can set a helper text for the field with `helperText`
 * (skins) `react-hook-form-auto` now takes care of register and not the skin. The skin will receive `onChange` and `onBlur`
 * (skins) Can take care of the logic for controlled components. Just add `controlled: true` to your skin entry and the skin component will receive also `value`.
 * (skins) Can choose a name for error field with `nameForErrors` skin attribute
@@ -23,6 +25,7 @@
 * (internal) Tests updated for the new DOM layout
 * (internal) `componentRender` refactor, separated to `componentRender`, `AutofieldContainer` and `AutoField`
 * (internal, important for tests) field names follow the new `react-hook-form` dotted syntax. You can continue to use the bracked syntax in `FieldPropsOverride` for example.
+* (internal) `coerceRef` becomes `stateRef` and holds state, not only value. Also its keys are now paths instead of a fully structured doc.
 
 ### Fixed
 

@@ -4,7 +4,9 @@ This library allows your React application to automatically generate forms using
 
 ## New in 1.3.0
 
-Now works with react-hook-form 7 :baloon:. All the members of the family, like `rhfa-react-native` are updated too. You can update the corresponding one and it should work. If not, please open an issue.
+Now works with React Hook Form 7 🎉
+
+All the members of the family, like `rhfa-react-native` are updated too. You can update the corresponding one and it should work. If not, please open an issue.
 
 The exception is if you made a skin for your project, then you should follow [this guide](docs/migrate-1.2-to-1.3.md).
 
@@ -24,6 +26,7 @@ The exception is if you made a skin for your project, then you should follow [th
   * [Validators](#validators)
     * [`validate` validator](#the-validate-validator)
   * [Other schema fields](#other-schema-fields)
+    * [Schema onChange](docs/schema-onchange.md) NEW, EXPERIMENTAL
   * [Schema](#schema)
   * [`Autoform` component](#autoform-component)
   * [Config](#config)
@@ -343,6 +346,7 @@ There are some other attributes you can pass while defining the field schema:
 | noAutocomplete  | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
 | addWrapperProps | object    | Directly passed to wrapper component |
 | addInputProps   | object    | Props merged into input component |
+| onChange        | function  | Allows you to change values on the fly. See [this](docs/schema-onchange.md). Warning: EXPERIMENTAL |
 
 ### Schema
 
@@ -794,11 +798,16 @@ The value of this field is used to render the input component. If it's a compone
 | `onBlur`     | function     | Callback for dom `blur` |
 | `className`     | function     | Calculated classes |
 | `field`     | function     | Relative field name |
+| `inputRef`     | function     | ref for the input element. Comes from `register` and it's used to update fields imperatively |
 | `errorText`     | string     | Validation errors or `''` |
 | `fieldSchema`     | object     | Part of the schema that refers to this field |
 | `formHook`     | object     | As returned from the `useForm()` call |
 | `styles`     | object     | All the styles in case you do class styling |
 | `skinElement`    | object     | Complete skin block specific to this type of field (for example `skin.number`) |
+| `setVisible`    | function     | Changes visibility of fields `setVisible(name, visible)` |
+| `setHelperText`    | function     | Changes field helper text `setVisible(name, text)` |
+| `setValue`    | function     | Changes value of any field `setValue(name, value)` |
+| `arrayControl`    | object     | Some control functions in the case field is inside an array. See [this](doc/schema-onchange.md#arraycontrol) |
 | `value`     | any     | Only for controlled types (`skin[type].controlled == true`) |
 | ...          | any         | ...any other prop added in schema with `addInputProps` |
 
@@ -830,6 +839,7 @@ For a 'lowercase' component like `<input />`, props passed are
 * defaultValue
 * onChange
 * onBlur
+* ref
 * className calculated
 * ...any fields added to schema's `addInputProps`
 

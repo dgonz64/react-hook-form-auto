@@ -164,7 +164,7 @@ export function pathToArray(path) {
  *                            // in context
  *  }
  *
- * @returns {object} Array in the form `[{ object, name }, ...]`
+ * @returns {array} Array in the form `[ object, attribute ]`
  *  (or empty if subobject is not found).
  *
  *  This allows you to mutate original object like this:
@@ -192,6 +192,9 @@ export function objectTraverse(object, pathOrArray, options = {}) {
       else
         return [ object, next ]
     } else {
+      if (createIfMissing && typeof object[next] == 'undefined')
+        object[next] = {}
+
       return objectTraverse(object[next], rest, options)
     }
   } else {
@@ -209,9 +212,75 @@ export function objectTraverse(object, pathOrArray, options = {}) {
   }
 }
 
+/**
+ * Returns input name in the form 'parent.index.field'
+ *
+ * @param {string} parent Optional parent
+ * @param {number|string} index Optional index
+ * @param {string} field Field
+ *
+ * @returns {string} Depends:
+ *      - If you passed index, then '<parent>.<index>.<field>'
+ *      - Else if you passed parent, then '<parent>.<field>'
+ *      - Else field
+ */
 export function inputName({ parent, index, field }) {
     if (typeof index == 'undefined')
       return parent ? `${parent}.${field}` : field
     else
       return `${parent || ''}.${index}.${field}`
+}
+
+/**
+ * If attr is not found in object, we create it in the form
+ * object[attr] = defaultObject
+ *
+ * @param {object} object Object
+ * @param {string} attr Key
+ * @param {function} create Function that returns a brand new
+ *    object to assign if it didn't exist. Important: It must be
+ *    a new object.
+ *
+ * @returns New or existing object[attr]
+ *
+ * @example
+ *  const obj = { existing: { count: 42 } }
+ *
+ *  valueOrCreate(obj, 'existing', () => ({ count: 0 }))
+ *    // -> { count: 42 }
+ *  valueOrCreate(obj, 'invented', () => ({ count: 0 }))
+ *    // -> { count: 0 }
+ */
+export function valueOrCreate(object, attr, create) {
+  if (!(attr in object))
+    object[attr] = create()
+
+  return object[attr]
+}
+
+/**
+ * @param {any} thing If thing is an event, value
+ *  will be extracted. I consider event anything
+ *  that has target with type
+ * @returns {any} value
+ */
+export function valueFromEvent(thing) {
+  if ('target' in thing) {
+    const { target } = thing
+    if ('type' in target) {
+      const { type, value } = target
+
+      switch (type) {
+      case 'checkbox':
+        return target.checked
+        break
+      default:
+        return value
+      }
+    } else {
+      return thing
+    }
+  } else {
+    return thing
+  }
 }
