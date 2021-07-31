@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.3
+
+### Added
+
+* Pass `inputRef` to skin function components to allow them to have the value changed without need them to be controlled
+* Pass `helperText` to skin function components too. Helps material-ui.
+
 ## 1.3.2
 
 ### Added

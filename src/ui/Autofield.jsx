@@ -60,6 +60,13 @@ export const Autofield = (props) => {
   if (option)
     componentBaseProps.value = option
   
+  let finalHelperText = helperText || fieldSchema.helperText
+  if (!finalHelperText) {
+    const helperId = trPath(props.schemaTypeName, field, '_helper')
+    if (stringExists(helperId))
+      finalHelperText = tr(helperId)
+  }
+
   let componentProps
   if (isComponent) {
     componentProps = {
@@ -70,7 +77,9 @@ export const Autofield = (props) => {
       fieldSchema,
       formHook,
       styles,
-      skinElement
+      skinElement,
+      inputRef,
+      helperText: finalHelperText
     }
   } else {
     componentProps = {
@@ -81,13 +90,6 @@ export const Autofield = (props) => {
 
   if (noAutocomplete || fieldSchema.noAutocomplete)
     componentProps.autoComplete = 'off'
-
-  let finalHelperText = helperText || fieldSchema.helperText
-  if (!finalHelperText) {
-    const helperId = trPath(props.schemaTypeName, field, '_helper')
-    if (stringExists(helperId))
-      finalHelperText = tr(helperId)
-  }
 
   return (
     <$wrapper
