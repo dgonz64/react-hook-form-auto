@@ -57,8 +57,11 @@ export const AutofieldContainer = (props) => {
   }
 
   // Allow field schema onChange
-  if ('onChange' in fieldSchema) {
+  if ('onChange' in fieldSchema || 'onChange' in overrides) {
     const { onChange } = baseProps
+    const overrideOnChange = overrides.onChange
+    if (overrideOnChange)
+      delete overrides.onChange
 
     const onChangeArguments = {
       name,
@@ -69,19 +72,26 @@ export const AutofieldContainer = (props) => {
       arrayControl
     }
 
+    const fireOnChange = (value) => {
+      if (fieldSchema.onChange)
+        fieldSchema.onChange(value, onChangeArguments)
+      if (overrideOnChange)
+        overrideOnChange(value, onChangeArguments)
+    }
+
     baseProps.onChange = (event) => {
       const value = valueFromEvent(event)
       onChange(event)
-
-      fieldSchema.onChange(value, onChangeArguments)
+      fireOnChange(value)
     }
 
     baseProps.setValue = (name, value) => {
       setValue(name, value)
-
-      fieldSchema.onChange(value, onChangeArguments)
+      fireOnChange(value)
     }
   }
+
+  // Allow overrides onChange
 
   const { render } = skinElement
   

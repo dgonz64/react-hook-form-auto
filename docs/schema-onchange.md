@@ -90,9 +90,26 @@ The `context` has information and allows you to operate fields. It's done with a
 | name | <code>string</code> | Full field path. Name compatible with all the utilities |
 | setVisible | <code>function</code> | `setVisible(name, visible)` changes the visibility of the field |
 | setHelperText | <code>function</code> | `setHelperText(name, text)` changes the text that appears below the field |
-| formHook | <code>object</code> | As returned by React Hook Form `register` |
+| formHook | <code>object</code> | As returned by [React Hook Form `useForm`](https://react-hook-form.com/api/useform) (`register`, `unregister`, etc) |
 | setValue | <code>function</code> | `setValue(name, value)` Sets the value of the field |
 | arrayControl | <code>object</code> | Utilities to change array in the case the field is an array |
+
+With `formHook` you can, for example, create errors:
+
+```javascript
+const owner = createSchema('owner', {
+  name: {
+    // ...
+    onChange: (value, { formHook }) => {
+      if (value == 'errorsy') {
+        formHook.setError('height', {
+          type: 'focus',
+          message: 'Something something error'
+        })
+      }
+    }
+  }
+})
 
 ## `arrayControl`
 

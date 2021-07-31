@@ -421,6 +421,32 @@ The name can specified without taking into account array ordinals. For example, 
 
 It can also be an specific path like `pets[0].name`.
 
+#### `<FieldPropsOverride />`'s `onChange`
+
+In `FieldPropsOverride`, `onChange` prop is automatically chained with both ReactHookForm and schema `onChange`. The callback receives exactly [the same arguments as schema `onChange`](https://github.com/dgonz64/react-hook-form-auto/blob/master/docs/schema-onchange.md). The order of calling is:
+
+1. ReactHookForm `onChange`
+1. Schema's `onChange`
+1. `FieldPropsOverride`'s `onChange`
+
+Example:
+
+```javascript
+const handleChange = (value, { setValue }) => {
+  if (value == 'tall')
+    setValue('name', 'André the Giant')
+}
+
+return (
+  <Autoform>
+    <FieldPropsOverride
+      name="height"
+      onChange={handleChange}
+    />
+  </Autoform>
+)
+```
+
 ### Coercers
 
 While react-hook-form works with inputs, this library is focused in models. This means:

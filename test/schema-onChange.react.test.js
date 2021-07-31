@@ -36,7 +36,6 @@ const pet = createSchema('pet', {
     type: 'select',
     options: ['blue', 'yellow'],
     onChange: (value, { name, setHelperText }) => {
-      debugger
       setHelperText(name, `Better not choose ${value}`)
     }
   },

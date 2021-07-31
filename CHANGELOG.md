@@ -5,6 +5,11 @@
 ### Added
 
 * Tests for schema `onChange`
+* Talk about creating errors with `onChange` and test it
+
+### Changed
+
+* `FieldPropsOverride`'s `onChange` now works like schema's and receives [form control context](https://github.com/dgonz64/react-hook-form-auto/blob/master/docs/schema-onchange.md#context).
 
 ### Fixed
 
