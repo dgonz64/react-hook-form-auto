@@ -1,4 +1,4 @@
-# EXPERIMENTAL Schema's onChange
+# Schema's onChange
 
 Now schemas can make the form react to changes. To acomplish that you need to set `onChange` accordingly.
 

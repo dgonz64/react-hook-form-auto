@@ -26,7 +26,7 @@ The exception is if you made a skin for your project, then you should follow [th
   * [Validators](#validators)
     * [`validate` validator](#the-validate-validator)
   * [Other schema fields](#other-schema-fields)
-    * [Schema onChange](docs/schema-onchange.md) NEW, EXPERIMENTAL
+    * [Schema onChange](docs/schema-onchange.md) NEW
   * [Schema](#schema)
   * [`Autoform` component](#autoform-component)
   * [Config](#config)
@@ -346,7 +346,7 @@ There are some other attributes you can pass while defining the field schema:
 | noAutocomplete  | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
 | addWrapperProps | object    | Directly passed to wrapper component |
 | addInputProps   | object    | Props merged into input component |
-| onChange        | function  | Allows you to change values on the fly. See [this](docs/schema-onchange.md). Warning: EXPERIMENTAL |
+| onChange        | function  | Allows you to change values on the fly. See [this](docs/schema-onchange.md). |
 | helperText      | string    | Explicit string for the helper text for the field, for example `tr('example')` |
 
 #### Helper text
