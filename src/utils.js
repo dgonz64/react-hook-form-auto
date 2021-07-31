@@ -266,19 +266,19 @@ export function valueOrCreate(object, attr, create) {
  */
 export function valueFromEvent(thing) {
   if ('target' in thing) {
-    const { target } = thing
-    if ('type' in target) {
-      const { type, value } = target
-
-      switch (type) {
-      case 'checkbox':
-        return target.checked
-        break
-      default:
-        return value
+    const {
+      target,
+      target: {
+        type,
+        value
       }
-    } else {
-      return thing
+    } = thing
+
+    switch (type) {
+    case 'checkbox':
+      return target.checked
+    default:
+      return value
     }
   } else {
     return thing
