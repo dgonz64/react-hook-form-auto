@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.2
+
+### Added
+
+* Tests for schema `onChange`
+
+### Fixed
+
+* Select type schema `onChange` value passing corrected
+
 ## 1.3.1
 
 ### Fixed
