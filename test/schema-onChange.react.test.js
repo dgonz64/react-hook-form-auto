@@ -7,7 +7,8 @@ import {
   createSchema,
   Autoform,
   setLanguageByName,
-  Button
+  Button,
+  Wrap
 } from '../src/index'
 import {
   changeInput,
@@ -19,7 +20,7 @@ const pet = createSchema('pet', {
   name: {
     type: String,
     required: true,
-    maxLength: 8
+    maxLength: 8,
   },
   heads: {
     type: Number,
@@ -45,6 +46,14 @@ const owner = createSchema('owner', {
   name: {
     type: 'string',
     required: true,
+    onChange: (value, { formHook }) => {
+      if (value == 'errorsy') {
+        formHook.setError('height', {
+          type: 'focus',
+          message: 'Something something error'
+        })
+      }
+    }
   },
   height: {
     type: 'radios',
@@ -149,4 +158,18 @@ test('onChange: Change helper text', async () => {
   await app.update()
 
   expect(app.text()).toMatch('Better not choose blue')
+})
+
+test('onChange: Produce error just because', async () => {
+  const app = mount(
+    <Autoform schema={owner} />
+  )
+
+  const name = app.find('input[name="name"]')
+  expect(name).toHaveLength(1)
+
+  await changeInput(name, 'errorsy')
+  await app.update()
+
+  expect(app.text()).toMatch('Something something error')
 })
