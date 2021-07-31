@@ -347,6 +347,15 @@ There are some other attributes you can pass while defining the field schema:
 | addWrapperProps | object    | Directly passed to wrapper component |
 | addInputProps   | object    | Props merged into input component |
 | onChange        | function  | Allows you to change values on the fly. See [this](docs/schema-onchange.md). Warning: EXPERIMENTAL |
+| helperText      | string    | Explicit string for the helper text for the field, for example `tr('example')` |
+
+#### Helper text
+
+The `helperText` attribute in the schema allows you to set a fixed helper text for the field. The helper text can be changed in other ways and this is the precedence order:
+
+1. Text set using `setHelperText` from schema (or `FieldPropsOverride`) `onChange`.
+1. Explicit text set by schema `{ name: 'name', type: 'string', helperText: tr('example') }`
+1. Automatic translation string in the form `models.<schemaTypeName>.<field>._helper`
 
 ### Schema
 

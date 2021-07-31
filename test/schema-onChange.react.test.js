@@ -80,12 +80,6 @@ const owner = createSchema('owner', {
   }
 })
 
-function timedPromise(time = 100) {
-  return new Promise(resolve => {
-    setTimeout(resolve, time)
-  })
-}
-
 test('onChange: hide according to initiallyVisible and change visibility', async () => {
   const app = mount(
     <Autoform schema={owner} />

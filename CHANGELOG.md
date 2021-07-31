@@ -6,6 +6,7 @@
 
 * Tests for schema `onChange`
 * Talk about creating errors with `onChange` and test it
+* The helper text is specified with `setHelperText` from `onChange`, then schema `helperText` then model translated string `models.<schema>.<field>._helper` then blank.
 
 ### Changed
 

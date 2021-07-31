@@ -1,6 +1,8 @@
 import React from 'react'
 import { useFormState } from 'react-hook-form'
 import { objectTraverse } from '../utils'
+import { tr, stringExists } from '../translate'
+import { trPath } from '../translation_utils'
 import classnames from 'classnames'
 
 export const Autofield = (props) => {
@@ -61,8 +63,8 @@ export const Autofield = (props) => {
   let componentProps
   if (isComponent) {
     componentProps = {
-      ...componentBaseProps,
       ...rest,
+      ...componentBaseProps,
       field,
       errorText,
       fieldSchema,
@@ -80,6 +82,13 @@ export const Autofield = (props) => {
   if (noAutocomplete || fieldSchema.noAutocomplete)
     componentProps.autoComplete = 'off'
 
+  let finalHelperText = helperText || fieldSchema.helperText
+  if (!finalHelperText) {
+    const helperId = trPath(props.schemaTypeName, field, '_helper')
+    if (stringExists(helperId))
+      finalHelperText = tr(helperId)
+  }
+
   return (
     <$wrapper
       {...rest}
@@ -90,7 +99,7 @@ export const Autofield = (props) => {
       styles={styles}
       fieldSchema={fieldSchema}
       errorText={errorText}
-      helperText={helperText || fieldSchema.helperText}
+      helperText={finalHelperText}
       inline={inline}
       addWrapperProps={fieldSchema.addWrapperProps}
     >
