@@ -15,6 +15,7 @@
 ### Fixed
 
 * Select type schema `onChange` value passing corrected
+* More resilient way to create autofield state control
 
 ## 1.3.1
 

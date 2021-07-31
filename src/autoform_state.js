@@ -15,8 +15,11 @@ export const useAutoformState = ({
   formHook,
   skipManualReset
 }) => {
-  const stateRef = useRef({})
-  const stateControl = new PubSub()
+  const stateRef = useRef({
+    stateControl: new PubSub()
+  })
+
+  const { stateControl } = stateRef.current
 
   const coercedSubmit = createCoercers({
     initialValues,
