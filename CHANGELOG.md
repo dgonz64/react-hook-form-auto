@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.4
+
+### Fixed
+
+* default skin select will receive correct initial values
+
 ## 1.3.3
 
 ### Added
