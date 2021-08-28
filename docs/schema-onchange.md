@@ -110,6 +110,7 @@ const owner = createSchema('owner', {
     }
   }
 })
+```
 
 ## `arrayControl`
 

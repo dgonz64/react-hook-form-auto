@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.5 (not yet launched)
+
+* Correct formatting in `docs/schema-onchange.md`
+
 ## 1.3.4
 
 ### Fixed
