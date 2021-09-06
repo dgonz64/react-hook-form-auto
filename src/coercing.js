@@ -45,22 +45,27 @@ export function createCoercers({
       })
     }
 
-    const fields = Object.keys(stateRef.current)
+    const fields = Object.keys(stateRef.current.fields)
     const values = fields.reduce((values, field) => {
-      const state = stateRef.current[field]
+      const state = stateRef.current.fields[field]
 
-      if (state.changed) {
+      if (state.visible) {
         const [ container, attr ] = objectTraverse(values, field, {
           createIfMissing: true
         })
-        if (container && attr)
-          container[attr] = state.value
+        const [ docContainer ] = objectTraverse(doc, field)
+        if (container && attr) {
+          if (state.changed)
+            container[attr] = state.value
+          else if (docContainer)
+            container[attr] = docContainer[attr]
+        }
       }
 
       return values
     }, {})
 
-    const wholeObj = deepmerge({}, initialValues, doc, values)
+    const wholeObj = deepmerge({}, initialValues, values)
     const coerced = coerceWithSchema({ doc: wholeObj, schema })
 
     onSubmit(coerced, doc)

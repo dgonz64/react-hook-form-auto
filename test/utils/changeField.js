@@ -7,7 +7,7 @@ export function changeInput(input, value, attr = 'value') {
   // like input.simulate() is not updating dom as a
   // browser would do or there's something I don't
   // understand
-  input.instance().value = value
+  input.instance()[attr] = value
 
   return input.simulate('change', {
     target: {

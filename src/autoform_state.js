@@ -16,7 +16,8 @@ export const useAutoformState = ({
   skipManualReset
 }) => {
   const stateRef = useRef({
-    stateControl: new PubSub()
+    stateControl: new PubSub(),
+    fields: {}
   })
 
   const { stateControl } = stateRef.current
@@ -31,7 +32,7 @@ export const useAutoformState = ({
 
   const schemaDef = schema.getSchema()
   const findOrInitState = (name) => {
-    return valueOrCreate(stateRef.current, name, () => {
+    return valueOrCreate(stateRef.current.fields, name, () => {
       const nameForVisible = `${name}.initiallyVisible`
       const initiallyVisible = objectTraverse(schemaDef, nameForVisible, {
         returnValue: true
@@ -77,7 +78,7 @@ export const useAutoformState = ({
   }
 
   const resetState = (values, omit) => {
-    stateRef.current = {}
+    stateRef.current.fields = {}
 
     setValues(values || {})
 
@@ -114,6 +115,8 @@ export const useAutoformState = ({
       ...state,
       [attr]: value
     })
+
+    state[attr] = value
   }
 
   const setVisible = (name, visible) => {
