@@ -839,8 +839,8 @@ The value of this field is used to render the input component. If it's a compone
 | `formHook`     | object     | As returned from the `useForm()` call |
 | `styles`     | object     | All the styles in case you do class styling |
 | `skinElement`    | object     | Complete skin block specific to this type of field (for example `skin.number`) |
-| `setVisible`    | function     | Changes visibility of fields `setVisible(name, visible)` |
-| `setHelperText`    | function     | Changes field helper text `setVisible(name, text)` |
+| `setVisible`    | function     | Changes visibility of fields `setVisible(name, visible)`. If the field is not visible, then it will not appear in submit doc neither. |
+| `setHelperText`    | function     | Changes field helper text `setHelperText(name, text)` |
 | `setValue`    | function     | Changes value of any field `setValue(name, value)` |
 | `arrayControl`    | object     | Some control functions in the case field is inside an array. See [this](doc/schema-onchange.md#arraycontrol) |
 | `value`     | any     | Only for controlled types (`skin[type].controlled == true`) |
