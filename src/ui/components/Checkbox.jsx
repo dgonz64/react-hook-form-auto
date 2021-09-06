@@ -1,4 +1,3 @@
-import React, { forwardRef } from 'react'
 import { trModel } from '../../translation_utils'
 
 export let Checkbox = ({
@@ -8,9 +7,10 @@ export let Checkbox = ({
   onChange,
   onBlur,
   defaultValue,
+  inputRef,
   styles = {},
   field 
-}, ref) => {
+}) => {
   const defaultChecked = defaultValue !== 'false' && defaultValue
 
   return (
@@ -24,6 +24,7 @@ export let Checkbox = ({
         onBlur={onBlur}
         defaultChecked={defaultChecked}
         className={styles.checkbox}
+        ref={inputRef}
       />
       <label
         key="label"
@@ -35,5 +36,3 @@ export let Checkbox = ({
     </div>
   )
 }
-
-Checkbox = forwardRef(Checkbox)

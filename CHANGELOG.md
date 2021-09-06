@@ -3,6 +3,7 @@
 ## 1.3.5 (not yet launched)
 
 * Correct formatting in `docs/schema-onchange.md`
+* Pass correctly `ref` in default skin in order for checkboxes to work
 
 ## 1.3.4
 
