@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.3.5 (not yet launched)
+## 1.3.5
 
 * Correct formatting in `docs/schema-onchange.md`
+* `setVisible` also prevents field occurrence in the submit results
 * Pass correctly `ref` in default skin in order for checkboxes to work
 
 ## 1.3.4
