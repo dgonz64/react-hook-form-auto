@@ -614,6 +614,13 @@ If your application has more than one language and it can be changed on the fly,
     setLanguageByName('en')
 ```
 
+You can add the translation strings directly to a language:
+
+### addLanguageTranslations
+Allows to add a bunch of strings to a language
+
+**Kind**: global function  
+
 ### Translation utils
 
 There are some functions that deal with semantic organization of the translation strings this library uses. You can take advantage of them if you are building a skin:

@@ -10,6 +10,7 @@ export {
 } from './utils'
 export {
   setLanguageByName,
+  addLanguageTranslations,
   trModel,
   trField,
   trError,

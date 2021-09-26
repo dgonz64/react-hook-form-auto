@@ -1,4 +1,5 @@
 import { en, es } from './translations'
+import { deepmerge } from './utils.js'
 import {
   tr,
   setLanguage
@@ -16,6 +17,13 @@ const defLangs = { en, es }
 export function setLanguageByName(name) {
   if (name in defLangs)
     setLanguage(defLangs[name])
+}
+
+/**
+ * Allows to add a bunch of strings to a language
+ */
+export function addLanguageTranslations(lang, strings) {
+  defLangs[lang] = deepmerge(defLangs[lang], strings)
 }
 
 /**
@@ -76,4 +84,3 @@ export function trPath(model, field, op) {
   else
     return ['models', model, field, op].join('.')
 }
-

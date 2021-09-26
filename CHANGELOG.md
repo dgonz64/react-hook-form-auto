@@ -3,6 +3,7 @@
 ## 1.3.6 (not published)
 
 * Put labels in some readme functions
+* Allow to add strings to specific language
 
 ## 1.3.5
 
