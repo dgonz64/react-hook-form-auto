@@ -618,6 +618,7 @@ If your application has more than one language and it can be changed on the fly,
 
 There are some functions that deal with semantic organization of the translation strings this library uses. You can take advantage of them if you are building a skin:
 
+### trModel
 Multipurpose semantic-ish translation.
 
 **Kind**: global function  
@@ -629,6 +630,7 @@ Multipurpose semantic-ish translation.
 | op | <code>string</code> | Thing that varies based on    the type. |
 
 
+### trField
 Translate field name
 
 **Kind**: global function  
@@ -639,6 +641,7 @@ Translate field name
 | field | <code>string</code> | Field name |
 
 
+### trError
 Translates error message.
 
 **Kind**: global function  

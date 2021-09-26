@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.6 (not published)
+
+* Put labels in some readme functions
+
 ## 1.3.5
 
 * Correct formatting in `docs/schema-onchange.md`
