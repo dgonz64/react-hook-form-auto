@@ -45,8 +45,8 @@ test('Submits', async () => {
   const input = app.find('input[name="name"]')
   changeInput(input, 'Hello')
 
-  const radiator = app.find('#simple-radiator-b')
-  changeInput(radiator, 'b')
+  const radiatorB = app.find('#simple-radiator-b')
+  changeCheckbox(radiatorB, true)
 
   const numberer = app.find('input[name="numberer"]')
   changeInput(numberer, '128')

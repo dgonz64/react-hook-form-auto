@@ -7,6 +7,7 @@ export let Radio = ({
   option,
   onChange,
   onBlur,
+  inputRef,
   label,
   styles,
   field,
@@ -25,7 +26,7 @@ export let Radio = ({
         value={option}
         onChange={onChange}
         onBlur={onBlur}
-        ref={ref}
+        ref={inputRef}
         defaultChecked={checked}
         className={styles.radio}
       />
