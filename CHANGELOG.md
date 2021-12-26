@@ -4,6 +4,7 @@
 
 * Put labels in some readme functions
 * Allow to add strings to specific language
+* Allow to change string base path with `trPathSetBase`
 
 ## 1.3.5
 

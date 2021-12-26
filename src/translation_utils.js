@@ -9,6 +9,8 @@ export { tr, setLanguage }
 
 const defLangs = { en, es }
 
+let modelBasePath = 'models'
+
 /**
  * Loads a language from the languages table.
  *
@@ -80,7 +82,19 @@ export function trError(error, data) {
  */
 export function trPath(model, field, op) {
   if (typeof op == 'undefined')
-    return ['models', model, field].join('.')
+    return [modelBasePath, model, field].join('.')
   else
-    return ['models', model, field, op].join('.')
+    return [modelBasePath, model, field, op].join('.')
+}
+
+/**
+ * Sets the base for the semantich(ish) translation, so
+ * instead of 'models.<model>.<field>' can be
+ * 'my.base.<model>.<field>'
+ *
+ * @param {string} newBasePath New path prepended to all
+ *    string paths.
+ */
+export function trPathSetBase(newBasePath) {
+  modelBasePath = newBasePath
 }

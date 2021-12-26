@@ -14,7 +14,8 @@ export {
   trModel,
   trField,
   trError,
-  trPath
+  trPath,
+  trPathSetBase
 } from './translation_utils'
 export { createSchema } from './createSchema'
 export { AutoformBase } from './ui/AutoformBase'
