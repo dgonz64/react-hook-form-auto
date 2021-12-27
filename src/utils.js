@@ -55,7 +55,7 @@ export function schemaTypeEx(type) {
  * @returns {boolean}
  */
 export function isObject(item) {
-  return (typeof item == 'object')
+  return typeof item == 'object' && !(item instanceof Date)
 }
 
 /**

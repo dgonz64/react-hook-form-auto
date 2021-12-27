@@ -26,7 +26,7 @@ The exception is if you made a skin for your project, then you should follow [th
   * [Validators](#validators)
     * [`validate` validator](#the-validate-validator)
   * [Other schema fields](#other-schema-fields)
-    * [Schema onChange](docs/schema-onchange.md) NEW
+    * [Schema onChange](docs/schema-onchange.md)
   * [Schema](#schema)
   * [`Autoform` component](#autoform-component)
   * [Config](#config)
@@ -74,9 +74,11 @@ The exception is if you made a skin for your project, then you should follow [th
 
     $ npm install react-hook-form react-hook-form-auto --save
 
-## Deprecated
+## Version deprecations
 
-* 1.3.0 works with react-hook-form 7. If you didn't override the skin, it should work out of the box after update. Please follow [this guide](docs/migrate-1.2-to-1.3.md).
+* 1.3.0 works with react-hook-form 7.
+  * If you didn't override the skin, it should work out of the box after update.
+  * If you overrided the skin, then follow [this guide](docs/migrate-1.2-to-1.3.md).
 * 1.2.0 works with react-hook-form 6: `npm install react-hook-form@6 react-hook-form-auto@1.2 --save`
 * 1.1.0 works with react-hook-form 4 and 5. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
@@ -377,7 +379,8 @@ The `<Autoform />` component accepts the following props
 | elementProps | object | Props extended in all the inputs |
 | initialValues | object | Initial values |
 | children | element | Whatever you want to put inside the form |
-| onSubmit    | function        | (optional) Code called when submitting |
+| onSubmit    | function        | (optional) Code called when submitting with the coerced doc |
+| onChange    | function        | (optional) Code called after any change with the current coerced doc |
 | onErrors    | function        | (optional) Code called when form has errors |
 | styles    | object | Styles used by the defaultSkin |
 | submitButton | boolean | (optional) Include submit button |
@@ -927,6 +930,8 @@ You can also do it in a more permanent way if you use webpack:
 # Help wanted / contribute
 
 react-hook-form-auto needs your help. Skins must be written!
+
+Also, it would make my day to see the library working in your project, provided it's public. Please, tell me!
 
 ### Where to begin
 

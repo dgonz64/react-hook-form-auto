@@ -56,9 +56,9 @@ export const AutofieldContainer = (props) => {
     }
   }
 
-  // Allow field schema onChange
+  // Allow field schema or overrides onChange
   if ('onChange' in fieldSchema || 'onChange' in overrides) {
-    const { onChange } = baseProps
+    const baseOnChange = baseProps.onChange
     const overrideOnChange = overrides.onChange
     if (overrideOnChange)
       delete overrides.onChange
@@ -81,7 +81,7 @@ export const AutofieldContainer = (props) => {
 
     baseProps.onChange = (event) => {
       const value = valueFromEvent(event)
-      onChange(event)
+      baseOnChange(event)
       fireOnChange(value)
     }
 
@@ -91,7 +91,14 @@ export const AutofieldContainer = (props) => {
     }
   }
 
-  // Allow overrides onChange
+  // Allow general onChange, passed to <Autoform />
+  if (props.onChange) {
+    const oldOnChange = baseProps.onChange
+    baseProps.onChange = (event) => {
+      oldOnChange(event)
+      props.onChange()
+    }
+  }
 
   const { render } = skinElement
   

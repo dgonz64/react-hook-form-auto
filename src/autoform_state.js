@@ -10,6 +10,7 @@ import { PubSub } from './pubsub'
 export const useAutoformState = ({
   initialValues,
   onSubmit,
+  onChange,
   schema,
   skin,
   formHook,
@@ -22,13 +23,33 @@ export const useAutoformState = ({
 
   const { stateControl } = stateRef.current
 
-  const coercedSubmit = createCoercers({
+  const coercersBase = {
     initialValues,
     stateRef,
     skin,
     onSubmit,
     schema
+  }
+
+  const coercedSubmit = createCoercers({
+    ...coercersBase,
+    notify: onSubmit
   })
+
+  let coercedChange
+  if (onChange) {
+    const coercedChangeDoc = onChange && createCoercers({
+      ...coercersBase,
+      notify: onChange
+    })
+
+    coercedChange = () => {
+      const doc = formHook.getValues()
+      return coercedChangeDoc(doc)
+    }
+  } else {
+    coercedChange = null
+  }
 
   const schemaDef = schema.getSchema()
   const findOrInitState = (name) => {
@@ -129,6 +150,7 @@ export const useAutoformState = ({
 
   return {
     coercedSubmit,
+    coercedChange,
     setValue,
     setVisible,
     setHelperText,

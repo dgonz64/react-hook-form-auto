@@ -50,6 +50,7 @@ export let AutoformBase = (props, ref) => {
 
   const {
     coercedSubmit,
+    coercedChange,
     setValue,
     setVisible,
     setHelperText,
@@ -58,6 +59,7 @@ export let AutoformBase = (props, ref) => {
   } = useAutoformState({
     initialValues,
     onSubmit,
+    onChange: props.onChange,
     schema,
     skin: finalSkin,
     formHook,
@@ -90,7 +92,8 @@ export let AutoformBase = (props, ref) => {
     stateControl,
     setValue,
     setVisible,
-    setHelperText
+    setHelperText,
+    onChange: coercedChange
   }
 
   const Button = finalSkin.button.render

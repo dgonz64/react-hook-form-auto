@@ -1,10 +1,12 @@
 # Changelog
 
-## 1.3.6 (not published)
+## 1.3.6 (not published yet)
 
 * Put labels in some readme functions
 * Allow to add strings to specific language
 * Allow to change string base path with `trPathSetBase`
+* `<Autoform />`'s `onChange` prop to listen to any document changes
+* Renamed skin `render` to `props` to make it clearer. The older `render` still works and I don't plan on deprecating it.
 
 ## 1.3.5
 

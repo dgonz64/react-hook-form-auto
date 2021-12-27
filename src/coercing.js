@@ -8,7 +8,7 @@ export function createCoercers({
   initialValues,
   stateRef,
   skin,
-  onSubmit,
+  notify,
   schema
 }) {
   return function coercedSubmit(doc) {
@@ -68,6 +68,6 @@ export function createCoercers({
     const wholeObj = deepmerge({}, initialValues, values)
     const coerced = coerceWithSchema({ doc: wholeObj, schema })
 
-    onSubmit(coerced, doc)
+    notify(coerced, doc)
   }
 }
