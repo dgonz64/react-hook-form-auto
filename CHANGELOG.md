@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.6 (not published yet)
+## 1.3.6
 
 * Put labels in some readme functions
 * Allow to add strings to specific language
