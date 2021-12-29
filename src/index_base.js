@@ -2,7 +2,9 @@ export {
   addTranslations,
   setTranslator,
   tr,
-  stringExists
+  stringExists,
+  setTranslateVariableRegex,
+  setTranslateReferenceRegex,
 } from './translate'
 export {
   processOptions,

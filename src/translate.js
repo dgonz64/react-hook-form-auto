@@ -2,8 +2,8 @@ import { deepmerge } from './utils.js'
 
 let translations = {}
 
-const VAR_REGEX = /__(.*?)__/g
-const REF_REGEX = /@@(.*?)@@/g
+let varRegex = /__(.*?)__/g
+let refRegex = /@@(.*?)@@/g
 
 function findString(id = '') {
   const part = id.split('.')
@@ -77,10 +77,10 @@ export function tr(id, vars = {}) {
   let { node } = findString(id)
   if (node) {
     // Find variables
-    node = regexReplace(VAR_REGEX, node, match => vars[match])
+    node = regexReplace(varRegex, node, match => vars[match])
 
     // Find references
-    node = regexReplace(REF_REGEX, node, match => tr(match, vars))
+    node = regexReplace(refRegex, node, match => tr(match, vars))
 
     return node
   } else
@@ -133,4 +133,18 @@ export function addTranslations(lang) {
  */
 export function setTranslator(translate) {
   tr = translate
+}
+
+/**
+ * Sets the regex for the variables
+ */
+export function setTranslateVariableRegex(newVarRegex) {
+  varRegex = newVarRegex
+}
+
+/**
+ * Sets the regex for the substitutions
+ */
+export function setTranslateReferenceRegex(newRefRegex) {
+  refRegex = newRefRegex
 }
