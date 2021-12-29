@@ -1,6 +1,7 @@
 import React from 'react'
 import { InputArrayWrap } from './components/InputArrayWrap'
 import { Submodel } from './components/Submodel'
+import { getSkinComponent } from '../utils'
 
 function getOtherSchema(schemaDef, fieldName, { isArray }) {
   const field = schemaDef[fieldName]
@@ -31,7 +32,7 @@ export default {
         return []
       }
     },
-    render: props => {
+    props: props => {
       const {
         config = {},
         fieldSchema,
@@ -41,8 +42,8 @@ export default {
 
       const { arrayMode } = config
       const isTable = arrayMode == 'table'
-      const ArrayTable = skin.arrayTable.render
-      const ArrayPanel = skin.arrayPanel.render
+      const ArrayTable = getSkinComponent(skin.arrayTable)
+      const ArrayPanel = getSkinComponent(skin.arrayPanel)
       const arrayHandler = isTable ? ArrayTable : ArrayPanel
 
       return {
@@ -66,8 +67,6 @@ export default {
 
       return coerceObject({ object: obj, schemaDef: otherSchema })
     },
-    render: {
-      component: Submodel
-    }
+    component: Submodel
   }
 }

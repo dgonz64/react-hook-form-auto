@@ -1,4 +1,5 @@
 import React from 'react'
+import { getSkinComponent } from '../../utils'
 
 const renderItemHeader = ({ styles, closeButton }) => {
   return (
@@ -23,7 +24,7 @@ const renderItems = ({ styles, items, Panel }) =>
 
 export const InputArrayPanel = (props) => {
   const { styles, skin } = props
-  const Panel = skin.panel.render
+  const Panel = getSkinComponent(skin.panel)
 
   return (
     <>

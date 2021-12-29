@@ -1,5 +1,10 @@
 import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react'
-import { objectTraverse, isObject, deepmerge } from '../utils'
+import {
+  objectTraverse,
+  isObject,
+  deepmerge,
+  getSkinComponent
+} from '../utils'
 import { useForm } from 'react-hook-form'
 import { getComponents, renderInputs } from './componentRender'
 import { useAutoformState } from '../autoform_state'
@@ -96,8 +101,8 @@ export let AutoformBase = (props, ref) => {
     onChange: coercedChange
   }
 
-  const Button = finalSkin.button.render
-  const Form = finalSkin.form.render
+  const Button = getSkinComponent(finalSkin.button)
+  const Form = getSkinComponent(finalSkin.form)
 
   return (
     <Form onSubmit={submit}>

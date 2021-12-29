@@ -25,34 +25,34 @@ function standardClasses(props) {
 export default {
   defaultWrap: InputWrap,
   string: {
-    render: props => ({
+    props: props => ({
       ...props,
       component: props.fieldSchema.textarea ? 'textarea' : 'input',
       type: 'text'
     }),
   },
   password: {
-    render: {
+    props: {
       component: 'input',
       type: 'password'
     }
   },
   number: {
     coerce: value => parseFloat(value),
-    render: {
+    props: {
       component: 'input',
       type: 'number'
     }
   },
   range: {
     coerce: value => parseFloat(value),
-    render: {
+    props: {
       component: 'input',
       type: 'range'
     }
   },
   radios: {
-    render: (props) => {
+    props: (props) => {
       const {
         schemaTypeName,
         field,
@@ -91,13 +91,11 @@ export default {
     }
   },
   select: {
-    render: {
-      component: Select
-    }
+    component: Select
   },
   boolean: {
     coerce: value => Boolean(value),
-    render: (props) => {
+    props: (props) => {
       return {
         ...props,
         component: Checkbox,
@@ -106,36 +104,36 @@ export default {
     }
   },
   button: {
-    render: Button
+    component: Button
   },
   arrayButton: {
-    render: Button
+    component: Button
   },
   form: {
-    render: ({ children, ...rest }) =>
+    component: ({ children, ...rest }) =>
       <form {...rest}>
         {children}
       </form>
   },
   panel: {
-    render: Panel
+    component: Panel
   },
   addGlyph: {
-    render: AddGlyph
+    component: AddGlyph
   },
   removeGlyph: {
-    render: RemoveGlyph
+    component: RemoveGlyph
   },
   arrayTable: {
-    render: InputArrayTable
+    component: InputArrayTable
   },
   arrayPanel: {
-    render: InputArrayPanel
+    component: InputArrayPanel
   },
   div: {
-    render: props => <div {...props} />
+    component: props => <div {...props} />
   },
   text: {
-    render: ({ children }) => children
+    component: ({ children }) => children
   }
 }

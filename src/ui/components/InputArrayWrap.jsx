@@ -10,7 +10,7 @@ import { renderInputs } from '../componentRender'
 import { inputArray } from '../ducks'
 import { tr, trModel } from '../../translation_utils'
 import { deletedMark } from '../deletedMark'
-import { inputName } from '../../utils'
+import { inputName, getSkinComponent } from '../../utils'
 
 const renderAddButton = ({ onAdd, styles, Button, AddGlyph }) => {
   const boundAdd = e => {
@@ -115,12 +115,12 @@ export let InputArrayWrap = ({
   const schema = type[0]
   const $arrayHandler = arrayHandler
 
-  const Button = skin.arrayButton.render
-  const AddGlyph = skin.addGlyph.render
-  const RemoveGlyph = skin.removeGlyph.render
-  const Panel = skin.panel.render
-  const Div = skin.div.render
-  const Text = skin.text.render
+  const Button = getSkinComponent(skin.arrayButton)
+  const AddGlyph = getSkinComponent(skin.addGlyph)
+  const RemoveGlyph = getSkinComponent(skin.removeGlyph)
+  const Panel = getSkinComponent(skin.panel)
+  const Div = getSkinComponent(skin.div)
+  const Text = getSkinComponent(skin.text)
 
   const aliveItems = items.keys.filter(idx => idx !== null)
   const counterField = skinElement.nameForErrors(name)

@@ -3,7 +3,8 @@ import { useController } from 'react-hook-form'
 import { Autofield } from './Autofield'
 import {
   objectTraverse,
-  valueFromEvent
+  valueFromEvent,
+  getPropsTransform
 } from '../utils'
 import { useAutofieldState } from '../autoform_state'
 
@@ -100,19 +101,21 @@ export const AutofieldContainer = (props) => {
     }
   }
 
-  const { render } = skinElement
+  const propsTransform = getPropsTransform(skinElement)
   
   let transformedProps
-  if (typeof render == 'function')
-    transformedProps = render ? render(baseProps) : baseProps
+  if (typeof propsTransform == 'function')
+    transformedProps = propsTransform ? propsTransform(baseProps) : baseProps
   else
-    transformedProps = { ...baseProps, ...render }
+    transformedProps = { ...baseProps, ...propsTransform }
   transformedProps = { ...transformedProps, ...overrides }
 
-  if (visible && transformedProps.component) {
+  const component = transformedProps.component || skinElement.component
+  if (visible && component) {
     return (
       <Autofield
         {...transformedProps}
+        component={component}
       />
     )
   } else {

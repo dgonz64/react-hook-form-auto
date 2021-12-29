@@ -4,35 +4,33 @@ After a [good question](https://github.com/dgonz64/react-hook-form-auto/issues/1
 
 If you made a skin, I hope this migration guide helps.
 
-When I refer to component I mean the `skin[type].render.component` entry.
+When I refer to component I mean the `skin[type].component` (or `skin[type].props.component`) entry.
 
 ## register vs onChange and onBlur
 
 The biggest difference is that now inputs are automatically registered and input component has `onChange` and `onBlur` as props that come from `const { field } = register()`. You should use those in the skin instead of `ref` or calling `register()` manually.
 
 ```diff
-     render: {
-       component: (props) => {
-         const {
-           id,
-           name,
--          register,
-           defaultValue,
-+          onChange,
-+          onBlur
-         } = props
+     component: (props) => {
+       const {
+         id,
+         name,
+-        register,
+         defaultValue,
++        onChange,
++        onBlur
+       } = props
 
-         return (
-           <Checkbox
-             id={id}
-             name={name}
--            inputProps={{ ref: register }}
-             defaultValue={defaultValue}
-+            onChange={onChange}
-+            onBlur={onBlur}
-           />
-         )
-       }
+       return (
+         <Checkbox
+           id={id}
+           name={name}
+-          inputProps={{ ref: register }}
+           defaultValue={defaultValue}
++          onChange={onChange}
++          onBlur={onBlur}
+         />
+       )
      }
 ```
 
@@ -41,29 +39,28 @@ The biggest difference is that now inputs are automatically registered and input
 Still works for plain value (not event), both for controlled and uncontrolled inputs.
 
 ```diff
-     render: {
-       component: (props) => {
-         const {
-           name,
-           defaultValue,
-+          setValue,
-+          onBlur
-         } = props
+     component: (props) => {
+       const {
+         name,
+         defaultValue,
++        setValue,
++        onBlur
+       } = props
  
-+        const handleChange = newValue => {
-+          setValue(name, newValue)
-+        }
++      const handleChange = newValue => {
++        setValue(name, newValue)
++      }
 +
-         return (
-           <TextInput
-             name={name}
-             defaultValue={defaultValue}
-+            onChange={handleChange}
-+            onBlur={onBlur}
-           />
-         )
-       }
+       return (
+         <TextInput
+           name={name}
+           defaultValue={defaultValue}
++          onChange={handleChange}
++          onBlur={onBlur}
+         />
+       )
      }
+   }
 
 ```
 
@@ -72,22 +69,21 @@ Still works for plain value (not event), both for controlled and uncontrolled in
 Components now receive id
 
 ```diff
-     render: {
-       component: (props) => {
-         const {
-+          id,
-           name,
-         } = props
+     component: (props) => {
+       const {
++        id,
+         name,
+       } = props
  
-         return (
-           <Checkbox
--            id={makeId({ schemaTypeName, name })}
-+            id={id}
-             name={name}
-           />
-         )
-       }
+       return (
+         <Checkbox
+-          id={makeId({ schemaTypeName, name })}
++          id={id}
+           name={name}
+         />
+       )
      }
+     
 ```
 
 ## Controlled
@@ -97,15 +93,13 @@ If the skin resolver is declared as controlled, example:
 ```javascript
   string: {
     controlled: true,
-    render: {
-      component: ({ id, name, onChange, onBlur, value }) => {
-        ...
-      }
+    component: ({ id, name, onChange, onBlur, value }) => {
+      ...
     }
   },
 ```
 
-Then `skin[type].render.component` will be rendered with `value` prop updated each time it changes.
+Then `skin[type].component` (or `skin[type].props.component`) will be rendered with `value` prop updated each time it changes.
 
 ## errorText
 

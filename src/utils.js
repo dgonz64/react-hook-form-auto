@@ -284,3 +284,17 @@ export function valueFromEvent(thing) {
     return thing
   }
 }
+
+/**
+ * Gets props transform from skin element (formelly `render`)
+ */
+export function getPropsTransform(skinElement) {
+  return skinElement.props || skinElement.render
+}
+
+/**
+ * Gets component from skin element
+ */
+export function getSkinComponent(skinElement) {
+  return skinElement.component || skinElement.render
+}

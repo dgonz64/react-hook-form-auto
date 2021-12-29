@@ -26,7 +26,7 @@ The exception is if you made a skin for your project, then you should follow [th
   * [Validators](#validators)
     * [`validate` validator](#the-validate-validator)
   * [Other schema fields](#other-schema-fields)
-    * [Schema onChange](docs/schema-onchange.md) NEW
+    * [Schema onChange](docs/schema-onchange.md)
   * [Schema](#schema)
   * [`Autoform` component](#autoform-component)
   * [Config](#config)
@@ -45,15 +45,15 @@ The exception is if you made a skin for your project, then you should follow [th
     * [With styles](#with-styles)
     * [Overriding skin](#overriding-skin)
       * [`coerce`](#coerce)
-      * [`render`](#render)
-        * [object](#render-is-an-object)
-        * [function](#render-is-a-function)
-        * [`onChange`, `onBlur`](#onchange-and-onblur-in-render)
+      * [`props`](#props)
+        * [object](#props-is-an-object)
+        * [function](#props-is-a-function)
+        * [`onChange`, `onBlur`](#onchange-and-onblur-in-props)
           * [Directly](#use-it-directly-recommended)
           * [`setValue`](#use-setvalue)
       * [Other skin attributes](#other-skin-block-attributes)
-      * [`skin[type].render` props](#skintyperender)
-      * [`skin[type].render.component` props](#skintyperendercomponent)
+      * [`skin[type].props`](#skintypeprops)
+      * [`skin[type].component`](#skintypepropscomponent)
   * [Importing base](#importing-base)
 
 ## Play with the demos
@@ -74,9 +74,11 @@ The exception is if you made a skin for your project, then you should follow [th
 
     $ npm install react-hook-form react-hook-form-auto --save
 
-## Deprecated
+## Version deprecations
 
-* 1.3.0 works with react-hook-form 7. If you didn't override the skin, it should work out of the box after update. Please follow [this guide](docs/migrate-1.2-to-1.3.md).
+* 1.3.0 works with react-hook-form 7.
+  * If you didn't override the skin, it should work out of the box after update.
+  * If you overrided the skin, then follow [this guide](docs/migrate-1.2-to-1.3.md).
 * 1.2.0 works with react-hook-form 6: `npm install react-hook-form@6 react-hook-form-auto@1.2 --save`
 * 1.1.0 works with react-hook-form 4 and 5. Older versions of this library (1.0.x) will only work with version 3 of react-hook-form.
 
@@ -283,6 +285,8 @@ They both allow options as an array that can be one of strings with the options 
 
 Options can also be a function. In that case it will be evaluated with the component props as the first argument. The results used as explained above, that is, array of strings or objects.
 
+Options as object 
+
 Example with keys:
 
 ```javascript
@@ -343,7 +347,7 @@ There are some other attributes you can pass while defining the field schema:
 
 | Attribute       | Type      | Meaning |
 | -----------     | --------  | -------------------------------------------------- |
-| noAutocomplete  | boolean   | Inputs (or skin's `render()`) will have `autocomplete=off` to help skip browser's autocomplete |
+| noAutocomplete  | boolean   | Inputs (or skin's `component`) will have `autocomplete=off` to help skip browser's autocomplete |
 | addWrapperProps | object    | Directly passed to wrapper component |
 | addInputProps   | object    | Props merged into input component |
 | onChange        | function  | Allows you to change values on the fly. See [this](docs/schema-onchange.md). |
@@ -383,7 +387,8 @@ The `<Autoform />` component accepts the following props
 | elementProps | object | Props extended in all the inputs |
 | initialValues | object | Initial values |
 | children | element | Whatever you want to put inside the form |
-| onSubmit    | function        | (optional) Code called when submitting |
+| onSubmit    | function        | (optional) Code called when submitting with the coerced doc |
+| onChange    | function        | (optional) Code called after any change with the current coerced doc |
 | onErrors    | function        | (optional) Code called when form has errors |
 | styles    | object | Styles used by the defaultSkin |
 | submitButton | boolean | (optional) Include submit button |
@@ -391,9 +396,9 @@ The `<Autoform />` component accepts the following props
 | skin | object | Base skin |
 | skinOverride | object | Override some skin components |
 | disableCoercing | boolean | Disable all coercing and get values as text |
-| noAutocomplete | boolean | Disable all autocompleting by passing `autocomplete=off` to the input or skin's `render()` |
+| noAutocomplete | boolean | Disable all autocompleting by passing `autocomplete=off` to the input or skin's `props` |
 
-Any other prop will be passed to the skin `render()`.
+Any other prop will be passed to the skin `props()`.
 
 ### Config
 
@@ -735,7 +740,7 @@ There's an entry in the skin object for every field type. The value of the entry
 ```javascript
     number: {
       coerce: value => parseFloat(value),
-      render: {
+      props: {
         component: 'input',
         type: 'number'
       }
@@ -746,52 +751,60 @@ There's an entry in the skin object for every field type. The value of the entry
 
 Function that converts result to its correct datatype.
 
-#### render
+#### props
 
-Properties for the rendered component.
+Prop transformation for the rendered component.
 
 The attribute `component` is the React component used to render the input inside the wrappers.
 
 ```javascript
     select: {
-      render: {
+      props: {
         component: Select
       }
     },
 ```
 
-##### render is an object
+It can be also a first level attribute, useful if you don't need to change props
+
+```javascript
+    select: {
+      component: Select
+    },
+```
+
+##### `props` is an object
 
 Props merged to component's default:
 
 ```javascript
     range: {
       coerce: value => parseFloat(value),
-      render: {
+      props: {
         component: 'input',
         type: 'range'
       }
     },
 ```
 
-If the component is a string, like in this example, it will only receive `<input />`-like props, like `name` and `onChange`.
+If `component` is a string, like in this example, it will only receive `<input />`-like props, like `name` and `onChange`.
 
-##### render is a function
+##### `props` is a function
 
 Function that takes the component's intended props and returns component's final props:
 
 ```javascript
     string: {
-      render: props => ({
+      props: props => ({
         ...props,
         component: props.fieldSchema.textarea ? 'textarea' : 'input'
       }),
     },
 ```
 
-#### `onChange` and `onBlur` in render
+#### `onChange` and `onBlur` in props
 
-The `component` in the `render` property is also in charge of the field update: For that matter you have two options
+The `component` in the `props` property is also in charge of the field update: For that matter you have two options
 
 ##### Use it directly (recommended)
 
@@ -803,9 +816,7 @@ The `component` in the `render` property is also in charge of the field update: 
 
   const mySkinOverride = {
     string: {
-      render: {
-        component: Input
-      }
+      component: Input
     }
   }
 ```
@@ -815,7 +826,7 @@ The `component` in the `render` property is also in charge of the field update: 
 Another way is to use `setValue(name, newValue)` on every change. The component is still uncontrolled but model's value will be updated.
 
 ```javascript
-  render: ({ name, register, setValue }) => {
+  props: ({ name, register, setValue }) => {
     const setValueFromEvent = event => {
       setValue(name, event.target.value)
     }
@@ -834,7 +845,7 @@ Another way is to use `setValue(name, newValue)` on every change. The component 
       controlled: true,
       skipRegister: true,
       nameForErrors: name => `${name}__counter`,
-      render: {
+      props: {
         component: 'input',
         type: 'range'
       }
@@ -843,7 +854,7 @@ Another way is to use `setValue(name, newValue)` on every change. The component 
 
 | Attribute | Means |
 | --------- | ----- |
-| `controlled` | Will `useController()`. Render component will receive also `value` prop |
+| `controlled` | Will `useController()`. Component will receive also `value` prop |
 | `skipRegister` | Will not automatically register this field. Hasn't any meaning if `controlled` is `true` |
 | `nameForErrors` | Function that receives `name` and returns a transformed name used to navigate through the `errors` object returned from `react-hook-form`'s `useFormState`. Helps to create errors for non registered field like `minChildren` does. |
 
@@ -855,7 +866,7 @@ You can override (or add) specific types by using `<Autoform />`'s `skinOverride
 
 Only override `array` and `schema` types if you know `react-hook-form-auto` internals. For example both need `skipRegister`.
 
-### `skin[type].render`
+### `skin[type].props`
 
 The rest of the properties a skin block can override:
 
@@ -877,9 +888,11 @@ The rest of the properties a skin block can override:
 | `autoformProps`  | object            | Properties passed to Autoform |
 | `skinElement`    | object            | skin resolver for the type of this field (for example `skin.boolean`) |
 
-### `skin[type].render.component`
+### `skin[type].component` or `skin[type].props.component`
 
-The value of this field is used to render the input component. If it's a component, the will receive these props, appart from the rest of the `skin[type].render` block.
+The value of this field is used to render the input component. If it's a component, the will receive these props, appart from the rest of the `skin[type].props` block.
+
+If `component` is specified both from `props` and directly (`skin[type].component`), the one coming from props will have priority.
 
 | Prop             |   Type   | Use |
 | ---------------- | -------- | --------------------------------------------------- |
@@ -996,6 +1009,8 @@ You can also do it in a more permanent way if you use webpack:
 # Help wanted / contribute
 
 react-hook-form-auto needs your help. Skins must be written!
+
+Also, it would make my day to see the library working in your project, provided it's public. Please, tell me!
 
 ### Where to begin
 
