@@ -53,7 +53,7 @@ The exception is if you made a skin for your project, then you should follow [th
           * [`setValue`](#use-setvalue)
       * [Other skin attributes](#other-skin-block-attributes)
       * [`skin[type].props`](#skintypeprops)
-      * [`skin[type].component`](#skintypepropscomponent)
+      * [`skin[type].component`](#skintypecomponent-or-skintypepropscomponent)
   * [Importing base](#importing-base)
 
 ## Play with the demos
@@ -302,8 +302,22 @@ Example with objects:
     {
       type: 'select',
       options: [
-        { value: 'r', label: 'red' },
-        { value: 'b', label: 'blue' }
+        { value: 'r', key: 'red' },
+        { value: 'b', key: 'blue' }
+      ]
+    }
+```
+
+You can specify label too. In that case it will be a direct already translated string. If you setup `key` then label will be infered and translated.
+
+Example with direct labels:
+
+```javascript
+    {
+      type: 'select',
+      options: [
+        { value: 'r', label: 'Some red' },
+        { value: 'b', label: 'Some blue' }
       ]
     }
 ```
@@ -315,7 +329,7 @@ Example with function. This example assumes `Autoform` component has a color col
       type: 'select',
       options: props => props.colors.map(color => ({
         value: color.id,
-        label: color.name
+        key: color.name
       }))
     }
 ```
