@@ -119,14 +119,22 @@ export function processOptions({
   const extracted = typeof options == 'function' ?
     options({ name, field, schemaTypeName, ...rest }) : options
 
+  const getLabel = option => trModel(schemaTypeName, field, option)
+
   const processed = extracted.map(option => {
     if (typeof option == 'string') {
       return {
         value: option,
-        label: trModel(schemaTypeName, field, option)
+        label: getLabel(option)
       }
     } else {
-      return option
+      if ('key' in option) {
+        return {
+          ...option,
+          label: option.label || getLabel(option.key)
+        }
+      } else
+        return option
     }
   })
 
