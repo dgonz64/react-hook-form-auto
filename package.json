@@ -30,7 +30,7 @@
     "enzyme": "^3.11.0",
     "jest": "^26.2.2",
     "jsdoc-to-markdown": "^7.0.1",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.11.0",
