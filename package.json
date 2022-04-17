@@ -32,7 +32,7 @@
     "jsdoc-to-markdown": "^7.1.1",
     "jsdom": "19.0.0",
     "jsdom-global": "3.0.2",
-    "react": "^16.13.1 || ^17",
+    "react": "^17",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.11.0",
     "rimraf": "^3.0.2",
@@ -41,7 +41,7 @@
     "webpack-merge": "^5.8.0"
   },
   "peerDependencies": {
-    "react": "^17",
+    "react": "^16.13.1 || ^17",
     "react-hook-form": "^7"
   },
   "dependencies": {

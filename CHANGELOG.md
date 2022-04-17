@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.8
+
+### Fixed
+
+* Fixed mistake that locked react to 17 in peerDependencies.
+
 ## 1.3.7
 
 ### Changed
