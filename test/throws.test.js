@@ -1,3 +1,4 @@
+import 'jsdom-global/register'
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'

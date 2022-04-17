@@ -1,3 +1,4 @@
+import 'jsdom-global/register'
 import React, { forwardRef } from 'react'
 import { mount } from 'enzyme'
 

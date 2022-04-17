@@ -3,7 +3,7 @@ const { NODE_ENV } = process.env
 const { merge } = require('webpack-merge')
 const package = require('./package.json')
 
-const commonConfig = mode => {
+const commonConfig = ({ mode, minimize }) => {
   return {
     mode,
     devtool: 'source-map',
@@ -18,7 +18,8 @@ const commonConfig = mode => {
           loader: 'babel-loader',
         },
       ],
-    }
+    },
+    optimization: { minimize }
   }
 }
 
@@ -60,12 +61,14 @@ const reactBaseConfig = ({ minAdd }) => {
   }
 }
 
-module.exports = (env) => {
-  const isBase = process.env.BUILD_TYPE == 'base'
-  const isProduction = env == 'production'
+module.exports = (env = {}) => {
+  const { mode } = env
+  const isBase = env.buildtype == 'base'
+  const isProduction = mode == 'production'
+  const minimize = env.minify == 'true'
   const minAdd = isProduction ? '.min' : ''
 
-  const common = commonConfig(env)
+  const common = commonConfig({ mode, minimize })
   const mergeWith = isBase ?
     reactBaseConfig({ minAdd }) : webConfig({ minAdd })
 

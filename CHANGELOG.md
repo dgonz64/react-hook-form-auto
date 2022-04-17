@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.7
+
+### Changed
+
+* Updated some modules to fix security advisories
+* In webpack, separated mode from minification so there can be no minimized build that is still production like `npm run build:umd`
+
 ## 1.3.6
 
 * Put labels in some readme functions
