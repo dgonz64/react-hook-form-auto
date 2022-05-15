@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.9
+
+### Added
+
+* Be able to set errors from outside (for example, server) with `forceErrors` param in `Autoform`
+
 ## 1.3.8
 
 ### Fixed

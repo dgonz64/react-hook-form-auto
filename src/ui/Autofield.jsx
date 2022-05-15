@@ -18,6 +18,7 @@ export const Autofield = (props) => {
     fieldSchema,
     helperText,
     inputRef,
+    forceErrors,
     type,
     option,
     inline,
@@ -34,7 +35,7 @@ export const Autofield = (props) => {
     skinElement.nameForErrors(name) : name
 
   const { errors } = useFormState({ control, name: nameForErrors })
-  const fieldErrors = objectTraverse(errors, nameForErrors, {
+  const fieldErrors = objectTraverse(forceErrors || errors, nameForErrors, {
     returnValue: true
   })
   const errorText = fieldErrors && fieldErrors.message

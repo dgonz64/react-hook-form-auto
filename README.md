@@ -32,6 +32,7 @@ The exception is if you made a skin for your project, then you should follow [th
   * [Config](#config)
   * [Field props override](#field-props-override)
   * [Coercers](#coercers)
+  * [Forcing errors](#forcing-errors)
   * [Translation](#translation)
     * [`tr()`](#tr)
     * [`stringExists()`](#stringexists)
@@ -236,7 +237,7 @@ Actually there aren't clearly defined goals. The library already suits my person
   - [ ] Need other? Open issue!
 - [x] Actually limit children
 - [x] React Native support
-- [ ] Translated messages from server/async
+- [x] Translated messages from server/async
 - [x] Make it compatible with `react-hook-form` 7.
 
 # Documentation
@@ -404,6 +405,7 @@ The `<Autoform />` component accepts the following props
 | onSubmit    | function        | (optional) Code called when submitting with the coerced doc |
 | onChange    | function        | (optional) Code called after any change with the current coerced doc |
 | onErrors    | function        | (optional) Code called when form has errors |
+| forceErrors    | object        | (optional) Object with the errors or _falsy_ like `null` to not force. Keys will be the field name (example `pets.0.name`) and the value is another object with key `message`. Example: `{ username: { message: 'Taken' } }` |
 | styles    | object | Styles used by the defaultSkin |
 | submitButton | boolean | (optional) Include submit button |
 | submitButtonText | element | (optional) Contents for the submit button |
@@ -488,6 +490,33 @@ You can also disable coercers with the `Autoform`'s `disableCoercing` prop.
 ### Select
 
 Select will include an empty option for uninitialized elements. Please, write an issue if you want this to be configurable.
+
+### Forcing errors
+
+You can force an error message for any field, including a nested one. For it you elaborate an object with the field keys in ReactHookForm notation, for example `pets.0.name`. Complete example:
+
+```javascript
+const LoginContainer = () => {
+  const [ serverErrors, setServerErrors ] = useState(null)
+
+  const handleLogin = () => {
+    setServerErrors({
+      username: { message: 'Already taken' },
+      password: { message: 'Also, wrong password' }
+    })
+  }
+
+  return (
+    <Autoform
+      ...
+      forceErrors={serverErrors}
+      onSubmit={handleLogin}
+    />
+  )
+}
+```
+
+Also take a look at this [demo](https://codesandbox.io/s/rhfa-emergency-example-server-validation-9571b7?file=/src/App.js). After you pass client validation (just fill both names), you can click Send to simulate server validation errors.
 
 ## Imperative handling
 
