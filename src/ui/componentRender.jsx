@@ -50,18 +50,6 @@ export function validationRules(fieldSchema) {
 }
 
 /**
- * Passes the validation parameters to react-hook-form
- *
- * @param {string} name Field name
- * @param {object} fieldSchema Schema for the field
- * @param {function} register react-hook-form register
- */
-export function registerValidation(name, fieldSchema, register) {
-  const rules = validationRules(fieldSchema)
-  return register(name, rules)
-}
-
-/**
  * Searches in children to find overrides.
  */
 function searchForOverrides(parent, name, children = []) {
