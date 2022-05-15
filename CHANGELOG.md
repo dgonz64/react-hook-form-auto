@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.10
+
+### Fixed
+
+* Externals errors with `forceErrors` now work with nested fields.
+
 ## 1.3.9
 
 ### Added

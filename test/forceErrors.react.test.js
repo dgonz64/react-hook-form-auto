@@ -13,6 +13,12 @@ const erroring = createSchema('erroring', {
   password: { type: 'password' }
 })
 
+const nested = createSchema('nested', {
+  errors: {
+    type: [erroring]
+  }
+})
+
 test('Allows you to specify arbitrary errors', async () => {
   const errors = {
     username: {
@@ -29,4 +35,19 @@ test('Allows you to specify arbitrary errors', async () => {
 
   expect(app.text()).toMatch(errors.username.message)
   expect(app.text()).toMatch(errors.password.message)
+})
+
+test('Allows you to specify arbitrary errors in nested fields', async () => {
+  const badText = 'bad nested username'
+  const errors = {
+    'errors.0.username': {
+      message: badText
+    }
+  }
+
+  const app = mount(
+    <Autoform schema={nested} forceErrors={errors} />
+  )
+
+  expect(app.text()).toMatch(badText)
 })
