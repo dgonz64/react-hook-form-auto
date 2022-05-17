@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.11
+
+### Added
+
+* Allow React 18 as peer dependency
+
 ## 1.3.10
 
 ### Fixed
