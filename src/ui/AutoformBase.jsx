@@ -47,8 +47,7 @@ export let AutoformBase = (props, ref) => {
     register,
     unregister,
     handleSubmit,
-    reset,
-    getValues
+    reset
   } = formHook
 
   const finalSkin = { ...baseSkin, ...skin, ...skinOverride }
@@ -60,7 +59,8 @@ export let AutoformBase = (props, ref) => {
     setVisible,
     setHelperText,
     resetState,
-    stateControl
+    stateControl,
+    getValues
   } = useAutoformState({
     initialValues,
     onSubmit,
@@ -78,6 +78,7 @@ export let AutoformBase = (props, ref) => {
     formHook: () => formHook,
     setValue,
     setVisible,
+    getValues,
     reset: resetState
   }))
 

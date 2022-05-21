@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.12
+
+### Added
+
+* `getValues()` to the imperative handlers that returns the complete coerced form values
+
 ## 1.3.11
 
 ### Added

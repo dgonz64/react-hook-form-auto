@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { deepmerge } from './utils'
 
 import {
   valueOrCreate,
@@ -148,6 +149,22 @@ export const useAutoformState = ({
     changeAndPublish(name, 'helperText', text)
   }
 
+  const getValues = () => {
+    let values = {}
+
+    const coercedGetValues = createCoercers({
+      ...coercersBase,
+      notify: (coerced) => {
+        deepmerge(values, coerced)
+      }
+    })
+
+    const doc = formHook.getValues()
+    coercedGetValues(doc)
+
+    return values
+  }
+
   return {
     coercedSubmit,
     coercedChange,
@@ -155,7 +172,8 @@ export const useAutoformState = ({
     setVisible,
     setHelperText,
     resetState,
-    stateControl
+    stateControl,
+    getValues
   }
 }
 
