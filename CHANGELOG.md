@@ -6,6 +6,7 @@
 
 * `getValues()` to the imperative handlers that returns the complete coerced form values
 * Tests for the rest of the imperative functions
+* Test for controlled components
 
 ### Fixed
 
