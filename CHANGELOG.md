@@ -5,6 +5,7 @@
 ### Added
 
 * `getValues()` to the imperative handlers that returns the complete coerced form values
+* Tests for the rest of the imperative functions
 
 ### Fixed
 
