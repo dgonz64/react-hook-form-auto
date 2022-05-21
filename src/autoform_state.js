@@ -102,7 +102,7 @@ export const useAutoformState = ({
   const resetState = (values, omit) => {
     stateRef.current.fields = {}
 
-    setValues(values || {})
+    setValues(values || {}, {})
 
     const currentValues = formHook.getValues()
 

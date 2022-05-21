@@ -6,6 +6,10 @@
 
 * `getValues()` to the imperative handlers that returns the complete coerced form values
 
+### Fixed
+
+* Fixed imperative `reset()`
+
 ## 1.3.11
 
 ### Added
