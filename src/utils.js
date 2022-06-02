@@ -71,13 +71,18 @@ export function deepmerge(target, ...sources) {
   if (isObject(target) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
+        const sourceIsArray = Array.isArray(source[key])
         if (!target[key]) {
-          if (Array.isArray(source[key]))
+          if (sourceIsArray)
             Object.assign(target, { [key]: [] })
           else
             Object.assign(target, { [key]: {} })
         }
-        deepmerge(target[key], source[key])
+        // Arrays are overwritten
+        if (sourceIsArray)
+          target[key] = [ ...source[key] ]
+        else
+          deepmerge(target[key], source[key])
       } else {
         Object.assign(target, { [key]: source[key] })
       }

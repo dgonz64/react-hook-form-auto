@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.13
+
+### Changed
+
+* Array values are overwritten from initialValues instead of appending them.
+
 ## 1.3.12
 
 ### Added
