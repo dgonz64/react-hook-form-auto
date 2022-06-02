@@ -5,6 +5,7 @@
 ### Changed
 
 * Array values are overwritten from initialValues instead of appending them.
+* Array mode can be overridden in fieldSchema.
 
 ## 1.3.12
 

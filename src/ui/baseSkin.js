@@ -41,7 +41,8 @@ export default {
       } = props
 
       const { arrayMode } = config
-      const isTable = arrayMode == 'table'
+      const finalArrayMode = fieldSchema.arrayMode || arrayMode
+      const isTable = finalArrayMode == 'table'
       const ArrayTable = getSkinComponent(skin.arrayTable)
       const ArrayPanel = getSkinComponent(skin.arrayPanel)
       const arrayHandler = isTable ? ArrayTable : ArrayPanel

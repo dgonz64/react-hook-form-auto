@@ -133,10 +133,13 @@ It also allows you to build arrays from other schemas. Simply specify the other 
     export const company = createSchema('company', {
       clients: {
         type: [client],
-        minChildren: 10
+        minChildren: 10,
+        arrayMode: 'panel'  // You can override config
       }
     })
 ```
+
+You can override form array config for a particular field using `arrayMode`
 
 ### 3. Make it prettier
 
