@@ -6,6 +6,7 @@
 
 * Array values are overwritten from initialValues instead of appending them.
 * Array mode can be overridden in fieldSchema.
+* Array field name digs into `_field` string id.
 
 ## 1.3.12
 

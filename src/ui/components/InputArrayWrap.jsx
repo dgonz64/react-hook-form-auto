@@ -73,7 +73,7 @@ const renderPanelHeader = ({
   return (
     <Div className={styles.inputPanelWrap}>
       <Text className={styles.inputPanelEntity}>
-        {trModel(schemaTypeName, name) + ' '}
+        {trModel(schemaTypeName, name, '_field') + ' '}
       </Text>
       {addButton}
     </Div>
