@@ -34,6 +34,11 @@ export function validationRules(fieldSchema) {
         if (validation.message && typeof validation.message == 'function')
           validation.message = validation.message(fieldSchema)
         data = validation
+      } else if (key == 'validate') {
+        data = value => {
+          const erroring = validation(value)
+          return erroring === false || erroring
+        }
       } else {
         data = {
           value: fieldSchema[key],

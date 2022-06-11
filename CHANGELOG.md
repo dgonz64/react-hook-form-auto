@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.14
+
+### Fixed
+
+* `validate` validation will correctly translated return value (`true` for "ok")
+
 ## 1.3.13
 
 ### Changed
