@@ -5,6 +5,7 @@
 ### Fixed
 
 * `validate` validation will correctly translated return value (`true` for "ok")
+* Passing `errorText` to wrapped array handler
 
 ## 1.3.13
 

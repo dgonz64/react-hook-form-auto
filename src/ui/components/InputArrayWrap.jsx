@@ -245,6 +245,7 @@ export let InputArrayWrap = ({
         schema={schema}
         config={config}
         name={name}
+        errorText={errorText}
         component={arrayHandler}
         onAdd={handleAdd}
         newObject={newObject}
